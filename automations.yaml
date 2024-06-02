@@ -931,7 +931,7 @@
   trigger:
   - platform: state
     entity_id:
-    - person.ben
+    - person.kyle
     - person.liam
     from: home
     to: not_home
@@ -942,7 +942,7 @@
       seconds: 0
   - platform: state
     entity_id:
-    - person.ben
+    - person.kyle
     - person.liam
     from: not_home
     to: home
@@ -958,7 +958,7 @@
         - condition: not
           conditions:
           - condition: state
-            entity_id: person.ben
+            entity_id: person.kyle
             state: home
         - condition: not
           conditions:
