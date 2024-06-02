@@ -1,0 +1,482 @@
+living_room_cardio_time:
+  alias: Living Room - Cardio Time
+  sequence:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - if:
+    - condition: state
+      entity_id: light.living_room_light
+      state: 'off'
+    then:
+    - service: light.turn_on
+      data:
+        brightness_pct: 100
+      target:
+        entity_id: light.living_room_light
+  - service: fan.turn_on
+    data:
+      percentage: 100
+    target:
+      entity_id:
+      - fan.living_room_air_purifier
+      - fan.living_room_fan
+  mode: single
+ben_s_bedroom_all_devices_off:
+  alias: Ben's Bedroom - All Devices Off
+  sequence:
+  - service: light.turn_off
+    data: {}
+    target:
+      area_id: ben_s_bedroom
+  - service: media_player.turn_off
+    data: {}
+    target:
+      area_id: ben_s_bedroom
+  mode: single
+home_alarm_arm_away:
+  alias: Home - Alarm - Arm Away
+  sequence:
+  - service: notify.alexa_media_last_called
+    data:
+      message: alexa.cannedtts.speak.curatedtts-category-goodbye/alexa.cannedtts.speak.curatedtts-random
+      data:
+        type: tts
+      target: last_called
+  - service: notify.alexa_media_last_called
+    data:
+      message: '"you have 30 seconds to exit, then I''ll arm the alarm"'
+      data:
+        type: tts
+      target: last_called
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 30
+      milliseconds: 0
+  - service: alarm_control_panel.alarm_arm_away
+    data: {}
+    target:
+      entity_id: alarm_control_panel.home_alarm
+  mode: single
+home_alexa_announce_dinner_time:
+  alias: Home - Alexa - Announce Dinner Time
+  sequence:
+  - service: media_player.volume_set
+    data:
+      volume_level: 1
+    target:
+      entity_id:
+      - media_player.boys_echo_dot
+      - media_player.utility_room_echo_dot
+  - repeat:
+      count: '3'
+      sequence:
+      - service: notify.alexa_media
+        data:
+          data:
+            method: all
+            type: announce
+          message: It's dinner time. Dinner is ready!
+          target:
+          - Kitchen Echo Show
+          - Living Room Echo
+          - Bedroom Echo Dot
+          - Boys' Echo Dot
+          - Utility Room Echo Dot
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 20
+      milliseconds: 0
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.3
+    target:
+      entity_id: media_player.boys_echo_dot
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.5
+    target:
+      entity_id: media_player.utility_room_echo_dot
+  mode: single
+bedroom_turn_on_bedside_lights:
+  alias: Bedroom - Lighting - Turn on Bedside Lights
+  sequence:
+  - service: light.turn_on
+    data:
+      brightness_pct: 10
+    target:
+      entity_id: light.bedside_lights
+  mode: single
+home_dinner_details:
+  alias: Home - Dinner Details
+  sequence:
+  - service: alexa_media.update_last_called
+    data: {}
+  - if:
+    - condition: template
+      value_template: '{{ states.calendar.meals.state == ''on'' }}'
+    then:
+    - service: notify.alexa_media_last_called
+      data:
+        data:
+          type: tts
+        message: 'Today''s dinner is {{ state_attr(''calendar.meals'', ''message'')
+          }}''. ''{{ state_attr(''calendar.meals'', ''description'') }}
+
+          '
+    else:
+    - service: notify.alexa_media_last_called
+      data:
+        data:
+          type: tts
+        message: There's no dinner for you today! Ha ha ha!
+  mode: single
+home_heating_room_boost:
+  alias: Home - Heating - Room Boost
+  sequence:
+  - service: alexa_media.update_last_called
+    data: {}
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: sensor.last_alexa
+        state: media_player.kitchen_echo_show
+      sequence:
+      - service: climate.set_temperature
+        data:
+          temperature: 20
+        target:
+          entity_id: climate.wiser_kitchen
+    - conditions:
+      - condition: or
+        conditions:
+        - condition: state
+          entity_id: sensor.last_alexa
+          state: media_player.living_room_echo_right
+        - condition: state
+          entity_id: sensor.last_alexa
+          state: media_player.living_room_echo
+      sequence:
+      - service: climate.set_temperature
+        data:
+          temperature: 20
+        target:
+          entity_id: climate.wiser_living_room
+    - conditions:
+      - condition: state
+        entity_id: sensor.last_alexa
+        state: media_player.bedroom_echo_dot
+      sequence:
+      - service: climate.set_temperature
+        data:
+          temperature: 20
+        target:
+          entity_id: climate.wiser_bedroom
+    - conditions:
+      - condition: state
+        entity_id: sensor.last_alexa
+        state: media_player.boys_echo_dot
+      sequence:
+      - service: climate.set_temperature
+        data:
+          temperature: 20
+        target:
+          entity_id: climate.wiser_boys_bedroom
+    - conditions:
+      - condition: state
+        entity_id: sensor.last_alexa
+        state: media_player.jess_s_echo_dot
+      sequence:
+      - service: climate.set_temperature
+        data:
+          temperature: 20
+        target:
+          entity_id:
+          - climate.wiser_ben_s_bedroom
+  - service: notify.alexa_media_last_called
+    data:
+      data:
+        type: tts
+      message: I've boosted the heating in this room
+  mode: single
+home_tv_turn_on:
+  alias: Home - TV - Turn On
+  sequence:
+  - service: alexa_media.update_last_called
+    data: {}
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: sensor.last_alexa
+        state: media_player.living_room_echo
+      sequence:
+      - service: media_player.turn_on
+        data: {}
+        target:
+          entity_id: media_player.living_room
+    - conditions:
+      - condition: state
+        entity_id: sensor.last_alexa
+        state: media_player.bedroom_echo_dot
+      sequence:
+      - service: media_player.turn_on
+        data: {}
+        target:
+          entity_id: media_player.bedroom_firetvstick_4k_max
+    - conditions:
+      - condition: state
+        entity_id: sensor.last_alexa
+        state: media_player.jess_s_echo_dot
+      sequence:
+      - service: media_player.turn_on
+        data: {}
+        target:
+          entity_id: media_player.ben_s_bedroom_firetvstick
+  mode: single
+home_tv_turn_off:
+  alias: Home - TV - Turn Off
+  sequence:
+  - service: alexa_media.update_last_called
+    data: {}
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: sensor.last_alexa
+        state: media_player.living_room_echo
+      sequence:
+      - service: media_player.turn_off
+        data: {}
+        target:
+          entity_id: media_player.living_room
+    - conditions:
+      - condition: state
+        entity_id: sensor.last_alexa
+        state: media_player.bedroom_echo_dot
+      sequence:
+      - service: media_player.turn_off
+        data: {}
+        target:
+          entity_id: media_player.bedroom_firetvstick_4k_max
+      - service: media_player.play_media
+        data:
+          media_content_id: Bedroom - Turn off Bedroom TV
+          media_content_type: custom
+        target:
+          entity_id: media_player.bedroom_firetvstick_4k_max_amp
+    - conditions:
+      - condition: state
+        entity_id: sensor.last_alexa
+        state: media_player.jess_s_echo_dot
+      sequence:
+      - service: media_player.turn_off
+        data: {}
+        target:
+          entity_id:
+          - media_player.ben_s_bedroom_firetvstick
+      - service: media_player.play_media
+        data:
+          media_content_type: custom
+          media_content_id: Turn off Ben's Bedroom TV
+        target:
+          entity_id:
+          - media_player.ben_s_bedroom_firetvstick_amp
+  mode: single
+living_room_workout_time_apple_tv:
+  alias: Living Room - Workout Time Apple TV
+  sequence:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - if:
+    - condition: state
+      entity_id: light.living_room_light
+      state: 'off'
+    then:
+    - service: light.turn_on
+      data:
+        brightness_pct: 100
+      target:
+        entity_id: light.living_room_light
+  - service: fan.turn_on
+    data:
+      percentage: 100
+    target:
+      entity_id:
+      - fan.living_room_air_purifier
+      - fan.living_room_fan
+  - service: remote.send_command
+    data:
+      num_repeats: 1
+      delay_secs: 0.4
+      hold_secs: 0
+      command: wakeup
+    target:
+      entity_id: remote.living_room
+  - service: media_player.turn_on
+    target:
+      entity_id:
+      - media_player.living_room
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 15
+      milliseconds: 0
+  - service: remote.send_command
+    data:
+      hold_secs: 0
+      command: top_menu
+      num_repeats: 2
+      delay_secs: 1
+    target:
+      entity_id: remote.living_room
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 30
+      milliseconds: 0
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.1
+    target:
+      entity_id:
+      - media_player.neil_s_vidaa_voice_tv
+  mode: single
+home_open_windows:
+  alias: Home - Open Windows
+  sequence:
+  - service: alexa_media.update_last_called
+    data: {}
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: binary_sensor.all_windows
+        state: 'on'
+      sequence:
+      - service: notify.alexa_media_last_called
+        data:
+          data:
+            type: tts
+          message: 'Yes, these windows are open! {{ states | selectattr(''entity_id'',''in'',
+            state_attr(''binary_sensor.all_windows'',''entity_id'')) | selectattr(''state'',''eq'',''on'')
+            | map(attribute=''name'') | join(''. '') }}
+
+            '
+    - conditions:
+      - condition: state
+        entity_id: binary_sensor.all_windows
+        state: 'off'
+      sequence:
+      - service: notify.alexa_media_last_called
+        data:
+          data:
+            type: tts
+          message: 'There are no windows open.
+
+            '
+  mode: single
+home_open_doors:
+  alias: Home - Open Doors
+  sequence:
+  - service: alexa_media.update_last_called
+    data: {}
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: binary_sensor.all_doors
+        state: 'on'
+      sequence:
+      - service: notify.alexa_media_last_called
+        data:
+          data:
+            type: tts
+          message: 'Yes, these doors are open! {{ states | selectattr(''entity_id'',''in'',
+            state_attr(''binary_sensor.all_doors'',''entity_id'')) | selectattr(''state'',''eq'',''on'')
+            | map(attribute=''name'') | join(''. '') }}
+
+            '
+    - conditions:
+      - condition: state
+        entity_id: binary_sensor.all_doors
+        state: 'off'
+      sequence:
+      - service: notify.alexa_media_last_called
+        data:
+          data:
+            type: tts
+          message: There are no doors open.
+  mode: single
+home_dinner_details_tomorrow:
+  alias: Home - Dinner Details Tomorrow
+  sequence:
+  - service: alexa_media.update_last_called
+    data: {}
+  - service: calendar.get_events
+    data:
+      duration:
+        hours: 0
+        minutes: 0
+        seconds: 1
+      start_date_time: '{{ (now().date() + timedelta(days=1)).strftime("%Y-%m-%d")
+        }} 12:00:00'
+    target:
+      entity_id: calendar.meals
+    response_variable: mealTomorrow
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ mealTomorrow[''calendar.meals''].events[0] | length !=
+          0 }}'
+      sequence:
+      - service: notify.alexa_media_last_called
+        data:
+          data:
+            type: tts
+          message: Tomorrow's dinner is {{ mealTomorrow['calendar.meals'].events[0].summary
+            }}, {{ mealTomorrow['calendar.meals'].events[0].description }}
+    - conditions:
+      - condition: template
+        value_template: '{{ mealTomorrow[''calendar.meals''].events[0] | length !=
+          0 }}'
+      sequence:
+      - service: notify.alexa_media_last_called
+        data:
+          data:
+            type: tts
+          message: There's no dinner for you tomorrow! Ha ha ha!
+  mode: single
+utility_room_dishwasher_status:
+  alias: Utility Room - Dishwasher - Status
+  sequence:
+  - service: alexa_media.update_last_called
+    data: {}
+  - service: notify.alexa_media_last_called
+    data:
+      data:
+        type: tts
+      message: The dishwasher is {{ states('input_select.utility_room_dishwasher_status')
+        }}
+  mode: single
+home_who_is_home:
+  alias: Home - Who Is Home
+  sequence:
+  - service: alexa_media.update_last_called
+    data: {}
+  - service: notify.alexa_media_last_called
+    data:
+      data:
+        type: tts
+      message: '{% if state_attr(''zone.home'', ''persons'') | count > 0 %} {% set
+        folks = expand(state_attr(''zone.home'', ''persons'')) | selectattr(''state'',''eq'',''home'')
+        | map(attribute=''name'') | list %} These people are at home. {% for folk
+        in folks %} {{ folk }}. {% endfor %} {% else %} There is nobody at home. {%
+        endif %}
+
+        '
+  mode: single

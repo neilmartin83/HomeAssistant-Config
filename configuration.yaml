@@ -1,0 +1,116 @@
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+# Template Sensors
+template:
+  - sensor:
+      - name: "Bathroom"
+        state: "{{ states('input_boolean.utility_room_presence') }}"
+        attributes:
+          temperature: "{{ states('sensor.wiser_lts_temperature_bathroom') }}°C"
+          icon: mdi:bathtub-outline
+  - sensor:
+      - name: "Bedroom"
+        state: "{{ states('binary_sensor.apollo_msr_1_38c3bc_radar_target') }}"
+        attributes:
+          temperature: "{{ states('sensor.wiser_lts_temperature_bedroom') }}°C"
+          icon: mdi:bed-king-outline
+  - sensor:
+      - name: "Boys' Bedroom"
+        state: "{{ states('binary_sensor.boys_bedroom_presence_sensor_fp2_cf9d_presence_sensor_room') }}"
+        attributes:
+          temperature: "{{ states('sensor.wiser_lts_temperature_boys_bedroom') }}°C"
+          icon: mdi:bunk-bed-outline
+  - sensor:
+      - name: "Garden"
+        state: "{{ states('binary_sensor.garden_camera_motion') }}"
+        attributes:
+          temperature: "{{ states('sensor.forecast_home_temperature') | float(0) | round(1) }}°C"
+          icon: mdi:flower-tulip-outline
+  - sensor:
+      - name: "Hall"
+        state: "{{ states('binary_sensor.hall_motion_sensor') }}"
+        attributes:
+          temperature: "{{ states('sensor.average_indoor_temperature') | round(1) }}°C"
+          icon: mdi:door-closed
+  - sensor:
+      - name: "Ben's Bedroom"
+        state: "{{ states('binary_sensor.ben_s_bedroom_motion_sensor') }}"
+        attributes:
+          temperature: "{{ states('sensor.wiser_lts_temperature_ben_s_bedroom') }}°C"
+          icon: mdi:bed-single-outline
+  - sensor:
+      - name: "Kitchen"
+        state: "{{ states('binary_sensor.everything_presence_lite_214fd8_occupancy') }}"
+        attributes:
+          temperature: "{{ states('sensor.wiser_lts_temperature_kitchen') }}°C"
+          icon: mdi:silverware-fork-knife
+  - sensor:
+      - name: "Landing"
+        state: "{{ states('binary_sensor.landing_motion_sensor') }}"
+        attributes:
+          temperature: "{{ states('sensor.air_quality_monitor_temperature') | round(1) }}°C"
+          icon: mdi:stairs-up
+  - sensor:
+      - name: "Living Room"
+        state: "{{ states('binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room') }}"
+        attributes:
+          temperature: "{{ states('sensor.wiser_lts_temperature_living_room') }}°C"
+          icon: mdi:sofa-outline
+  - sensor:
+      - name: "Porch"
+        state: "{{ states('binary_sensor.front_doorbell_motion') }}"
+        attributes:
+          temperature: "{{ states('sensor.forecast_home_temperature') | float(0) | round(1) }}°C"
+          icon: mdi:coach-lamp
+  - sensor:
+      - name: "Utility Room"
+        state: "{{ states('input_boolean.utility_room_presence') }}"
+        attributes:
+          temperature: "{{ states('sensor.utility_room_echo_dot_temperature') }}°C"
+          icon: mdi:washing-machine
+
+# Flux
+switch:
+  - platform: flux
+    lights:
+      - light.bedroom_light
+      - light.boys_bedroom_light
+    name: "Adaptive Lighting Upstairs"
+    start_colortemp: 4500
+    stop_colortemp: 2700
+    disable_brightness_adjust: true
+    mode: mired
+  - platform: flux
+    lights:
+      - light.living_room_light
+      - light.living_room_tv_backlight
+    name: "Adaptive Lighting Living Room"
+    start_colortemp: 4500
+    stop_colortemp: 3000
+    disable_brightness_adjust: true
+    mode: mired
+  - platform: flux
+    lights:
+      - light.cooker_hood_light
+      - light.kitchen_light
+      - light.kitchen_lightstrip
+      - light.utility_room_light
+    name: "Adaptive Lighting Kitchen"
+    start_colortemp: 4500
+    stop_colortemp: 3500
+    sunset_colortemp: 3500
+    disable_brightness_adjust: true
+    mode: mired

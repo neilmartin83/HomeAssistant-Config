@@ -1,0 +1,21 @@
+substitutions:
+  name: localbytes-plug-pm-8ca11b
+  friendly_name: Living Room Fan
+packages:
+  localbytes.plug-pm: github://LocalBytes/esphome-localbytes-plug/localbytes-plug-pm.yaml@main
+esphome:
+  name: ${name}
+  name_add_mac_suffix: false
+  friendly_name: ${friendly_name}
+
+api:
+  encryption:
+    key: !secret localbytes-plug-pm-8ca11b_api_encryption_key
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: True
+
+ota:
+  password: !secret localbytes-plug-pm-8ca11b_ota_password

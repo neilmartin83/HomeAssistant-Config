@@ -1,0 +1,124 @@
+substitutions:
+  name: usb-relay-918283
+  friendly_name: USB Relay
+  default_state: RESTORE_DEFAULT_OFF
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+
+esp8266:
+  board: esp01_1m
+  restore_from_flash: True
+
+logger:
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: True
+  power_save_mode: HIGH
+  ap:
+    ssid: ${friendly_name}
+    ap_timeout: 3min
+
+captive_portal:
+
+api:
+  encryption:
+    key: !secret usb-relay-918283_api_encryption_key
+
+ota:
+  password: !secret usb-relay-918283_ota_password
+
+# Blue LED
+status_led:
+  pin:
+    number: GPIO16
+
+switch:
+    # Relay
+  - platform: gpio
+    id: switch_relay
+    pin: GPIO5
+    # Green LED
+  - platform: gpio
+    pin: GPIO14
+    id: green_led
+    # Disable Button Template
+  - platform: template
+    name: Disable Button
+    id: disable_button
+    icon: mdi:toggle-switch-off-outline
+    restore_mode: ${default_state}
+    optimistic: True
+    # Disable Green LED Template
+  - platform: template
+    name: Disable Green LED
+    id: disable_green_led
+    icon: mdi:led-variant-off
+    restore_mode: ${default_state}
+    optimistic: True
+    turn_on_action:
+        - switch.turn_off:
+            id: green_led
+    turn_off_action:
+        - if:
+            condition:
+              switch.is_off: switch_relay
+            then:
+              switch.turn_on: green_led
+
+  # Template to link relay and green LED states
+  # LED is on when relay is off
+  - platform: template
+    id: relay
+    name: ""
+    lambda: |-
+      if (id(switch_relay).state) {
+        return true;
+      } else {
+        return false;
+      }
+    restore_mode: ${default_state}
+    turn_on_action:
+        - switch.turn_on:
+            id: switch_relay
+        - if:
+            condition:
+              switch.is_off: disable_green_led
+            then:
+              switch.turn_off: green_led
+    turn_off_action:
+        - switch.turn_off:
+            id: switch_relay
+        - if:
+            condition:
+              switch.is_off: disable_green_led
+            then:
+              switch.turn_on: green_led
+
+# Button
+binary_sensor:
+  - platform: gpio
+    id: hardware_button
+    pin:
+      number: GPIO04
+      mode: INPUT_PULLUP
+      inverted: True
+    on_press:
+      - if:
+          condition:
+            switch.is_off: disable_button
+          then:
+            switch.toggle: relay
+
+# WiFi Signal Sensor
+sensor:
+  - platform: wifi_signal
+    name: WiFi Status
+    update_interval: 60s
+
+button:
+  - platform: restart
+    name: Restart
