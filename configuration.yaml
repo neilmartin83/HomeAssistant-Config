@@ -77,9 +77,9 @@ template:
           icon: mdi:coach-lamp
   - sensor:
       - name: "Utility Room"
-        state: "{{ states('input_boolean.utility_room_presence') }}"
+        state: "{{ states('binary_sensor.utility_room_motion_sensor') }}"
         attributes:
-          temperature: "{{ states('sensor.utility_room_echo_dot_temperature') }}°C"
+          temperature: "{{ states('sensor.average_indoor_temperature') | float(0) | round(1) }}°C"
           icon: mdi:washing-machine
 
 # Flux

@@ -70,7 +70,6 @@ home_alexa_announce_dinner_time:
     target:
       entity_id:
       - media_player.boys_echo_dot
-      - media_player.utility_room_echo_dot
   - repeat:
       count: '3'
       sequence:
@@ -85,7 +84,6 @@ home_alexa_announce_dinner_time:
           - Living Room Echo
           - Bedroom Echo Dot
           - Boys' Echo Dot
-          - Utility Room Echo Dot
   - delay:
       hours: 0
       minutes: 0
@@ -93,14 +91,9 @@ home_alexa_announce_dinner_time:
       milliseconds: 0
   - service: media_player.volume_set
     data:
-      volume_level: 0.3
+      volume_level: 0.35
     target:
       entity_id: media_player.boys_echo_dot
-  - service: media_player.volume_set
-    data:
-      volume_level: 0.5
-    target:
-      entity_id: media_player.utility_room_echo_dot
   mode: single
 bedroom_turn_on_bedside_lights:
   alias: Bedroom - Lighting - Turn on Bedside Lights

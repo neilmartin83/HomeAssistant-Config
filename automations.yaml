@@ -1036,7 +1036,10 @@
     entity_id:
     - vacuum.deebot_t9
     to: cleaning
-  condition: []
+  condition:
+  - condition: time
+    after: 09:00:00
+    before: '21:30:00'
   action:
   - service: notify.alexa_media
     data:
@@ -1049,7 +1052,7 @@
       - Living Room Echo
       - Bedroom Echo Dot
       - Boys' Echo Dot
-      - Utility Room Echo Dot
+      - Ben's Echo Dot
   - wait_for_trigger:
     - platform: state
       entity_id:
@@ -1068,7 +1071,7 @@
       - Living Room Echo
       - Bedroom Echo Dot
       - Boys' Echo Dot
-      - Utility Room Echo Dot
+      - Ben's Echo Dot
   mode: single
 - id: '1670183604197'
   alias: Bedroom - Lighting - Bedroom Light off when Bedside Lights turn on
@@ -1621,7 +1624,7 @@
           milliseconds: 0
   mode: single
 - id: '1671518985271'
-  alias: Utility Room - Computer - Pause Schedule
+  alias: Boys' Bedroom - Kyle's Computer - Pause Schedule
   description: ''
   trigger:
   - platform: time
@@ -1656,17 +1659,16 @@
     data:
       volume_level: 1
     target:
-      entity_id:
-      - media_player.utility_room_echo_dot
-  - service: notify.alexa_media_utility_room_echo_dot
+      entity_id: media_player.boys_echo_dot
+  - service: notify.alexa_media_boys_echo_dot
     data:
-      message: Kyle, you have five minutes left!
+      message: Kyle, you have five minutes left
   - service: light.turn_on
     metadata: {}
     data:
       flash: long
     target:
-      entity_id: light.utility_room_light
+      entity_id: light.boys_bedroom_light
   - delay:
       hours: 0
       minutes: 4
@@ -1677,8 +1679,8 @@
     data:
       flash: long
     target:
-      entity_id: light.utility_room_light
-  - service: notify.alexa_media_utility_room_echo_dot
+      entity_id: light.boys_bedroom_light
+  - service: notify.alexa_media_boys_echo_dot
     data:
       message: Kyle, you have one minute left!
   - delay:
@@ -1688,9 +1690,9 @@
       milliseconds: 0
   - service: media_player.volume_set
     data:
-      volume_level: 0.5
+      volume_level: 0.35
     target:
-      entity_id: media_player.utility_room_echo_dot
+      entity_id: media_player.boys_echo_dot
   - repeat:
       sequence:
       - service: light.turn_on
@@ -1698,7 +1700,7 @@
         data:
           flash: long
         target:
-          entity_id: light.utility_room_light
+          entity_id: light.boys_bedroom_light
       - delay:
           hours: 0
           minutes: 0
@@ -3364,7 +3366,10 @@
     entity_id:
     - vacuum.deebot_ozmo_920
     to: cleaning
-  condition: []
+  condition:
+  - condition: time
+    after: 09:00:00
+    before: '21:30:00'
   action:
   - service: notify.alexa_media
     data:
@@ -3377,7 +3382,7 @@
       - Living Room Echo
       - Bedroom Echo Dot
       - Boys' Echo Dot
-      - Utility Room Echo Dot
+      - Ben's Echo Dot
   - wait_for_trigger:
     - platform: state
       entity_id:
@@ -3396,7 +3401,7 @@
       - Living Room Echo
       - Bedroom Echo Dot
       - Boys' Echo Dot
-      - Utility Room Echo Dot
+      - Ben's Echo Dot
   mode: single
 - id: '1696061969620'
   alias: Home - Heating - Back Door
@@ -3486,9 +3491,7 @@
     data:
       volume_level: 1
     target:
-      entity_id:
-      - media_player.utility_room_echo_dot
-      - media_player.kitchen_echo_show
+      entity_id: media_player.boys_echo_dot
   - delay:
       hours: 0
       minutes: 0
@@ -3500,12 +3503,10 @@
       data:
         method: all
         type: announce
-      title: A title
       target:
-      - Utility Room Echo Dot
-      - Boys' Bedroom Echo Dot
       - Kitchen Echo Show
-      - Living Room Echo Left
+      - Living Room Echo
+      - Boys' Echo Dot
   - delay:
       hours: 0
       minutes: 0
@@ -3515,9 +3516,7 @@
     data:
       volume_level: 0.35
     target:
-      entity_id:
-      - media_player.utility_room_echo_dot
-      - media_player.kitchen_echo_show
+      entity_id: media_player.boys_echo_dot
   mode: restart
 - id: '1701726382538'
   alias: Boys' Bedroom - Dehumidifier - Schedule
