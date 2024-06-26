@@ -29,7 +29,8 @@ api:
     key: !secret usb-relay-918283_api_encryption_key
 
 ota:
-  password: !secret usb-relay-918283_ota_password
+  - platform: esphome
+    password: !secret usb-relay-918283_ota_password
 
 # Blue LED
 status_led:

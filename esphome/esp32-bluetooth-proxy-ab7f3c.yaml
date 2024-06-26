@@ -20,6 +20,7 @@ wifi:
   fast_connect: True
 
 ota:
+  platform: esphome
   password: !secret esp32-bluetooth-proxy-ab7f3c_ota_password
 
 status_led:

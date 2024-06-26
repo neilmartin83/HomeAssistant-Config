@@ -20,4 +20,5 @@ wifi:
   fast_connect: True
 
 ota:
-  password: !secret everything-presence-lite-214fd8_ota_password
+  - platform: esphome
+    password: !secret everything-presence-lite-214fd8_ota_password

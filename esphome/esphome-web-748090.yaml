@@ -16,7 +16,8 @@ api:
     key: !secret esphome-web-748090_api_encryption_key
 
 ota:
-  password: !secret esphome-web-748090_ota_password
+  - platform: esphome
+    password: !secret esphome-web-748090_ota_password
 
 wifi:
   ssid: !secret wifi_ssid

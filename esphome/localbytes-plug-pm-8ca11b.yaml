@@ -18,4 +18,5 @@ wifi:
   fast_connect: True
 
 ota:
-  password: !secret localbytes-plug-pm-8ca11b_ota_password
+  - platform: esphome
+    password: !secret localbytes-plug-pm-8ca11b_ota_password
