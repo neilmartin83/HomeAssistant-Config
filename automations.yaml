@@ -1050,7 +1050,7 @@
       target:
       - Kitchen Echo Show
       - Living Room Echo
-      - Bedroom Echo Dot
+      - Bedroom Echo Spot
       - Boys' Echo Dot
       - Ben's Echo Dot
   - wait_for_trigger:
@@ -1069,7 +1069,7 @@
       target:
       - Kitchen Echo Show
       - Living Room Echo
-      - Bedroom Echo Dot
+      - Bedroom Echo Spot
       - Boys' Echo Dot
       - Ben's Echo Dot
   mode: single
@@ -1159,7 +1159,7 @@
           media_content_type: routine
           media_content_id: Bedroom - Turn off TV
         target:
-          entity_id: media_player.bedroom_echo_dot
+          entity_id: media_player.bedroom_echo_spot
     - conditions:
       - condition: trigger
         id: '2'
@@ -1747,7 +1747,7 @@
       - service: switch.turn_on
         data: {}
         target:
-          entity_id: switch.bedroom_echo_dot_do_not_disturb_switch
+          entity_id: switch.bedroom_echo_spot_do_not_disturb_switch
     - conditions:
       - condition: trigger
         id: '2'
@@ -1755,7 +1755,7 @@
       - service: switch.turn_off
         data: {}
         target:
-          entity_id: switch.bedroom_echo_dot_do_not_disturb_switch
+          entity_id: switch.bedroom_echo_spot_do_not_disturb_switch
   mode: single
 - id: '1672177277902'
   alias: Home - Shopping List - Copy Weekly Items
@@ -3380,7 +3380,7 @@
       target:
       - Kitchen Echo Show
       - Living Room Echo
-      - Bedroom Echo Dot
+      - Bedroom Echo Spot
       - Boys' Echo Dot
       - Ben's Echo Dot
   - wait_for_trigger:
@@ -3399,7 +3399,7 @@
       target:
       - Kitchen Echo Show
       - Living Room Echo
-      - Bedroom Echo Dot
+      - Bedroom Echo Spot
       - Boys' Echo Dot
       - Ben's Echo Dot
   mode: single
@@ -4147,7 +4147,7 @@
       media_content_id: wake up boo radleys
       media_content_type: APPLE_MUSIC
     target:
-      entity_id: media_player.bedroom_echo_dot
+      entity_id: media_player.bedroom_echo_spot
   mode: single
 - id: '1712408109712'
   alias: Boys' Bedroom - Liam's PC - Pause Wi-Fi
