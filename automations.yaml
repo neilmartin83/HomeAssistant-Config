@@ -4125,7 +4125,7 @@
     event_type: alexa_media_alarm_dismissal_event
     event_data:
       device:
-        id: G091ET10113304EP
+        id: GN42ML05408320243
   condition:
   - condition: or
     conditions:
