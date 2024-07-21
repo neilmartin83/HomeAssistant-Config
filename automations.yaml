@@ -473,6 +473,9 @@
     - conditions:
       - condition: trigger
         id: '1'
+      - condition: state
+        entity_id: binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room
+        state: 'on'
       sequence:
       - service: light.turn_on
         data: {}
@@ -2670,7 +2673,7 @@
                   method: all
                   type: announce
                 target:
-                - Boys' Echo Dot
+                - Ben's Echo Dot
                 message: Hey Ben! The washing machine has finished!
           - delay:
               hours: 0
@@ -3287,6 +3290,16 @@
         data: {}
         target:
           entity_id: light.living_room_light
+      - if:
+        - condition: state
+          entity_id: media_player.living_room_tv_airplay
+          state: 'on'
+        then:
+        - service: light.turn_on
+          metadata: {}
+          data: {}
+          target:
+            entity_id: light.living_room_tv_backlight
     - conditions:
       - condition: trigger
         id: '2'
@@ -3296,6 +3309,7 @@
         target:
           entity_id:
           - light.living_room_light
+          - light.living_room_tv_backlight
   mode: single
 - id: '1689100303323'
   alias: Home - Shopping List - Add Meal Ingredients
@@ -4317,36 +4331,70 @@
     - binary_sensor.living_room_window_casement_right
     from: 'on'
     to: 'off'
-  condition:
-  - condition: state
-    entity_id: media_player.living_room_tv_airplay
-    state: 'on'
-  - condition: numeric_state
-    entity_id: fan.living_room_air_purifier
-    attribute: percentage
-    above: 99
-  - condition: state
-    entity_id: fan.living_room_air_purifier
-    state: 'on'
-  - condition: state
-    entity_id: fan.living_room_air_purifier
-    attribute: preset_mode
-    state: manual
-  - condition: state
-    entity_id: fan.living_room_fan
-    state: 'on'
+    id: '1'
+  - platform: state
+    entity_id:
+    - binary_sensor.living_room_window_casement_right
+    from: 'off'
+    to: 'on'
+    id: '2'
+  condition: []
   action:
-  - service: fan.turn_off
-    data: {}
-    target:
-      area_id: living_room
-  - service: light.turn_off
-    data: {}
-    target:
-      area_id: living_room
-  - service: media_player.turn_off
-    metadata: {}
-    data: {}
-    target:
-      entity_id: media_player.living_room
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: media_player.living_room_tv_airplay
+        state: 'on'
+      - condition: numeric_state
+        entity_id: fan.living_room_air_purifier
+        attribute: percentage
+        above: 99
+      - condition: state
+        entity_id: fan.living_room_air_purifier
+        state: 'on'
+      - condition: state
+        entity_id: fan.living_room_air_purifier
+        attribute: preset_mode
+        state: manual
+      - condition: state
+        entity_id: fan.living_room_fan
+        state: 'on'
+      - condition: trigger
+        id:
+        - '1'
+      sequence:
+      - service: fan.turn_off
+        data: {}
+        target:
+          area_id: living_room
+      - service: light.turn_off
+        data: {}
+        target:
+          area_id: living_room
+      - service: media_player.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: media_player.living_room
+    - conditions:
+      - condition: not
+        conditions:
+        - condition: state
+          entity_id: media_player.living_room_tv_airplay
+          state: 'on'
+      - condition: state
+        entity_id: fan.living_room_fan
+        state: 'off'
+      - condition: trigger
+        id:
+        - '2'
+      - condition: time
+        after: 05:30:00
+        before: 06:15:00
+      sequence:
+      - service: script.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: script.living_room_workout_time_apple_tv
   mode: single
