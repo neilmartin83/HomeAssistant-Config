@@ -114,3 +114,8 @@ switch:
     sunset_colortemp: 3500
     disable_brightness_adjust: true
     mode: mired
+  - platform: flux
+    lights:
+      - light.neils_desk_filament_lamp
+    name: "Adaptive Lighting Neil's Desk"
+    brightness: 1
