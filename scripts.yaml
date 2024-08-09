@@ -291,55 +291,55 @@ living_room_workout_time_apple_tv:
       entity_id: light.living_room_light
       state: 'off'
     then:
-    - service: light.turn_on
-      data:
+    - data:
         brightness_pct: 100
       target:
         entity_id: light.living_room_light
-  - service: fan.turn_on
-    data:
+      action: light.turn_on
+  - data:
       percentage: 100
     target:
       entity_id:
       - fan.living_room_air_purifier
       - fan.living_room_fan
-  - service: remote.send_command
-    data:
+    action: fan.turn_on
+  - data:
       num_repeats: 1
       delay_secs: 0.4
       hold_secs: 0
       command: wakeup
     target:
       entity_id: remote.living_room
-  - service: media_player.turn_on
-    target:
+    action: remote.send_command
+  - target:
       entity_id:
       - media_player.living_room
     data: {}
+    action: media_player.turn_on
   - delay:
       hours: 0
       minutes: 0
       seconds: 15
       milliseconds: 0
-  - service: remote.send_command
-    data:
+  - data:
       hold_secs: 0
       command: top_menu
       num_repeats: 2
       delay_secs: 1
     target:
       entity_id: remote.living_room
+    action: remote.send_command
   - delay:
       hours: 0
       minutes: 0
       seconds: 30
       milliseconds: 0
-  - service: media_player.volume_set
-    data:
+  - data:
       volume_level: 0.1
     target:
       entity_id:
-      - media_player.neil_s_vidaa_voice_tv
+      - media_player.living_room_tv
+    action: media_player.volume_set
   mode: single
 home_open_windows:
   alias: Home - Open Windows

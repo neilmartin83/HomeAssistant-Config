@@ -88,6 +88,7 @@ switch:
     lights:
       - light.bedroom_light
       - light.boys_bedroom_light
+      - light.ben_s_bedroom_light
     name: "Adaptive Lighting Upstairs"
     start_colortemp: 4500
     stop_colortemp: 2700
