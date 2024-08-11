@@ -485,7 +485,7 @@
               metadata: {}
               data: {}
               target:
-                entity_id: humidifier.living_room_dehumidifier
+                entity_id: humidifier.living_room_dehumidifier_none
             - if:
                 - condition: state
                   entity_id: fan.living_room_fan
@@ -3036,7 +3036,7 @@
               metadata: {}
               data: {}
               target:
-                entity_id: humidifier.boys_bedroom_dehumidifier
+                entity_id: humidifier.boys_bedroom_dehumidifier_none
         - conditions:
             - condition: trigger
               id: "2"
@@ -3066,7 +3066,7 @@
                   metadata: {}
                   data: {}
                   target:
-                    entity_id: humidifier.boys_bedroom_dehumidifier
+                    entity_id: humidifier.boys_bedroom_dehumidifier_none
   mode: single
 - id: "1684056329158"
   alias: Ben's Bedroom - Heating - Window Off
@@ -3578,12 +3578,12 @@
             - service: humidifier.turn_on
               target:
                 entity_id:
-                  - humidifier.boys_bedroom_dehumidifier
+                  - humidifier.boys_bedroom_dehumidifier_none
               data: {}
             - service: humidifier.set_humidity
               target:
                 entity_id:
-                  - humidifier.boys_bedroom_dehumidifier
+                  - humidifier.boys_bedroom_dehumidifier_none
               data:
                 humidity: 55
         - conditions:
@@ -3593,7 +3593,7 @@
           sequence:
             - service: humidifier.turn_off
               target:
-                entity_id: humidifier.boys_bedroom_dehumidifier
+                entity_id: humidifier.boys_bedroom_dehumidifier_none
               data: {}
   mode: single
 - id: "1702211376026"
@@ -3602,7 +3602,7 @@
   trigger:
     - platform: state
       entity_id:
-        - binary_sensor.boys_bedroom_dehumidifier_tank_full
+        - binary_sensor.boys_bedroom_dehumidifier_tank
       from: "off"
       to: "on"
   condition:
@@ -3647,7 +3647,7 @@
               milliseconds: 0
         until:
           - condition: state
-            entity_id: binary_sensor.boys_bedroom_dehumidifier_tank_full
+            entity_id: binary_sensor.boys_bedroom_dehumidifier_tank
             state: "off"
   mode: single
 - id: "1702240719027"
@@ -3757,7 +3757,7 @@
       metadata: {}
       data: {}
       target:
-        entity_id: humidifier.living_room_dehumidifier
+        entity_id: humidifier.living_room_dehumidifier_none
   mode: single
 - id: "1707058960910"
   alias: Living Room - Dehumidifier - Dry Clothes
@@ -3765,7 +3765,7 @@
   trigger:
     - platform: state
       entity_id:
-        - humidifier.living_room_dehumidifier
+        - humidifier.living_room_dehumidifier_none
       from: "off"
       to: "on"
       id: "1"
@@ -3776,7 +3776,7 @@
       id: "2"
     - platform: state
       entity_id:
-        - humidifier.living_room_dehumidifier
+        - humidifier.living_room_dehumidifier_none
       from: "on"
       to: "off"
       id: "3"
@@ -3790,7 +3790,7 @@
           sequence:
             - service: humidifier.set_mode
               target:
-                entity_id: humidifier.living_room_dehumidifier
+                entity_id: humidifier.living_room_dehumidifier_none
               data:
                 mode: "2"
             - service: timer.start
@@ -3810,7 +3810,7 @@
               metadata: {}
               data: {}
               target:
-                entity_id: humidifier.living_room_dehumidifier
+                entity_id: humidifier.living_room_dehumidifier_none
             - service: notify.notify
               metadata: {}
               data:
@@ -4106,7 +4106,7 @@
   trigger:
     - platform: state
       entity_id:
-        - binary_sensor.living_room_dehumidifier_tank_full
+        - binary_sensor.living_room_dehumidifier_tank
       from: "off"
       to: "on"
   condition:
@@ -4131,7 +4131,7 @@
               milliseconds: 0
         until:
           - condition: state
-            entity_id: binary_sensor.living_room_dehumidifier_tank_full
+            entity_id: binary_sensor.living_room_dehumidifier_tank
             state: "off"
   mode: single
 - id: "1708353532168"
