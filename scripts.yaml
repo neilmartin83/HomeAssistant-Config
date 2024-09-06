@@ -131,70 +131,65 @@ home_dinner_details:
 home_heating_room_boost:
   alias: Home - Heating - Room Boost
   sequence:
-  - service: alexa_media.update_last_called
-    data: {}
+  - data: {}
+    action: alexa_media.update_last_called
   - choose:
     - conditions:
       - condition: state
         entity_id: sensor.last_alexa
         state: media_player.kitchen_echo_show
       sequence:
-      - service: climate.set_temperature
-        data:
+      - data:
           temperature: 20
         target:
           entity_id: climate.wiser_kitchen
+        action: climate.set_temperature
     - conditions:
-      - condition: or
-        conditions:
-        - condition: state
-          entity_id: sensor.last_alexa
-          state: media_player.living_room_echo_right
-        - condition: state
-          entity_id: sensor.last_alexa
-          state: media_player.living_room_echo
+      - condition: state
+        entity_id: sensor.last_alexa
+        state: media_player.living_room_echo_dot
       sequence:
-      - service: climate.set_temperature
-        data:
+      - data:
           temperature: 20
         target:
           entity_id: climate.wiser_living_room
+        action: climate.set_temperature
     - conditions:
       - condition: state
         entity_id: sensor.last_alexa
         state: media_player.bedroom_echo_spot
       sequence:
-      - service: climate.set_temperature
-        data:
+      - data:
           temperature: 20
         target:
           entity_id: climate.wiser_bedroom
+        action: climate.set_temperature
     - conditions:
       - condition: state
         entity_id: sensor.last_alexa
         state: media_player.boys_echo_dot
       sequence:
-      - service: climate.set_temperature
-        data:
+      - data:
           temperature: 20
         target:
           entity_id: climate.wiser_boys_bedroom
+        action: climate.set_temperature
     - conditions:
       - condition: state
         entity_id: sensor.last_alexa
         state: media_player.jess_s_echo_dot
       sequence:
-      - service: climate.set_temperature
-        data:
+      - data:
           temperature: 20
         target:
           entity_id:
           - climate.wiser_ben_s_bedroom
-  - service: notify.alexa_media_last_called
-    data:
+        action: climate.set_temperature
+  - data:
       data:
         type: tts
       message: I've boosted the heating in this room
+    action: notify.alexa_media_last_called
   mode: single
 home_tv_turn_on:
   alias: Home - TV - Turn On
@@ -205,7 +200,7 @@ home_tv_turn_on:
     - conditions:
       - condition: state
         entity_id: sensor.last_alexa
-        state: media_player.living_room_echo
+        state: media_player.
       sequence:
       - service: media_player.turn_on
         data: {}
@@ -239,7 +234,7 @@ home_tv_turn_off:
     - conditions:
       - condition: state
         entity_id: sensor.last_alexa
-        state: media_player.living_room_echo
+        state: media_player.
       sequence:
       - service: media_player.turn_off
         data: {}

@@ -737,7 +737,7 @@
       media_content_type: routine
       media_content_id: Living Room - Turn off TV
     target:
-      entity_id: media_player.living_room_echo
+      entity_id: media_player.living_room_echo_dot
   mode: single
 - id: '1669807196729'
   alias: Bedroom - Heating - Schedule Neil - Presence
@@ -1052,7 +1052,7 @@
         type: announce
       target:
       - Kitchen Echo Show
-      - Living Room Echo
+      - Living Room Echo Dot
       - Bedroom Echo Spot
       - Boys' Echo Dot
       - Ben's Echo Dot
@@ -1071,7 +1071,7 @@
         type: announce
       target:
       - Kitchen Echo Show
-      - Living Room Echo
+      - Living Room Echo Dot
       - Bedroom Echo Spot
       - Boys' Echo Dot
       - Ben's Echo Dot
@@ -2934,24 +2934,18 @@
   trigger:
   - platform: state
     entity_id:
-    - binary_sensor.bluespike_l1fwcyfgxnmbp_237294_wireless_connected
-    from: 'off'
-    to: 'on'
+    - sensor.l1fwcyfgxnmbp_frontmost_app
     id: '1'
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 15
+    from: loginwindow
   - platform: state
     entity_id:
-    - binary_sensor.bluespike_l1fwcyfgxnmbp_237294_wireless_connected
-    from: 'on'
-    to: 'off'
+    - sensor.l1fwcyfgxnmbp_frontmost_app
+    to: loginwindow
     id: '2'
     for:
       hours: 0
       minutes: 0
-      seconds: 0
+      seconds: 5
   - platform: state
     entity_id:
     - light.bedroom_light
@@ -2976,8 +2970,13 @@
             id:
             - '3'
           - condition: state
-            entity_id: binary_sensor.bluespike_l1fwcyfgxnmbp_237294_wireless_connected
-            state: 'on'
+            entity_id: person.neil
+            state: home
+          - condition: not
+            conditions:
+            - condition: state
+              entity_id: sensor.l1fwcyfgxnmbp_frontmost_app
+              state: loginwindow
         - condition: trigger
           id: '1'
       - condition: state
@@ -2987,31 +2986,31 @@
         entity_id: person.neil
         state: home
       sequence:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 1
         target:
           entity_id:
           - light.neils_desk_filament_lamp
-      - service: light.turn_on
-        metadata: {}
+        action: light.turn_on
+      - metadata: {}
         data: {}
         target:
           entity_id:
           - light.bedroom_light
           - light.neil_s_monitor_light_bar
+        action: light.turn_on
     - conditions:
       - condition: or
         conditions:
         - condition: trigger
           id: '2'
       sequence:
-      - service: light.turn_off
-        data: {}
+      - data: {}
         target:
           entity_id:
           - light.neils_desk_filament_lamp
           - light.neil_s_monitor_light_bar
+        action: light.turn_off
   mode: single
 - id: '1684046061640'
   alias: Boys' Bedroom - Heating - Windows Off
@@ -3417,7 +3416,7 @@
         type: announce
       target:
       - Kitchen Echo Show
-      - Living Room Echo
+      - Living Room Echo Dot
       - Bedroom Echo Spot
       - Boys' Echo Dot
       - Ben's Echo Dot
@@ -3436,7 +3435,7 @@
         type: announce
       target:
       - Kitchen Echo Show
-      - Living Room Echo
+      - Living Room Echo Dot
       - Bedroom Echo Spot
       - Boys' Echo Dot
       - Ben's Echo Dot
@@ -3543,7 +3542,7 @@
         type: announce
       target:
       - Kitchen Echo Show
-      - Living Room Echo
+      - Living Room Echo Dot
       - Boys' Echo Dot
   - delay:
       hours: 0
@@ -3802,7 +3801,7 @@
         data: {}
         target:
           entity_id: timer.living_room_dehumidifier_timer
-      - service: notify.alexa_media_living_room_echo
+      - service: notify.alexa_media_living_room_echo_dot
         data:
           message: Your clothes will be dry in 6 hours time.
     - conditions:
