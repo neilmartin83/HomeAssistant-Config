@@ -1664,13 +1664,13 @@
     conditions:
     - condition: and
       conditions:
-      - condition: template
-        value_template: '{{ (''holiday'' | lower in state_attr(''calendar.edward_francis_primary_school'',
-          ''message'') | lower) or (''non-pupil day'' | lower in state_attr(''calendar.edward_francis_primary_school'',
-          ''message'') | lower) }}'
       - condition: state
-        entity_id: calendar.edward_francis_primary_school
+        entity_id: calendar.school_term_dates_2024_2027
         state: 'on'
+      - condition: state
+        entity_id: calendar.school_term_dates_2024_2027
+        state: Holiday
+        attribute: message
   - condition: time
     weekday:
     - mon
@@ -1682,52 +1682,52 @@
     entity_id: calendar.united_kingdom_eng
     state: 'off'
   action:
-  - service: media_player.volume_set
-    data:
+  - data:
       volume_level: 1
     target:
       entity_id: media_player.boys_echo_dot
-  - service: notify.alexa_media_boys_echo_dot
-    data:
+    action: media_player.volume_set
+  - data:
       message: Kyle, you have five minutes left
-  - service: light.turn_on
-    metadata: {}
+    action: notify.alexa_media_boys_echo_dot
+  - metadata: {}
     data:
       flash: long
     target:
       entity_id: light.boys_bedroom_light
+    action: light.turn_on
   - delay:
       hours: 0
       minutes: 4
       seconds: 0
       milliseconds: 0
-  - service: light.turn_on
-    metadata: {}
+  - metadata: {}
     data:
       flash: long
     target:
       entity_id: light.boys_bedroom_light
-  - service: notify.alexa_media_boys_echo_dot
-    data:
+    action: light.turn_on
+  - data:
       message: Kyle, you have one minute left!
+    action: notify.alexa_media_boys_echo_dot
   - delay:
       hours: 0
       minutes: 1
       seconds: 0
       milliseconds: 0
-  - service: media_player.volume_set
-    data:
+  - data:
       volume_level: 0.35
     target:
       entity_id: media_player.boys_echo_dot
+    action: media_player.volume_set
   - repeat:
       sequence:
-      - service: light.turn_on
-        metadata: {}
+      - metadata: {}
         data:
           flash: long
         target:
           entity_id: light.boys_bedroom_light
+        action: light.turn_on
       - delay:
           hours: 0
           minutes: 0
@@ -3507,12 +3507,12 @@
     - condition: and
       conditions:
       - condition: state
-        entity_id: calendar.edward_francis_primary_school
+        entity_id: calendar.school_term_dates_2024_2027
         state: 'on'
-      - condition: template
-        value_template: '{{ (''holiday'' | lower in state_attr(''calendar.edward_francis_primary_school'',
-          ''message'') | lower) or (''non-pupil day'' | lower in state_attr(''calendar.edward_francis_primary_school'',
-          ''message'') | lower) }}'
+      - condition: state
+        entity_id: calendar.school_term_dates_2024_2027
+        state: Holiday
+        attribute: message
   - condition: time
     weekday:
     - mon
@@ -3524,18 +3524,17 @@
     entity_id: calendar.united_kingdom_eng
     state: 'off'
   action:
-  - service: media_player.volume_set
-    data:
+  - data:
       volume_level: 1
     target:
       entity_id: media_player.boys_echo_dot
+    action: media_player.volume_set
   - delay:
       hours: 0
       minutes: 0
       seconds: 5
       milliseconds: 0
-  - service: notify.alexa_media
-    data:
+  - data:
       message: Kyle, it's time to leave for school now.
       data:
         method: all
@@ -3544,16 +3543,17 @@
       - Kitchen Echo Show
       - Living Room Echo Dot
       - Boys' Echo Dot
+    action: notify.alexa_media
   - delay:
       hours: 0
       minutes: 0
       seconds: 10
       milliseconds: 0
-  - service: media_player.volume_set
-    data:
+  - data:
       volume_level: 0.35
     target:
       entity_id: media_player.boys_echo_dot
+    action: media_player.volume_set
   mode: restart
 - id: '1701726382538'
   alias: Boys' Bedroom - Dehumidifier - Schedule
