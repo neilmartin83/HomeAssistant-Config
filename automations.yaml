@@ -259,26 +259,6 @@
         target:
           entity_id: fan.boys_bedroom_air_purifier
   mode: single
-- id: '1669644032716'
-  alias: Home - Lighting - Lights on at Sunset
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.sun_solar_elevation
-    below: -1.5
-  condition: []
-  action:
-  - service: light.turn_on
-    data:
-      brightness_pct: 1
-    target:
-      entity_id:
-      - light.landing_light
-  - service: light.turn_on
-    data: {}
-    target:
-      entity_id: light.christmas_tree
-  mode: single
 - id: '1669644349426'
   alias: Home - Lighting - Lights off at Sunrise
   description: ''
@@ -327,21 +307,21 @@
         id: '1'
       - condition: numeric_state
         entity_id: sensor.everything_presence_lite_214fd8_illuminance
-        below: 5
+        below: 10
       sequence:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 100
         target:
           entity_id: light.kitchen_light
+        action: light.turn_on
     - conditions:
       - condition: trigger
         id: '2'
       sequence:
-      - service: light.turn_off
-        data: {}
+      - data: {}
         target:
           area_id: kitchen
+        action: light.turn_off
   mode: single
 - id: '1669645883067'
   alias: Living Room - Air Purifier - Presence
@@ -435,21 +415,21 @@
       - condition: trigger
         id: '1'
       - condition: numeric_state
-        entity_id: sensor.sun_solar_elevation
-        below: -1.5
+        entity_id: sensor.everything_presence_lite_2fbc58_illuminance
+        below: 1.1
       sequence:
-      - service: light.turn_on
-        data: {}
+      - data: {}
         target:
           entity_id: light.utility_room_light
+        action: light.turn_on
     - conditions:
       - condition: trigger
         id: '2'
       sequence:
-      - service: light.turn_off
-        data: {}
+      - data: {}
         target:
           entity_id: light.utility_room_light
+        action: light.turn_off
   mode: single
 - id: '1669655182401'
   alias: Living Room - Lighting - TV
@@ -856,7 +836,7 @@
     from: home
     for:
       hours: 0
-      minutes: 5
+      minutes: 0
       seconds: 0
   - platform: state
     entity_id:
@@ -871,26 +851,14 @@
       - condition: trigger
         id: '1'
       sequence:
-      - service: media_player.turn_off
-        target:
-          area_id:
-          - ben_s_bedroom
-        data: {}
-      - service: light.turn_off
-        data: {}
-        target:
-          area_id: ben_s_bedroom
-      - service: climate.set_hvac_mode
-        data:
+      - data:
           hvac_mode: 'off'
         target:
           area_id: ben_s_bedroom
-      - service: media_player.play_media
-        data:
-          media_content_type: routine
-          media_content_id: Ben's Bedroom - Turn off TV
-        target:
-          entity_id: media_player.ben_s_bedroom_firetvstick_amp
+        action: climate.set_hvac_mode
+      - action: script.ben_s_bedroom_all_devices_off
+        metadata: {}
+        data: {}
     - conditions:
       - condition: trigger
         id: '2'
@@ -898,12 +866,12 @@
         entity_id: binary_sensor.ben_s_bedroom_window
         state: 'off'
       sequence:
-      - service: climate.set_hvac_mode
-        data:
+      - data:
           hvac_mode: auto
         target:
           area_id:
           - ben_s_bedroom
+        action: climate.set_hvac_mode
   mode: single
 - id: '1669974397900'
   alias: Home - Heating - Temperature Cap
@@ -1400,6 +1368,7 @@
   - platform: state
     entity_id:
     - binary_sensor.everything_presence_lite_2fbc58_occupancy
+    - binary_sensor.hall_motion_sensor
     to: 'on'
     for:
       hours: 0
@@ -1407,13 +1376,23 @@
       seconds: 0
     from: 'off'
     id: '1'
+  - platform: state
+    entity_id:
+    - binary_sensor.hall_motion_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+    from: 'on'
+    id: '3'
+    to: 'off'
   condition: []
   action:
   - choose:
     - conditions:
       - condition: numeric_state
-        entity_id: sensor.sun_solar_elevation
-        below: -1.5
+        entity_id: sensor.everything_presence_lite_2fbc58_illuminance
+        below: 0.3
       - condition: trigger
         id:
         - '1'
@@ -1424,9 +1403,23 @@
         target:
           entity_id: light.landing_light
     - conditions:
-      - condition: trigger
-        id:
-        - '2'
+      - condition: or
+        conditions:
+        - condition: trigger
+          id:
+          - '2'
+        - condition: and
+          conditions:
+          - condition: trigger
+            id:
+            - '3'
+          - condition: state
+            entity_id: binary_sensor.everything_presence_lite_2fbc58_occupancy
+            state: 'off'
+            for:
+              hours: 0
+              minutes: 5
+              seconds: 0
       sequence:
       - data: {}
         target:
@@ -1745,12 +1738,14 @@
   - platform: state
     entity_id:
     - binary_sensor.neils_iphone_focus
+    - binary_sensor.l1fwcyfgxnmbp_audio_input_in_use
     from: 'off'
     to: 'on'
     id: '1'
   - platform: state
     entity_id:
     - binary_sensor.neils_iphone_focus
+    - binary_sensor.l1fwcyfgxnmbp_audio_input_in_use
     from: 'on'
     to: 'off'
     id: '2'
@@ -1771,18 +1766,18 @@
         - thu
         - fri
       sequence:
-      - service: switch.turn_on
-        data: {}
+      - data: {}
         target:
           entity_id: switch.bedroom_echo_spot_do_not_disturb_switch
+        action: switch.turn_on
     - conditions:
       - condition: trigger
         id: '2'
       sequence:
-      - service: switch.turn_off
-        data: {}
+      - data: {}
         target:
           entity_id: switch.bedroom_echo_spot_do_not_disturb_switch
+        action: switch.turn_off
   mode: single
 - id: '1672177277902'
   alias: Home - Shopping List - Copy Weekly Items
@@ -2326,18 +2321,18 @@
       - condition: trigger
         id: '1'
       - condition: numeric_state
-        entity_id: sensor.sun_solar_elevation
-        below: -1.5
+        entity_id: sensor.everything_presence_lite_2fbc58_illuminance
+        below: 0.3
       sequence:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 1
         target:
           entity_id: light.hall_light
-      - service: timer.start
-        data: {}
+        action: light.turn_on
+      - data: {}
         target:
           entity_id: timer.hall_light_timer
+        action: timer.start
     - conditions:
       - condition: trigger
         id: '2'
@@ -2355,10 +2350,10 @@
               from: 'on'
               to: 'off'
             continue_on_timeout: false
-          - service: light.turn_off
-            data: {}
+          - data: {}
             target:
               entity_id: light.hall_light
+            action: light.turn_off
         - conditions:
           - condition: state
             entity_id: timer.hall_light_timer
@@ -2371,15 +2366,15 @@
               from: active
               to: idle
             continue_on_timeout: false
-          - service: light.turn_off
-            data: {}
+          - data: {}
             target:
               entity_id: light.hall_light
+            action: light.turn_off
         default:
-        - service: light.turn_off
-          data: {}
+        - data: {}
           target:
             entity_id: light.hall_light
+          action: light.turn_off
   mode: restart
 - id: '1673208182391'
   alias: Hall - Dimmer Switch
@@ -4162,7 +4157,7 @@
     event_type: alexa_media_alarm_dismissal_event
     event_data:
       device:
-        id: GN42ML05408320243
+        id: A3EH2E0YZ30OD6
   condition:
   - condition: or
     conditions:
@@ -4178,13 +4173,13 @@
       minutes: 0
       seconds: 15
       milliseconds: 0
-  - service: media_player.play_media
-    metadata: {}
+  - metadata: {}
     data:
       media_content_id: wake up boo radleys
       media_content_type: APPLE_MUSIC
     target:
       entity_id: media_player.bedroom_echo_spot
+    action: media_player.play_media
   mode: single
 - id: '1712408109712'
   alias: Boys' Bedroom - Liam's PC - Pause Wi-Fi
@@ -4420,4 +4415,40 @@
         data: {}
         target:
           entity_id: script.living_room_workout_time_apple_tv
+  mode: single
+- id: '1725784605363'
+  alias: Living Room - Apple TV - Remote
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - remote.living_room
+    to: 'off'
+  condition: []
+  action:
+  - action: remote.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: remote.living_room
+  mode: single
+- id: '1725784850353'
+  alias: Living Room - TV - Volume
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - media_player.living_room_tv_airplay
+    to: 'on'
+  condition: []
+  action:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+    enabled: true
+  - action: script.living_room_tv_volume_reset
+    metadata: {}
+    data: {}
   mode: single

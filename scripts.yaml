@@ -27,14 +27,21 @@ living_room_cardio_time:
 ben_s_bedroom_all_devices_off:
   alias: Ben's Bedroom - All Devices Off
   sequence:
-  - service: light.turn_off
-    data: {}
+  - data: {}
     target:
       area_id: ben_s_bedroom
-  - service: media_player.turn_off
-    data: {}
+    action: light.turn_off
+  - data: {}
     target:
       area_id: ben_s_bedroom
+    action: media_player.turn_off
+  - data:
+      media_content_type: custom
+      media_content_id: Turn off Ben's Bedroom TV
+    target:
+      entity_id:
+      - media_player.ben_s_bedroom_firetvstick_amp
+    action: media_player.play_media
   mode: single
 home_alarm_arm_away:
   alias: Home - Alarm - Arm Away
@@ -64,36 +71,35 @@ home_alarm_arm_away:
 home_alexa_announce_dinner_time:
   alias: Home - Alexa - Announce Dinner Time
   sequence:
-  - service: media_player.volume_set
-    data:
+  - data:
       volume_level: 1
     target:
       entity_id:
       - media_player.boys_echo_dot
+    action: media_player.volume_set
   - repeat:
       count: '3'
       sequence:
-      - service: notify.alexa_media
-        data:
+      - data:
           data:
             method: all
             type: announce
           message: It's dinner time. Dinner is ready!
           target:
-          - Kitchen Echo Show
-          - Living Room Echo
+          - Living Room Echo Dot
           - Bedroom Echo Spot
           - Boys' Echo Dot
+        action: notify.alexa_media
   - delay:
       hours: 0
       minutes: 0
       seconds: 20
       milliseconds: 0
-  - service: media_player.volume_set
-    data:
+  - data:
       volume_level: 0.35
     target:
       entity_id: media_player.boys_echo_dot
+    action: media_player.volume_set
   mode: single
 bedroom_turn_on_bedside_lights:
   alias: Bedroom - Lighting - Turn on Bedside Lights
@@ -194,84 +200,84 @@ home_heating_room_boost:
 home_tv_turn_on:
   alias: Home - TV - Turn On
   sequence:
-  - service: alexa_media.update_last_called
-    data: {}
+  - data: {}
+    action: alexa_media.update_last_called
   - choose:
     - conditions:
       - condition: state
         entity_id: sensor.last_alexa
-        state: media_player.
+        state: media_player.living_room_echo_dot
       sequence:
-      - service: media_player.turn_on
-        data: {}
+      - data: {}
         target:
           entity_id: media_player.living_room
+        action: media_player.turn_on
     - conditions:
       - condition: state
         entity_id: sensor.last_alexa
         state: media_player.bedroom_echo_spot
       sequence:
-      - service: media_player.turn_on
-        data: {}
+      - data: {}
         target:
           entity_id: media_player.bedroom_firetvstick_4k_max
+        action: media_player.turn_on
     - conditions:
       - condition: state
         entity_id: sensor.last_alexa
         state: media_player.jess_s_echo_dot
       sequence:
-      - service: media_player.turn_on
-        data: {}
+      - data: {}
         target:
           entity_id: media_player.ben_s_bedroom_firetvstick
+        action: media_player.turn_on
   mode: single
 home_tv_turn_off:
   alias: Home - TV - Turn Off
   sequence:
-  - service: alexa_media.update_last_called
-    data: {}
+  - data: {}
+    action: alexa_media.update_last_called
   - choose:
     - conditions:
       - condition: state
         entity_id: sensor.last_alexa
-        state: media_player.
+        state: media_player.living_room_echo_dot
       sequence:
-      - service: media_player.turn_off
-        data: {}
+      - data: {}
         target:
           entity_id: media_player.living_room
+        action: media_player.turn_off
     - conditions:
       - condition: state
         entity_id: sensor.last_alexa
         state: media_player.bedroom_echo_spot
       sequence:
-      - service: media_player.turn_off
-        data: {}
+      - data: {}
         target:
           entity_id: media_player.bedroom_firetvstick_4k_max
-      - service: media_player.play_media
-        data:
+        action: media_player.turn_off
+      - data:
           media_content_id: Bedroom - Turn off Bedroom TV
           media_content_type: custom
         target:
           entity_id: media_player.bedroom_firetvstick_4k_max_amp
+        action: media_player.play_media
     - conditions:
       - condition: state
         entity_id: sensor.last_alexa
-        state: media_player.jess_s_echo_dot
+        state: media_player.ben_s_echo_dot
       sequence:
-      - service: media_player.turn_off
-        data: {}
+      - data: {}
         target:
           entity_id:
           - media_player.ben_s_bedroom_firetvstick
-      - service: media_player.play_media
-        data:
+        action: media_player.turn_off
+      - data:
           media_content_type: custom
           media_content_id: Turn off Ben's Bedroom TV
         target:
           entity_id:
           - media_player.ben_s_bedroom_firetvstick_amp
+        action: media_player.play_media
   mode: single
 living_room_workout_time_apple_tv:
   alias: Living Room - Workout Time Apple TV
@@ -324,17 +330,6 @@ living_room_workout_time_apple_tv:
     target:
       entity_id: remote.living_room
     action: remote.send_command
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 30
-      milliseconds: 0
-  - data:
-      volume_level: 0.1
-    target:
-      entity_id:
-      - media_player.living_room_tv
-    action: media_player.volume_set
   mode: single
 home_open_windows:
   alias: Home - Open Windows
@@ -468,3 +463,73 @@ home_who_is_home:
 
         '
   mode: single
+living_room_tv_volume_reset:
+  alias: Living Room - TV - Volume Reset
+  sequence:
+  - action: remote.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: remote.living_room
+  - repeat:
+      sequence:
+      - repeat:
+          sequence:
+          - action: remote.send_command
+            metadata: {}
+            data:
+              command: volume_down
+            target:
+              entity_id: remote.living_room
+          - delay:
+              hours: 0
+              minutes: 0
+              seconds: 1
+              milliseconds: 0
+          while:
+          - condition: numeric_state
+            entity_id: media_player.living_room_tv
+            attribute: volume_level
+            above: 0.1
+      - repeat:
+          sequence:
+          - action: remote.send_command
+            metadata: {}
+            data:
+              command: volume_up
+            target:
+              entity_id: remote.living_room
+          - delay:
+              hours: 0
+              minutes: 0
+              seconds: 1
+              milliseconds: 0
+          while:
+          - condition: numeric_state
+            entity_id: media_player.living_room_tv
+            attribute: volume_level
+            below: 0.1
+      until:
+      - condition: numeric_state
+        entity_id: media_player.living_room_tv
+        attribute: volume_level
+        above: 0.09
+        below: 0.11
+  description: ''
+home_alexa_announce_coffee_time:
+  alias: Home - Alexa - Announce Coffee Time
+  sequence:
+  - repeat:
+      count: '3'
+      sequence:
+      - data:
+          data:
+            method: all
+            type: announce
+          message: It's coffee time. Coffee is ready!
+          target:
+          - Living Room Echo Dot
+          - Bedroom Echo Spot
+        action: notify.alexa_media
+  mode: single
+  description: ''
