@@ -339,7 +339,7 @@
     to: 'off'
     for:
       hours: 0
-      minutes: 0
+      minutes: 10
       seconds: 0
     id: '2'
     from: 'on'
@@ -350,19 +350,19 @@
       - condition: trigger
         id: '1'
       sequence:
-      - service: fan.turn_on
-        data:
+      - data:
           preset_mode: sleep
         target:
           entity_id: fan.living_room_air_purifier
+        action: fan.turn_on
     - conditions:
       - condition: trigger
         id: '2'
       sequence:
-      - service: fan.turn_off
-        data: {}
+      - data: {}
         target:
           entity_id: fan.living_room_air_purifier
+        action: fan.turn_off
   mode: single
 - id: '1669652542466'
   alias: Living Room - Devices - Presence
@@ -636,25 +636,42 @@
 - id: '1669784210807'
   alias: Home - Battery - Low level notification
   description: ''
-  use_blueprint:
-    path: sbyx/low-battery-level-detection-notification-for-all-battery-sensors.yaml
-    input:
-      exclude:
-        entity_id:
-        - sensor.heathers_iphone_battery_level
-        - sensor.kyles_iphone_battery_level
-        - sensor.neils_iphone_battery_level
-        - sensor.bum_squeaker_battery_level
-      day: 6
-      actions:
-      - service: notify.mobile_app_neils_iphone
+  trigger:
+  - platform: time
+    at: 07:30:00
+  condition:
+  - condition: template
+    value_template: '{{ sensors != '''' and (day | int == 0 or day | int == now().isoweekday())
+      }}'
+  action:
+  - choose: []
+    default:
+    - data:
+        message: '{{sensors}}'
+        title: Low battery warning
         data:
-          message: '{{sensors}}'
-          title: Low battery warning
-          data:
-            url: /lovelace/battery-status
-      time: 07:30:00
-      threshold: 10
+          url: /lovelace/battery-status
+      action: notify.mobile_app_neils_iphone
+  variables:
+    day: 6
+    threshold: 10
+    exclude:
+      entity_id:
+      - sensor.heathers_iphone_battery_level
+      - sensor.kyles_iphone_battery_level
+      - sensor.neils_iphone_battery_level
+      - sensor.liams_iphone_battery_level
+      - sensor.ben_s_iphone_battery_level
+    sensors: "{% set result = namespace(sensors=[]) %} {% for state in states.sensor
+      | selectattr('attributes.device_class', '==', 'battery') %}\n  {% if 0 <= state.state
+      | int(-1) < threshold | int and not state.entity_id in exclude.entity_id %}\n
+      \   {% set result.sensors = result.sensors + [state.name ~ ' (' ~ state.state
+      ~ ' %)'] %}\n  {% endif %}\n{% endfor %} {% for state in states.binary_sensor
+      | selectattr('attributes.device_class', '==', 'battery') | selectattr('state',
+      '==', 'on') %}\n  {% if not state.entity_id in exclude.entity_id %}\n    {%
+      set result.sensors = result.sensors + [state.name] %}\n  {% endif %}\n{% endfor
+      %} {{result.sensors|join(', ')}}"
+  mode: single
 - id: '1669786710313'
   alias: Home - Alarm - Armed Away
   description: ''
@@ -3283,8 +3300,9 @@
     id: '2'
     for:
       hours: 0
-      minutes: 5
+      minutes: 10
       seconds: 0
+    from: 'on'
   condition: []
   action:
   - choose:
@@ -3303,31 +3321,31 @@
           entity_id: media_player.living_room_tv_airplay
           state: unavailable
       sequence:
-      - service: light.turn_on
-        metadata: {}
+      - metadata: {}
         data: {}
         target:
           entity_id: light.living_room_light
+        action: light.turn_on
       - if:
         - condition: state
           entity_id: media_player.living_room_tv_airplay
           state: 'on'
         then:
-        - service: light.turn_on
-          metadata: {}
+        - metadata: {}
           data: {}
           target:
             entity_id: light.living_room_tv_backlight
+          action: light.turn_on
     - conditions:
       - condition: trigger
         id: '2'
       sequence:
-      - service: light.turn_off
-        data: {}
+      - data: {}
         target:
           entity_id:
           - light.living_room_light
           - light.living_room_tv_backlight
+        action: light.turn_off
   mode: single
 - id: '1689100303323'
   alias: Home - Shopping List - Add Meal Ingredients
@@ -4147,8 +4165,25 @@
       - update.home_assistant_supervisor_update
       - update.mosquitto_broker_update
       - update.ring_mqtt_with_video_streaming_update
+      - update.alexa_media_player_update
+      - update.battery_state_card_entity_row_update
+      - update.bedroom_presence_sensor_firmware
+      - update.custom_vesync_update
+      - update.dishwasher_firmware
+      - update.drayton_wiser_integration_for_home_assistant_update
+      - update.eero_update
+      - update.hacs_update
+      - update.kitchen_presence_sensor_firmware
+      - update.landing_presence_sensor_firmware
+      - update.living_room_fan_firmware
+      - update.neil_s_monitor_light_bar_firmware
+      - update.spook_your_homie_update
+      - update.tumble_dryer_firmware
+      - update.tuya_local_update
+      - update.washing_machine_firmware
       mobile_app_device: 6f7b01aaeab2f76775d41dd43d1d3413
       mobile_app_device_2: 6f7b01aaeab2f76775d41dd43d1d3413
+      run_config_check: true
 - id: '1709400691469'
   alias: Bedroom - Alarm Dismissed
   description: ''

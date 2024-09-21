@@ -38,10 +38,9 @@ ben_s_bedroom_all_devices_off:
   - data:
       media_content_type: custom
       media_content_id: Turn off Ben's Bedroom TV
-    target:
-      entity_id:
-      - media_player.ben_s_bedroom_firetvstick_amp
     action: media_player.play_media
+    target:
+      entity_id: media_player.ben_s_echo_dot
   mode: single
 home_alarm_arm_away:
   alias: Home - Alarm - Arm Away
@@ -183,7 +182,7 @@ home_heating_room_boost:
     - conditions:
       - condition: state
         entity_id: sensor.last_alexa
-        state: media_player.jess_s_echo_dot
+        state: media_player.ben_s_echo_dot
       sequence:
       - data:
           temperature: 20
@@ -224,7 +223,7 @@ home_tv_turn_on:
     - conditions:
       - condition: state
         entity_id: sensor.last_alexa
-        state: media_player.jess_s_echo_dot
+        state: media_player.ben_s_echo_dot
       sequence:
       - data: {}
         target:
@@ -252,32 +251,30 @@ home_tv_turn_off:
         state: media_player.bedroom_echo_spot
       sequence:
       - data: {}
+        action: media_player.turn_off
         target:
           entity_id: media_player.bedroom_firetvstick_4k_max
-        action: media_player.turn_off
       - data:
-          media_content_id: Bedroom - Turn off Bedroom TV
+          media_content_id: Turn off Bedroom TV
           media_content_type: custom
-        target:
-          entity_id: media_player.bedroom_firetvstick_4k_max_amp
         action: media_player.play_media
+        target:
+          entity_id: media_player.bedroom_echo_spot
     - conditions:
       - condition: state
         entity_id: sensor.last_alexa
         state: media_player.ben_s_echo_dot
       sequence:
       - data: {}
-        target:
-          entity_id:
-          - media_player.ben_s_bedroom_firetvstick
         action: media_player.turn_off
+        target:
+          entity_id: media_player.ben_s_bedroom_firetvstick
       - data:
           media_content_type: custom
           media_content_id: Turn off Ben's Bedroom TV
-        target:
-          entity_id:
-          - media_player.ben_s_bedroom_firetvstick_amp
         action: media_player.play_media
+        target:
+          entity_id: media_player.ben_s_echo_dot
   mode: single
 living_room_workout_time_apple_tv:
   alias: Living Room - Workout Time Apple TV
