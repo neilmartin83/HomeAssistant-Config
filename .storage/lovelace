@@ -294,7 +294,7 @@
                   "cards": [
                     {
                       "type": "tile",
-                      "entity": "sensor.kitchen",
+                      "entity": "sensor.wiser_lts_temperature_kitchen",
                       "state_content": "temperature",
                       "tap_action": {
                         "action": "navigate",
@@ -303,11 +303,13 @@
                       "icon_tap_action": {
                         "action": "navigate",
                         "navigation_path": "/lovelace/kitchen"
-                      }
+                      },
+                      "name": "Kitchen",
+                      "icon": "mdi:silverware-fork-knife"
                     },
                     {
                       "type": "tile",
-                      "entity": "sensor.living_room",
+                      "entity": "sensor.wiser_lts_temperature_living_room",
                       "state_content": "temperature",
                       "tap_action": {
                         "action": "navigate",
@@ -316,11 +318,13 @@
                       "icon_tap_action": {
                         "action": "navigate",
                         "navigation_path": "/lovelace/living-room"
-                      }
+                      },
+                      "name": "Living Room",
+                      "icon": "mdi:sofa-outline"
                     },
                     {
                       "type": "tile",
-                      "entity": "sensor.bathroom",
+                      "entity": "sensor.wiser_lts_temperature_bathroom",
                       "state_content": "temperature",
                       "tap_action": {
                         "action": "navigate",
@@ -329,11 +333,13 @@
                       "icon_tap_action": {
                         "action": "navigate",
                         "navigation_path": "/lovelace/bathroom"
-                      }
+                      },
+                      "name": "Bathroom",
+                      "icon": "mdi:shower"
                     },
                     {
                       "type": "tile",
-                      "entity": "sensor.utility_room",
+                      "entity": "sensor.average_indoor_temperature",
                       "state_content": "temperature",
                       "tap_action": {
                         "action": "navigate",
@@ -342,7 +348,9 @@
                       "icon_tap_action": {
                         "action": "navigate",
                         "navigation_path": "/lovelace/utility-room"
-                      }
+                      },
+                      "icon": "mdi:washing-machine",
+                      "name": "Utility Room"
                     },
                     {
                       "type": "conditional",
@@ -357,7 +365,7 @@
                       ],
                       "card": {
                         "type": "tile",
-                        "entity": "sensor.bedroom",
+                        "entity": "sensor.wiser_lts_temperature_bedroom",
                         "state_content": "temperature",
                         "tap_action": {
                           "action": "navigate",
@@ -366,7 +374,9 @@
                         "icon_tap_action": {
                           "action": "navigate",
                           "navigation_path": "/lovelace/bedroom"
-                        }
+                        },
+                        "name": "Bedroom",
+                        "icon": "mdi:bed-king-outline"
                       }
                     },
                     {
@@ -384,7 +394,7 @@
                       ],
                       "card": {
                         "type": "tile",
-                        "entity": "sensor.boys_bedroom",
+                        "entity": "sensor.wiser_lts_temperature_boys_bedroom",
                         "state_content": "temperature",
                         "tap_action": {
                           "action": "navigate",
@@ -393,7 +403,9 @@
                         "icon_tap_action": {
                           "action": "navigate",
                           "navigation_path": "/lovelace/boys-bedroom"
-                        }
+                        },
+                        "name": "Boys' Bedroom",
+                        "icon": "mdi:bunk-bed-outline"
                       }
                     },
                     {
@@ -410,7 +422,7 @@
                       ],
                       "card": {
                         "type": "tile",
-                        "entity": "sensor.ben_s_bedroom",
+                        "entity": "sensor.wiser_lts_temperature_ben_s_bedroom",
                         "state_content": "temperature",
                         "tap_action": {
                           "action": "navigate",
@@ -419,7 +431,9 @@
                         "icon_tap_action": {
                           "action": "navigate",
                           "navigation_path": "/lovelace/ben_s-bedroom"
-                        }
+                        },
+                        "name": "Ben's Bedroom",
+                        "icon": "mdi:bed-outline"
                       }
                     }
                   ],
@@ -432,7 +446,7 @@
                   "cards": [
                     {
                       "type": "tile",
-                      "entity": "sensor.hall",
+                      "entity": "sensor.average_indoor_temperature",
                       "state_content": "temperature",
                       "tap_action": {
                         "action": "navigate",
@@ -441,11 +455,13 @@
                       "icon_tap_action": {
                         "action": "navigate",
                         "navigation_path": "/lovelace/hall"
-                      }
+                      },
+                      "name": "Hall",
+                      "icon": "mdi:door-closed"
                     },
                     {
                       "type": "tile",
-                      "entity": "sensor.landing",
+                      "entity": "sensor.air_quality_monitor_temperature",
                       "state_content": "temperature",
                       "tap_action": {
                         "action": "navigate",
@@ -454,11 +470,13 @@
                       "icon_tap_action": {
                         "action": "navigate",
                         "navigation_path": "/lovelace/landing"
-                      }
+                      },
+                      "name": "Landing",
+                      "icon": "mdi:stairs-up"
                     },
                     {
                       "type": "tile",
-                      "entity": "sensor.porch",
+                      "entity": "sensor.forecast_home_temperature",
                       "state_content": "temperature",
                       "tap_action": {
                         "action": "navigate",
@@ -467,11 +485,13 @@
                       "icon_tap_action": {
                         "action": "navigate",
                         "navigation_path": "/lovelace/porch"
-                      }
+                      },
+                      "name": "Porch",
+                      "icon": "mdi:coach-lamp"
                     },
                     {
                       "type": "tile",
-                      "entity": "sensor.garden",
+                      "entity": "sensor.forecast_home_temperature",
                       "state_content": "temperature",
                       "tap_action": {
                         "action": "navigate",
@@ -480,7 +500,9 @@
                       "icon_tap_action": {
                         "action": "navigate",
                         "navigation_path": "/lovelace/garden"
-                      }
+                      },
+                      "icon": "mdi:flower-tulip-outline",
+                      "name": "Garden"
                     }
                   ],
                   "title": "Spaces"
@@ -2297,27 +2319,55 @@
             },
             {
               "square": false,
+              "columns": 2,
               "type": "grid",
               "cards": [
                 {
-                  "type": "custom:battery-state-card",
-                  "sort": "state",
-                  "filter": {
-                    "include": [
-                      {
-                        "name": "entity_id",
-                        "value": "*switch*_battery"
-                      },
-                      {
-                        "name": "entity_id",
-                        "value": "*button*_battery"
-                      }
-                    ]
-                  }
+                  "type": "tile",
+                  "entity": "sensor.hall_dimmer_switch_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.living_room_dimmer_switch_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.kitchen_smart_button_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.hue_smart_button_1_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.utility_room_smart_button_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.landing_dimmer_switch_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.bedroom_dimmer_switch_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.neils_bedside_lamp_button_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.heathers_bedside_lamp_button_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.boys_bedroom_dimmer_switch_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.ben_s_bedroom_dimmer_switch_battery"
                 }
               ],
-              "columns": 1,
-              "title": "Battery Status"
+              "title": "Batteries"
             }
           ]
         },
@@ -3042,18 +3092,42 @@
               "title": "Status"
             },
             {
-              "type": "custom:battery-state-card",
-              "sort": {
-                "by": "state"
-              },
-              "filter": {
-                "include": [
-                  {
-                    "name": "entity_id",
-                    "value": "*wiser_*battery"
-                  }
-                ]
-              }
+              "square": false,
+              "columns": 2,
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_itrv_living_room_battery",
+                  "name": "Living Room"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_itrv_kitchen_battery",
+                  "name": "Kitchen"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_itrv_bathroom_battery",
+                  "name": "Bathroom"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_itrv_bedroom_battery",
+                  "name": "Bedroom"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_itrv_boys_bedroom_battery",
+                  "name": "Boys' Bedroom"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_itrv_ben_s_bedroom_battery",
+                  "name": "Ben's Bedroom"
+                }
+              ],
+              "title": "Batteries"
             }
           ]
         },
