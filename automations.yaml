@@ -4163,8 +4163,6 @@
       - update.mosquitto_broker_update
       - update.ring_mqtt_with_video_streaming_update
       - update.alexa_media_player_update
-      - update.battery_state_card_entity_row_update
-      - update.bedroom_presence_sensor_firmware
       - update.custom_vesync_update
       - update.dishwasher_firmware
       - update.drayton_wiser_integration_for_home_assistant_update
@@ -4178,6 +4176,7 @@
       - update.tumble_dryer_firmware
       - update.tuya_local_update
       - update.washing_machine_firmware
+      - update.bedroom_presence_sensor_firmware
       mobile_app_device: 6f7b01aaeab2f76775d41dd43d1d3413
       mobile_app_device_2: 6f7b01aaeab2f76775d41dd43d1d3413
       run_config_check: true

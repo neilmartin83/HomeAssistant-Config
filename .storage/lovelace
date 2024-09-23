@@ -44,17 +44,6 @@
             },
             {
               "type": "entity",
-              "entity": "sensor.back_door_battery",
-              "icon": "mdi:battery-charging",
-              "display_type": "minimal",
-              "color": "primary",
-              "tap_action": {
-                "action": "navigate",
-                "navigation_path": "/lovelace/battery-status"
-              }
-            },
-            {
-              "type": "entity",
               "entity": "input_select.utility_room_dishwasher_status",
               "tap_action": {
                 "action": "none"
@@ -2707,59 +2696,6 @@
                   "title": "Windows"
                 }
               ]
-            }
-          ]
-        },
-        {
-          "path": "battery-status",
-          "subview": true,
-          "icon": "mdi:battery-charging-100",
-          "title": "Battery Status",
-          "badges": [],
-          "cards": [
-            {
-              "type": "custom:battery-state-card",
-              "sort": {
-                "by": "state"
-              },
-              "filter": {
-                "include": [
-                  {
-                    "name": "entity_id",
-                    "value": "*_battery_level"
-                  },
-                  {
-                    "name": "attributes.device_class",
-                    "value": "*battery"
-                  }
-                ],
-                "exclude": [
-                  {
-                    "name": "entity_id",
-                    "value": "*phone*"
-                  },
-                  {
-                    "name": "entity_id",
-                    "value": "*bum*"
-                  },
-                  {
-                    "name": "entity_id",
-                    "value": "*internal*"
-                  },
-                  {
-                    "name": "entity_id",
-                    "value": "*camera*"
-                  },
-                  {
-                    "name": "entity_id",
-                    "value": "*deebot*"
-                  },
-                  {
-                    "name": "entity_id",
-                    "value": "*doorbell*"
-                  }
-                ]
-              }
             }
           ]
         },
