@@ -5,6 +5,7 @@
 !.gitignore
 !*.md
 !esphome
+!.storage/lovelace
 
 # Ignore folders.
 .storage

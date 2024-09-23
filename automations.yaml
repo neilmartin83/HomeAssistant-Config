@@ -658,10 +658,7 @@
     exclude:
       entity_id:
       - sensor.heathers_iphone_battery_level
-      - sensor.kyles_iphone_battery_level
       - sensor.neils_iphone_battery_level
-      - sensor.liams_iphone_battery_level
-      - sensor.ben_s_iphone_battery_level
     sensors: "{% set result = namespace(sensors=[]) %} {% for state in states.sensor
       | selectattr('attributes.device_class', '==', 'battery') %}\n  {% if 0 <= state.state
       | int(-1) < threshold | int and not state.entity_id in exclude.entity_id %}\n
