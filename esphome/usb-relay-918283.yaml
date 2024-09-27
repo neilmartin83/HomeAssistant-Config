@@ -10,6 +10,7 @@ esphome:
 esp8266:
   board: esp01_1m
   restore_from_flash: True
+  early_pin_init: False
   
 preferences:
   flash_write_interval: 0s

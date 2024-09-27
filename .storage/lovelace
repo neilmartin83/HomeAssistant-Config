@@ -6,17 +6,339 @@
     "config": {
       "views": [
         {
-          "icon": "mdi:home",
+          "type": "sections",
+          "path": "home",
+          "max_columns": 2,
           "title": "Home",
+          "icon": "mdi:home",
+          "subview": false,
+          "dense_section_placement": false,
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "light.all_lights",
+                  "name": "Lights",
+                  "vertical": true,
+                  "hide_state": true,
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/lights"
+                  },
+                  "icon_tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/lights"
+                  },
+                  "layout_options": {
+                    "grid_columns": 1,
+                    "grid_rows": 2
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_heating",
+                  "name": "Heat",
+                  "vertical": true,
+                  "hide_state": true,
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/heat"
+                  },
+                  "icon_tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/heat"
+                  },
+                  "color": "deep-orange",
+                  "layout_options": {
+                    "grid_columns": 1,
+                    "grid_rows": 2
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "alarm_control_panel.home_alarm",
+                  "name": "Secure",
+                  "vertical": true,
+                  "hide_state": true,
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/secure"
+                  },
+                  "icon_tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/secure"
+                  },
+                  "layout_options": {
+                    "grid_columns": 1,
+                    "grid_rows": 2
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "vacuum.deebot_t9",
+                  "name": "Vacuum",
+                  "vertical": true,
+                  "hide_state": true,
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/vacuum"
+                  },
+                  "icon_tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/vacuum"
+                  },
+                  "show_entity_picture": false,
+                  "layout_options": {
+                    "grid_columns": 1,
+                    "grid_rows": 2
+                  }
+                }
+              ],
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "person.neil",
+                  "show_entity_picture": true,
+                  "state_content": "last-changed"
+                },
+                {
+                  "type": "tile",
+                  "entity": "person.heather",
+                  "show_entity_picture": true,
+                  "state_content": "last-changed"
+                },
+                {
+                  "type": "tile",
+                  "entity": "person.jess",
+                  "show_entity_picture": true,
+                  "state_content": "last-changed"
+                },
+                {
+                  "type": "tile",
+                  "entity": "person.ben",
+                  "show_entity_picture": true,
+                  "state_content": "last-changed"
+                },
+                {
+                  "type": "tile",
+                  "entity": "person.liam",
+                  "show_entity_picture": true,
+                  "state_content": "last-changed"
+                },
+                {
+                  "type": "tile",
+                  "entity": "person.kyle",
+                  "show_entity_picture": true,
+                  "state_content": "last-changed"
+                }
+              ],
+              "title": "Family",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_lts_temperature_kitchen",
+                  "state_content": "temperature",
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/kitchen"
+                  },
+                  "icon_tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/kitchen"
+                  },
+                  "name": "Kitchen",
+                  "icon": "mdi:silverware-fork-knife"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_lts_temperature_living_room",
+                  "state_content": "temperature",
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/living-room"
+                  },
+                  "icon_tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/living-room"
+                  },
+                  "name": "Living Room",
+                  "icon": "mdi:sofa-outline"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_lts_temperature_bathroom",
+                  "state_content": "temperature",
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/bathroom"
+                  },
+                  "icon_tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/bathroom"
+                  },
+                  "name": "Bathroom",
+                  "icon": "mdi:shower"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.average_indoor_temperature",
+                  "state_content": "temperature",
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/utility-room"
+                  },
+                  "icon_tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/utility-room"
+                  },
+                  "icon": "mdi:washing-machine",
+                  "name": "Utility Room"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_lts_temperature_bedroom",
+                  "state_content": "temperature",
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/bedroom"
+                  },
+                  "icon_tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/bedroom"
+                  },
+                  "name": "Bedroom",
+                  "icon": "mdi:bed-king-outline"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_lts_temperature_boys_bedroom",
+                  "state_content": "temperature",
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/boys-bedroom"
+                  },
+                  "icon_tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/boys-bedroom"
+                  },
+                  "name": "Boys' Bedroom",
+                  "icon": "mdi:bunk-bed-outline"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_lts_temperature_ben_s_bedroom",
+                  "state_content": "temperature",
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/ben-s-bedroom"
+                  },
+                  "icon_tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/ben-s-bedroom"
+                  },
+                  "name": "Ben's Bedroom",
+                  "icon": "mdi:bed-outline",
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": 1
+                  }
+                }
+              ],
+              "title": "Rooms",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "sensor.average_indoor_temperature",
+                  "state_content": "temperature",
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/hall"
+                  },
+                  "icon_tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/hall"
+                  },
+                  "name": "Hall",
+                  "icon": "mdi:door-closed"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.air_quality_monitor_temperature",
+                  "state_content": "temperature",
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/landing"
+                  },
+                  "icon_tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/landing"
+                  },
+                  "name": "Landing",
+                  "icon": "mdi:stairs-up"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.forecast_home_temperature",
+                  "state_content": "temperature",
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/porch"
+                  },
+                  "icon_tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/porch"
+                  },
+                  "name": "Porch",
+                  "icon": "mdi:coach-lamp"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.forecast_home_temperature",
+                  "state_content": "temperature",
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/garden"
+                  },
+                  "icon_tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/garden"
+                  },
+                  "icon": "mdi:flower-tulip-outline",
+                  "name": "Garden"
+                }
+              ],
+              "title": "Spaces",
+              "column_span": 1
+            }
+          ],
           "badges": [
             {
               "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
               "entity": "weather.forecast_home",
-              "show_entity_picture": false,
               "state_content": "temperature"
             },
             {
               "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
               "entity": "sensor.bins",
               "tap_action": {
                 "action": "perform-action",
@@ -28,22 +350,29 @@
             },
             {
               "type": "entity",
-              "entity": "input_boolean.guest_mode",
-              "display_type": "minimal",
-              "tap_action": {
-                "action": "toggle"
-              }
-            },
-            {
-              "type": "entity",
+              "show_name": false,
+              "show_state": false,
+              "show_icon": true,
               "entity": "input_boolean.window_cleaner",
-              "display_type": "minimal",
               "tap_action": {
                 "action": "toggle"
               }
             },
             {
               "type": "entity",
+              "show_name": false,
+              "show_state": false,
+              "show_icon": true,
+              "entity": "input_boolean.guest_mode",
+              "tap_action": {
+                "action": "toggle"
+              }
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
               "entity": "input_select.utility_room_dishwasher_status",
               "tap_action": {
                 "action": "none"
@@ -58,6 +387,9 @@
             },
             {
               "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
               "entity": "input_select.utility_room_washing_machine_status",
               "visibility": [
                 {
@@ -72,6 +404,9 @@
             },
             {
               "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
               "entity": "input_select.tumble_dryer_status",
               "tap_action": {
                 "action": "none"
@@ -85,591 +420,150 @@
               ]
             }
           ],
-          "cards": [
-            {
-              "square": false,
-              "columns": 1,
-              "type": "grid",
-              "cards": [
-                {
-                  "type": "conditional",
-                  "conditions": [
-                    {
-                      "condition": "user",
-                      "users": [
-                        "0b0bf6c2959e464582093e79aa540066",
-                        "aedf768629bf470d833313914d0c458c"
-                      ]
-                    }
-                  ],
-                  "card": {
-                    "square": false,
-                    "columns": 4,
-                    "type": "grid",
-                    "cards": [
-                      {
-                        "type": "tile",
-                        "entity": "light.all_lights",
-                        "name": "Lights",
-                        "vertical": true,
-                        "hide_state": true,
-                        "tap_action": {
-                          "action": "navigate",
-                          "navigation_path": "/lovelace/lights"
-                        },
-                        "icon_tap_action": {
-                          "action": "navigate",
-                          "navigation_path": "/lovelace/lights"
-                        }
-                      },
-                      {
-                        "type": "tile",
-                        "entity": "sensor.wiser_heating",
-                        "name": "Heat",
-                        "vertical": true,
-                        "hide_state": true,
-                        "tap_action": {
-                          "action": "navigate",
-                          "navigation_path": "/lovelace/heat"
-                        },
-                        "icon_tap_action": {
-                          "action": "navigate",
-                          "navigation_path": "/lovelace/heat"
-                        },
-                        "color": "deep-orange"
-                      },
-                      {
-                        "type": "tile",
-                        "entity": "alarm_control_panel.home_alarm",
-                        "name": "Secure",
-                        "vertical": true,
-                        "hide_state": true,
-                        "tap_action": {
-                          "action": "navigate",
-                          "navigation_path": "/lovelace/secure"
-                        },
-                        "icon_tap_action": {
-                          "action": "navigate",
-                          "navigation_path": "/lovelace/secure"
-                        }
-                      },
-                      {
-                        "type": "tile",
-                        "entity": "vacuum.deebot_t9",
-                        "name": "Vacuum",
-                        "vertical": true,
-                        "hide_state": true,
-                        "tap_action": {
-                          "action": "navigate",
-                          "navigation_path": "/lovelace/vacuum"
-                        },
-                        "icon_tap_action": {
-                          "action": "navigate",
-                          "navigation_path": "/lovelace/vacuum"
-                        },
-                        "show_entity_picture": false
-                      }
-                    ]
-                  }
-                },
-                {
-                  "type": "conditional",
-                  "conditions": [
-                    {
-                      "condition": "user",
-                      "users": [
-                        "602ff2c0d1c34067b2eff779dfd5ad08",
-                        "e3f67606885f45afbd0ebf160d9b36a5",
-                        "2891bbb5e831444c835b957c2c976291",
-                        "5ea4360e2b5f4b639510ea745c9bcbd2"
-                      ]
-                    }
-                  ],
-                  "card": {
-                    "square": false,
-                    "columns": 3,
-                    "type": "grid",
-                    "cards": [
-                      {
-                        "type": "tile",
-                        "entity": "light.all_lights",
-                        "name": "Lights",
-                        "vertical": true,
-                        "hide_state": true,
-                        "tap_action": {
-                          "action": "none"
-                        },
-                        "icon_tap_action": {
-                          "action": "navigate",
-                          "navigation_path": "/lovelace/lights"
-                        }
-                      },
-                      {
-                        "type": "tile",
-                        "entity": "alarm_control_panel.home_alarm",
-                        "name": "Secure",
-                        "vertical": true,
-                        "hide_state": true,
-                        "tap_action": {
-                          "action": "none"
-                        },
-                        "icon_tap_action": {
-                          "action": "navigate",
-                          "navigation_path": "/lovelace/secure"
-                        }
-                      },
-                      {
-                        "type": "tile",
-                        "entity": "vacuum.deebot_t9",
-                        "name": "Vacuum",
-                        "vertical": true,
-                        "hide_state": true,
-                        "tap_action": {
-                          "action": "none"
-                        },
-                        "icon_tap_action": {
-                          "action": "navigate",
-                          "navigation_path": "/lovelace/vacuum"
-                        },
-                        "show_entity_picture": false
-                      }
-                    ]
-                  }
-                },
-                {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "type": "tile",
-                      "entity": "person.neil",
-                      "show_entity_picture": true,
-                      "state_content": "last-changed"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "person.heather",
-                      "show_entity_picture": true,
-                      "state_content": "last-changed"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "person.jess",
-                      "show_entity_picture": true,
-                      "state_content": "last-changed"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "person.ben",
-                      "show_entity_picture": true,
-                      "state_content": "last-changed"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "person.liam",
-                      "show_entity_picture": true,
-                      "state_content": "last-changed"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "person.kyle",
-                      "show_entity_picture": true,
-                      "state_content": "last-changed"
-                    }
-                  ],
-                  "title": "Family"
-                }
-              ]
-            },
-            {
-              "square": false,
-              "columns": 1,
-              "type": "grid",
-              "cards": [
-                {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "type": "tile",
-                      "entity": "sensor.wiser_lts_temperature_kitchen",
-                      "state_content": "temperature",
-                      "tap_action": {
-                        "action": "navigate",
-                        "navigation_path": "/lovelace/kitchen"
-                      },
-                      "icon_tap_action": {
-                        "action": "navigate",
-                        "navigation_path": "/lovelace/kitchen"
-                      },
-                      "name": "Kitchen",
-                      "icon": "mdi:silverware-fork-knife"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "sensor.wiser_lts_temperature_living_room",
-                      "state_content": "temperature",
-                      "tap_action": {
-                        "action": "navigate",
-                        "navigation_path": "/lovelace/living-room"
-                      },
-                      "icon_tap_action": {
-                        "action": "navigate",
-                        "navigation_path": "/lovelace/living-room"
-                      },
-                      "name": "Living Room",
-                      "icon": "mdi:sofa-outline"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "sensor.wiser_lts_temperature_bathroom",
-                      "state_content": "temperature",
-                      "tap_action": {
-                        "action": "navigate",
-                        "navigation_path": "/lovelace/bathroom"
-                      },
-                      "icon_tap_action": {
-                        "action": "navigate",
-                        "navigation_path": "/lovelace/bathroom"
-                      },
-                      "name": "Bathroom",
-                      "icon": "mdi:shower"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "sensor.average_indoor_temperature",
-                      "state_content": "temperature",
-                      "tap_action": {
-                        "action": "navigate",
-                        "navigation_path": "/lovelace/utility-room"
-                      },
-                      "icon_tap_action": {
-                        "action": "navigate",
-                        "navigation_path": "/lovelace/utility-room"
-                      },
-                      "icon": "mdi:washing-machine",
-                      "name": "Utility Room"
-                    },
-                    {
-                      "type": "conditional",
-                      "conditions": [
-                        {
-                          "condition": "user",
-                          "users": [
-                            "0b0bf6c2959e464582093e79aa540066",
-                            "aedf768629bf470d833313914d0c458c"
-                          ]
-                        }
-                      ],
-                      "card": {
-                        "type": "tile",
-                        "entity": "sensor.wiser_lts_temperature_bedroom",
-                        "state_content": "temperature",
-                        "tap_action": {
-                          "action": "navigate",
-                          "navigation_path": "/lovelace/bedroom"
-                        },
-                        "icon_tap_action": {
-                          "action": "navigate",
-                          "navigation_path": "/lovelace/bedroom"
-                        },
-                        "name": "Bedroom",
-                        "icon": "mdi:bed-king-outline"
-                      }
-                    },
-                    {
-                      "type": "conditional",
-                      "conditions": [
-                        {
-                          "condition": "user",
-                          "users": [
-                            "0b0bf6c2959e464582093e79aa540066",
-                            "2891bbb5e831444c835b957c2c976291",
-                            "5ea4360e2b5f4b639510ea745c9bcbd2",
-                            "aedf768629bf470d833313914d0c458c"
-                          ]
-                        }
-                      ],
-                      "card": {
-                        "type": "tile",
-                        "entity": "sensor.wiser_lts_temperature_boys_bedroom",
-                        "state_content": "temperature",
-                        "tap_action": {
-                          "action": "navigate",
-                          "navigation_path": "/lovelace/boys-bedroom"
-                        },
-                        "icon_tap_action": {
-                          "action": "navigate",
-                          "navigation_path": "/lovelace/boys-bedroom"
-                        },
-                        "name": "Boys' Bedroom",
-                        "icon": "mdi:bunk-bed-outline"
-                      }
-                    },
-                    {
-                      "type": "conditional",
-                      "conditions": [
-                        {
-                          "condition": "user",
-                          "users": [
-                            "0b0bf6c2959e464582093e79aa540066",
-                            "e3f67606885f45afbd0ebf160d9b36a5",
-                            "602ff2c0d1c34067b2eff779dfd5ad08"
-                          ]
-                        }
-                      ],
-                      "card": {
-                        "type": "tile",
-                        "entity": "sensor.wiser_lts_temperature_ben_s_bedroom",
-                        "state_content": "temperature",
-                        "tap_action": {
-                          "action": "navigate",
-                          "navigation_path": "/lovelace/ben_s-bedroom"
-                        },
-                        "icon_tap_action": {
-                          "action": "navigate",
-                          "navigation_path": "/lovelace/ben_s-bedroom"
-                        },
-                        "name": "Ben's Bedroom",
-                        "icon": "mdi:bed-outline"
-                      }
-                    }
-                  ],
-                  "title": "Rooms"
-                },
-                {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "type": "tile",
-                      "entity": "sensor.average_indoor_temperature",
-                      "state_content": "temperature",
-                      "tap_action": {
-                        "action": "navigate",
-                        "navigation_path": "/lovelace/hall"
-                      },
-                      "icon_tap_action": {
-                        "action": "navigate",
-                        "navigation_path": "/lovelace/hall"
-                      },
-                      "name": "Hall",
-                      "icon": "mdi:door-closed"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "sensor.air_quality_monitor_temperature",
-                      "state_content": "temperature",
-                      "tap_action": {
-                        "action": "navigate",
-                        "navigation_path": "/lovelace/landing"
-                      },
-                      "icon_tap_action": {
-                        "action": "navigate",
-                        "navigation_path": "/lovelace/landing"
-                      },
-                      "name": "Landing",
-                      "icon": "mdi:stairs-up"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "sensor.forecast_home_temperature",
-                      "state_content": "temperature",
-                      "tap_action": {
-                        "action": "navigate",
-                        "navigation_path": "/lovelace/porch"
-                      },
-                      "icon_tap_action": {
-                        "action": "navigate",
-                        "navigation_path": "/lovelace/porch"
-                      },
-                      "name": "Porch",
-                      "icon": "mdi:coach-lamp"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "sensor.forecast_home_temperature",
-                      "state_content": "temperature",
-                      "tap_action": {
-                        "action": "navigate",
-                        "navigation_path": "/lovelace/garden"
-                      },
-                      "icon_tap_action": {
-                        "action": "navigate",
-                        "navigation_path": "/lovelace/garden"
-                      },
-                      "icon": "mdi:flower-tulip-outline",
-                      "name": "Garden"
-                    }
-                  ],
-                  "title": "Spaces"
-                }
-              ]
-            }
-          ]
+          "cards": []
         },
         {
-          "theme": "Backend-selected",
-          "path": "living-room",
-          "icon": "mdi:sofa",
-          "subview": true,
-          "visible": [
-            {
-              "user": "0a250f5e6e034571a716062a1eb4b1a5"
-            },
-            {
-              "user": "aedf768629bf470d833313914d0c458c"
-            },
-            {
-              "user": "0b0bf6c2959e464582093e79aa540066"
-            },
-            {
-              "user": "a6e7aae0e0974f19973a41e40c031d32"
-            }
-          ],
           "title": "Living Room",
-          "badges": [],
-          "cards": [
+          "path": "living-room",
+          "icon": "mdi:sofa-outline",
+          "type": "sections",
+          "max_columns": 2,
+          "sections": [
             {
-              "square": false,
-              "columns": 1,
               "type": "grid",
               "cards": [
                 {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
+                  "type": "thermostat",
+                  "entity": "climate.wiser_living_room",
+                  "name": " ",
+                  "features": [
                     {
-                      "graph": "line",
-                      "hours_to_show": 24,
-                      "type": "sensor",
-                      "entity": "sensor.wiser_lts_temperature_living_room",
-                      "detail": 1,
-                      "name": " "
+                      "type": "climate-hvac-modes"
                     },
                     {
-                      "type": "tile",
-                      "entity": "climate.wiser_living_room",
-                      "vertical": true,
-                      "tap_action": {
-                        "action": "none"
-                      },
-                      "icon_tap_action": {
-                        "action": "none"
-                      },
-                      "name": "Heating"
+                      "type": "climate-preset-modes",
+                      "style": "dropdown"
                     }
                   ],
-                  "title": "Climate"
-                },
-                {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "type": "tile",
-                      "entity": "light.living_room_light",
-                      "name": "Light",
-                      "features": [
-                        {
-                          "type": "light-brightness"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "fan.living_room_fan",
-                      "name": "Fan"
-                    },
-                    {
-                      "features": [
-                        {
-                          "type": "fan-speed"
-                        }
-                      ],
-                      "type": "tile",
-                      "entity": "fan.living_room_air_purifier",
-                      "name": "Air Purifier",
-                      "icon": "",
-                      "state_content": [
-                        "state",
-                        "preset_mode"
-                      ]
-                    },
-                    {
-                      "type": "media-control",
-                      "entity": "media_player.living_room"
-                    },
-                    {
-                      "type": "media-control",
-                      "entity": "media_player.living_room_echo_dot"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "humidifier.living_room_dehumidifier_none",
-                      "name": "Dehumidifier",
-                      "vertical": true,
-                      "hide_state": false,
-                      "show_entity_picture": false
-                    }
-                  ],
-                  "title": "Devices"
-                },
-                {
-                  "type": "conditional",
-                  "conditions": [
-                    {
-                      "condition": "state",
-                      "entity": "timer.living_room_dehumidifier_timer",
-                      "state": "active"
-                    }
-                  ],
-                  "card": {
-                    "type": "markdown",
-                    "content": "__Dehumidifier Time Remaining:__ {{ state_attr('timer.living_room_dehumidifier_timer', 'finishes_at') | as_datetime - now().replace(microsecond=0) }}\n"
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": 5
                   }
                 },
                 {
-                  "square": false,
-                  "type": "grid",
-                  "cards": [
+                  "type": "humidifier",
+                  "entity": "humidifier.living_room_dehumidifier_none",
+                  "features": [
                     {
-                      "features": [
-                        {
-                          "type": "light-brightness"
-                        }
-                      ],
-                      "type": "tile",
-                      "entity": "light.living_room_tv_backlight",
-                      "name": "TV Backlight"
+                      "type": "humidifier-toggle"
                     },
                     {
-                      "type": "conditional",
-                      "conditions": [
-                        {
-                          "condition": "state",
-                          "entity": "light.christmas_tree",
-                          "state_not": "unavailable"
-                        }
-                      ],
-                      "card": {
-                        "type": "tile",
-                        "entity": "light.christmas_tree"
-                      }
+                      "type": "humidifier-modes",
+                      "style": "dropdown"
                     }
                   ],
-                  "columns": 2
+                  "name": " ",
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": 5
+                  }
+                },
+                {
+                  "type": "markdown",
+                  "content": "{% if is_state('timer.living_room_dehumidifier_timer', 'idle') %}\n__Dehumidifier Not Running__\n{% else %}\n__Dehumidifier Time Remaining:__ {{ state_attr('timer.living_room_dehumidifier_timer', 'finishes_at') | as_datetime - now().replace(microsecond=0) }}\n{% endif %}",
+                  "layout_options": {
+                    "grid_columns": "full",
+                    "grid_rows": "auto"
+                  }
                 }
-              ]
+              ],
+              "title": "Climate",
+              "column_span": 1
             },
             {
-              "square": false,
-              "columns": 1,
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "light.living_room_light",
+                  "name": "Light",
+                  "features": [
+                    {
+                      "type": "light-brightness"
+                    }
+                  ]
+                },
+                {
+                  "features": [
+                    {
+                      "type": "light-brightness"
+                    }
+                  ],
+                  "type": "tile",
+                  "entity": "light.living_room_tv_backlight",
+                  "name": "TV Backlight"
+                },
+                {
+                  "type": "tile",
+                  "entity": "fan.living_room_fan",
+                  "name": "Fan",
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": 2
+                  },
+                  "vertical": true
+                },
+                {
+                  "type": "tile",
+                  "entity": "humidifier.living_room_dehumidifier_none",
+                  "name": "Dehumidifier",
+                  "vertical": true,
+                  "hide_state": false,
+                  "show_entity_picture": false,
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": 1
+                  }
+                },
+                {
+                  "features": [
+                    {
+                      "type": "fan-speed"
+                    }
+                  ],
+                  "type": "tile",
+                  "entity": "fan.living_room_air_purifier",
+                  "name": "Air Purifier",
+                  "icon": "",
+                  "state_content": [
+                    "state",
+                    "preset_mode"
+                  ]
+                },
+                {
+                  "type": "tile",
+                  "entity": "light.christmas_tree"
+                }
+              ],
+              "title": "Devices",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "media-control",
+                  "entity": "media_player.living_room"
+                },
+                {
+                  "type": "media-control",
+                  "entity": "media_player.living_room_echo_dot"
+                }
+              ],
+              "title": "Media",
+              "column_span": 1
+            },
+            {
               "type": "grid",
               "cards": [
                 {
@@ -686,596 +580,446 @@
                       "entity": "switch.living_room_camera_siren"
                     }
                   ],
-                  "camera_image": "camera.living_room_camera_snapshot"
+                  "camera_image": "camera.living_room_camera",
+                  "entity": "camera.living_room_camera"
                 },
                 {
                   "type": "markdown",
                   "content": "{% if state_attr('camera.living_room_camera_snapshot', 'timestamp') == none %}\n{% else %}\n{{ state_attr('camera.living_room_camera_snapshot', 'timestamp') | timestamp_local | as_timestamp | timestamp_custom(\"%a %-d %h %-I:%M:%S %p\") }}\n{% endif %}"
-                },
-                {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "type": "tile",
-                      "entity": "sensor.living_room_presence_sensor_fp2_243e_light_sensor_light_level",
-                      "name": "Light Level"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.living_room_motion_sensor",
-                      "name": "Motion",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.living_room_window_awning_left",
-                      "name": "Left Top Window",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.living_room_window_awning_right",
-                      "name": "Right Top Window",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.living_room_window_casement_left",
-                      "name": "Left Bottom Window",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.living_room_window_casement_right",
-                      "name": "Right Bottom Window",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room",
-                      "name": "Occupancy",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    }
-                  ],
-                  "title": "Sensors"
                 }
               ],
-              "title": "Security"
-            }
-          ]
-        },
-        {
-          "path": "bathroom",
-          "icon": "mdi:bathtub-outline",
-          "subview": true,
-          "visible": [
-            {
-              "user": "0a250f5e6e034571a716062a1eb4b1a5"
+              "title": "Security",
+              "column_span": 1
             },
             {
-              "user": "aedf768629bf470d833313914d0c458c"
-            },
-            {
-              "user": "0b0bf6c2959e464582093e79aa540066"
-            },
-            {
-              "user": "a6e7aae0e0974f19973a41e40c031d32"
-            }
-          ],
-          "title": "Bathroom",
-          "badges": [],
-          "cards": [
-            {
-              "square": false,
-              "columns": 1,
               "type": "grid",
               "cards": [
                 {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "graph": "line",
-                      "hours_to_show": 24,
-                      "type": "sensor",
-                      "entity": "sensor.wiser_lts_temperature_bathroom",
-                      "detail": 1,
-                      "name": " "
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "climate.wiser_bathroom",
-                      "name": "Heating",
-                      "vertical": true,
-                      "tap_action": {
-                        "action": "none"
-                      },
-                      "icon_tap_action": {
-                        "action": "none"
-                      }
-                    }
-                  ],
-                  "title": "Climate"
+                  "type": "tile",
+                  "entity": "sensor.living_room_presence_sensor_fp2_243e_light_sensor_light_level",
+                  "name": "Light Level"
                 },
                 {
-                  "square": false,
-                  "columns": 1,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.bathroom_window",
-                      "name": "Window",
-                      "state_content": "last-changed"
-                    }
-                  ],
-                  "title": "Sensors"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "path": "utility-room",
-          "icon": "mdi:washing-machine",
-          "subview": true,
-          "visible": [
-            {
-              "user": "0a250f5e6e034571a716062a1eb4b1a5"
-            },
-            {
-              "user": "aedf768629bf470d833313914d0c458c"
-            },
-            {
-              "user": "0b0bf6c2959e464582093e79aa540066"
-            },
-            {
-              "user": "a6e7aae0e0974f19973a41e40c031d32"
-            }
-          ],
-          "title": "Utility Room",
-          "badges": [],
-          "cards": [
-            {
-              "square": false,
-              "columns": 1,
-              "type": "grid",
-              "cards": [
-                {
-                  "graph": "line",
-                  "hours_to_show": 24,
-                  "type": "sensor",
-                  "entity": "sensor.average_indoor_temperature",
-                  "detail": 1,
-                  "name": " "
+                  "type": "tile",
+                  "entity": "binary_sensor.living_room_motion_sensor",
+                  "name": "Motion",
+                  "state_content": "last-changed",
+                  "color": "primary"
                 },
                 {
-                  "square": false,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "type": "tile",
-                      "entity": "light.utility_room_light",
-                      "name": "Light",
-                      "features": [
-                        {
-                          "type": "light-brightness"
-                        }
-                      ]
-                    },
-                    {
-                      "square": false,
-                      "columns": 2,
-                      "type": "grid",
-                      "cards": [
-                        {
-                          "type": "tile",
-                          "entity": "input_select.utility_room_dishwasher_status",
-                          "name": "Dishwasher",
-                          "tap_action": {
-                            "action": "none"
-                          },
-                          "icon_tap_action": {
-                            "action": "none"
-                          },
-                          "state_content": [
-                            "state",
-                            "last-changed"
-                          ]
-                        },
-                        {
-                          "type": "tile",
-                          "entity": "input_select.utility_room_washing_machine_status",
-                          "name": "Washing Machine",
-                          "tap_action": {
-                            "action": "none"
-                          },
-                          "icon_tap_action": {
-                            "action": "none"
-                          },
-                          "state_content": [
-                            "state",
-                            "last-changed"
-                          ]
-                        },
-                        {
-                          "type": "tile",
-                          "entity": "input_select.tumble_dryer_status",
-                          "name": "Tumble Dryer",
-                          "tap_action": {
-                            "action": "none"
-                          },
-                          "icon_tap_action": {
-                            "action": "none"
-                          },
-                          "state_content": [
-                            "state",
-                            "last-changed"
-                          ]
-                        }
-                      ]
-                    }
-                  ],
-                  "columns": 1,
-                  "title": "Devices"
+                  "type": "tile",
+                  "entity": "binary_sensor.living_room_window_awning_left",
+                  "name": "Left Top Window",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.living_room_window_awning_right",
+                  "name": "Right Top Window",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.living_room_window_casement_left",
+                  "name": "Left Bottom Window",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.living_room_window_casement_right",
+                  "name": "Right Bottom Window",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room",
+                  "name": "Occupancy",
+                  "state_content": "last-changed",
+                  "color": "primary"
                 }
               ],
-              "title": "Climate"
+              "title": "Sensors",
+              "column_span": 1
+            }
+          ],
+          "dense_section_placement": false,
+          "cards": [],
+          "subview": true,
+          "badges": [
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.wiser_lts_temperature_living_room"
             },
             {
-              "square": false,
-              "columns": 1,
-              "type": "grid",
-              "cards": [
-                {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.utility_room_motion_sensor",
-                      "name": "Motion",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.back_door",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.utility_room_window",
-                      "name": "Window",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    }
-                  ],
-                  "title": "Sensors"
-                }
-              ]
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.living_room_dehumidifier_humidity"
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.living_room_presence_sensor_fp2_243e_light_sensor_light_level"
             }
           ]
         },
         {
-          "path": "kitchen",
-          "icon": "mdi:silverware-fork-knife",
-          "subview": true,
-          "visible": [
-            {
-              "user": "0a250f5e6e034571a716062a1eb4b1a5"
-            },
-            {
-              "user": "aedf768629bf470d833313914d0c458c"
-            },
-            {
-              "user": "0b0bf6c2959e464582093e79aa540066"
-            },
-            {
-              "user": "a6e7aae0e0974f19973a41e40c031d32"
-            }
-          ],
           "title": "Kitchen",
-          "badges": [],
-          "cards": [
+          "path": "kitchen",
+          "icon": "mdi:silverware-variant",
+          "type": "sections",
+          "max_columns": 2,
+          "subview": true,
+          "sections": [
             {
-              "square": false,
-              "columns": 1,
               "type": "grid",
               "cards": [
                 {
-                  "type": "conditional",
-                  "conditions": [
-                    {
-                      "condition": "state",
-                      "entity": "calendar.meals",
-                      "state": "on"
-                    }
+                  "type": "tile",
+                  "entity": "calendar.meals",
+                  "state_content": [
+                    "message",
+                    "description"
                   ],
-                  "card": {
-                    "type": "tile",
-                    "entity": "calendar.meals",
-                    "state_content": [
-                      "message",
-                      "description"
-                    ],
-                    "color": "light-grey",
-                    "name": "Today's Dinner",
-                    "tap_action": {
-                      "action": "navigate",
-                      "navigation_path": "/lovelace/meal-planning"
-                    },
-                    "icon_tap_action": {
-                      "action": "navigate",
-                      "navigation_path": "/lovelace/meal-planning"
-                    }
+                  "name": "Today's Dinner",
+                  "icon": "mdi:chef-hat",
+                  "color": "light-grey",
+                  "layout_options": {
+                    "grid_columns": 4,
+                    "grid_rows": 1
+                  },
+                  "show_entity_picture": false,
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/meal-planning"
+                  },
+                  "icon_tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/meal-planning"
                   }
-                },
+                }
+              ],
+              "visibility": [
                 {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
+                  "condition": "state",
+                  "entity": "calendar.meals",
+                  "state": "on"
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "thermostat",
+                  "entity": "climate.wiser_kitchen",
+                  "features": [
                     {
-                      "graph": "line",
-                      "hours_to_show": 24,
-                      "type": "sensor",
-                      "entity": "sensor.wiser_lts_temperature_kitchen",
-                      "detail": 1,
-                      "name": " "
+                      "type": "climate-hvac-modes"
                     },
                     {
-                      "graph": "line",
-                      "hours_to_show": 24,
-                      "type": "sensor",
-                      "entity": "sensor.everything_presence_lite_214fd8_illuminance",
-                      "detail": 1,
-                      "name": " "
+                      "type": "climate-preset-modes",
+                      "style": "dropdown"
                     }
                   ],
-                  "title": "Climate"
+                  "layout_options": {
+                    "grid_columns": 4,
+                    "grid_rows": 5
+                  },
+                  "name": " "
+                }
+              ],
+              "title": "Climate",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "light.kitchen_light",
+                  "features": [
+                    {
+                      "type": "light-brightness"
+                    }
+                  ]
                 },
                 {
-                  "square": false,
-                  "type": "grid",
-                  "cards": [
+                  "features": [
                     {
-                      "type": "tile",
-                      "entity": "light.kitchen_light",
-                      "features": [
-                        {
-                          "type": "light-brightness"
-                        }
-                      ]
-                    },
-                    {
-                      "features": [
-                        {
-                          "type": "light-brightness"
-                        }
-                      ],
-                      "type": "tile",
-                      "entity": "light.kitchen_lightstrip"
-                    },
-                    {
-                      "features": [
-                        {
-                          "type": "light-brightness"
-                        }
-                      ],
-                      "type": "tile",
-                      "entity": "light.cooker_hood_light"
+                      "type": "light-brightness"
                     }
                   ],
-                  "columns": 2,
-                  "title": "Devices"
+                  "type": "tile",
+                  "entity": "light.kitchen_lightstrip"
                 },
+                {
+                  "features": [
+                    {
+                      "type": "light-brightness"
+                    }
+                  ],
+                  "type": "tile",
+                  "entity": "light.cooker_hood_light"
+                }
+              ],
+              "title": "Devices",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
                 {
                   "type": "media-control",
                   "entity": "media_player.kitchen_echo_show"
                 }
-              ]
+              ],
+              "title": "Media",
+              "column_span": 1
             },
             {
-              "square": false,
-              "columns": 1,
               "type": "grid",
               "cards": [
                 {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
+                  "type": "tile",
+                  "entity": "binary_sensor.kitchen_motion_sensor",
+                  "name": "Motion",
+                  "color": "primary",
+                  "state_content": "last-changed"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.kitchen_window",
+                  "name": "Window",
+                  "color": "primary",
+                  "state_content": "last-changed"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.everything_presence_lite_214fd8_occupancy",
+                  "name": "Occupancy",
+                  "state_content": [
+                    "last-changed"
+                  ]
+                }
+              ],
+              "title": "Sensors",
+              "column_span": 1
+            }
+          ],
+          "cards": [],
+          "badges": [
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.wiser_lts_temperature_kitchen"
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.everything_presence_lite_214fd8_illuminance"
+            }
+          ],
+          "dense_section_placement": false
+        },
+        {
+          "title": "Utility Room",
+          "path": "utility-room",
+          "subview": true,
+          "type": "sections",
+          "max_columns": 2,
+          "icon": "mdi:washing-machine",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "light.utility_room_light",
+                  "name": "Light",
+                  "features": [
                     {
-                      "type": "tile",
-                      "entity": "binary_sensor.kitchen_motion_sensor",
-                      "name": "Motion",
-                      "color": "primary",
-                      "state_content": "last-changed"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.kitchen_window",
-                      "name": "Window",
-                      "color": "primary",
-                      "state_content": "last-changed"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.everything_presence_lite_214fd8_occupancy",
-                      "name": "Occupancy",
-                      "state_content": [
-                        "state",
-                        "last-changed"
-                      ]
+                      "type": "light-brightness"
                     }
                   ],
-                  "title": "Sensors"
+                  "layout_options": {
+                    "grid_columns": 4,
+                    "grid_rows": 2
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "input_select.utility_room_dishwasher_status",
+                  "name": "Dishwasher",
+                  "tap_action": {
+                    "action": "none"
+                  },
+                  "icon_tap_action": {
+                    "action": "none"
+                  },
+                  "state_content": [
+                    "state",
+                    "last-changed"
+                  ]
+                },
+                {
+                  "type": "tile",
+                  "entity": "input_select.utility_room_washing_machine_status",
+                  "name": "Washing Machine",
+                  "tap_action": {
+                    "action": "none"
+                  },
+                  "icon_tap_action": {
+                    "action": "none"
+                  },
+                  "state_content": [
+                    "state",
+                    "last-changed"
+                  ]
+                },
+                {
+                  "type": "tile",
+                  "entity": "input_select.tumble_dryer_status",
+                  "name": "Tumble Dryer",
+                  "tap_action": {
+                    "action": "none"
+                  },
+                  "icon_tap_action": {
+                    "action": "none"
+                  },
+                  "state_content": [
+                    "state",
+                    "last-changed"
+                  ]
                 }
-              ]
+              ],
+              "title": "Devices",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.utility_room_motion_sensor",
+                  "name": "Motion",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.back_door",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.utility_room_window",
+                  "name": "Window",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                }
+              ],
+              "title": "Sensors",
+              "column_span": 1
+            }
+          ],
+          "cards": [],
+          "badges": [
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.average_indoor_temperature"
             }
           ]
         },
         {
-          "path": "landing",
-          "icon": "mdi:stairs-up",
-          "subview": true,
-          "visible": [
+          "title": "Bathroom",
+          "path": "bathroom",
+          "icon": "mdi:bathtub-outline",
+          "type": "sections",
+          "max_columns": 2,
+          "sections": [
             {
-              "user": "0a250f5e6e034571a716062a1eb4b1a5"
-            },
-            {
-              "user": "aedf768629bf470d833313914d0c458c"
-            },
-            {
-              "user": "0b0bf6c2959e464582093e79aa540066"
-            },
-            {
-              "user": "a6e7aae0e0974f19973a41e40c031d32"
-            }
-          ],
-          "title": "Landing",
-          "badges": [],
-          "cards": [
-            {
-              "square": false,
               "type": "grid",
               "cards": [
                 {
-                  "graph": "line",
-                  "hours_to_show": 24,
-                  "type": "sensor",
-                  "entity": "sensor.air_quality_monitor_temperature",
-                  "detail": 1,
-                  "name": " "
-                },
-                {
-                  "graph": "line",
-                  "hours_to_show": 24,
-                  "type": "sensor",
-                  "entity": "sensor.air_quality_monitor_humidity",
-                  "detail": 1,
-                  "name": " "
-                },
-                {
-                  "graph": "line",
-                  "hours_to_show": 24,
-                  "type": "sensor",
-                  "entity": "sensor.everything_presence_lite_2fbc58_illuminance",
-                  "detail": 1,
-                  "name": " "
-                },
-                {
-                  "graph": "line",
-                  "hours_to_show": 24,
-                  "type": "sensor",
-                  "entity": "sensor.air_quality_monitor_carbon_monoxide",
-                  "detail": 1,
-                  "name": "CO"
-                },
-                {
-                  "graph": "line",
-                  "hours_to_show": 24,
-                  "type": "sensor",
-                  "entity": "sensor.air_quality_monitor_particulate_matter",
-                  "detail": 1,
-                  "name": "PM"
-                },
-                {
-                  "graph": "line",
-                  "hours_to_show": 24,
-                  "type": "sensor",
-                  "entity": "sensor.air_quality_monitor_volatile_organic_compounds",
-                  "detail": 1,
-                  "name": "VOCs"
+                  "type": "thermostat",
+                  "entity": "climate.wiser_bathroom",
+                  "name": " ",
+                  "features": [
+                    {
+                      "type": "climate-hvac-modes"
+                    },
+                    {
+                      "type": "climate-preset-modes",
+                      "style": "dropdown"
+                    }
+                  ],
+                  "layout_options": {
+                    "grid_columns": 4,
+                    "grid_rows": 5
+                  }
                 }
               ],
-              "columns": 2,
+              "column_span": 1,
               "title": "Climate"
             },
             {
-              "square": false,
-              "columns": 1,
               "type": "grid",
               "cards": [
                 {
-                  "square": false,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "type": "tile",
-                      "entity": "light.landing_light",
-                      "features": [
-                        {
-                          "type": "light-brightness"
-                        }
-                      ]
-                    }
-                  ],
-                  "columns": 1,
-                  "title": "Devices"
-                },
-                {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.landing_motion_sensor",
-                      "name": "Motion",
-                      "color": "primary",
-                      "state_content": "last-changed"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.landing_window",
-                      "name": "Window",
-                      "color": "primary",
-                      "state_content": "last-changed"
-                    }
-                  ],
-                  "title": "Sensors"
+                  "type": "tile",
+                  "entity": "binary_sensor.bathroom_window",
+                  "name": "Window",
+                  "state_content": "last-changed",
+                  "layout_options": {
+                    "grid_columns": 4,
+                    "grid_rows": 1
+                  }
                 }
-              ]
+              ],
+              "column_span": 1,
+              "title": "Sensors"
+            }
+          ],
+          "subview": true,
+          "cards": [],
+          "badges": [
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.wiser_lts_temperature_bathroom"
             }
           ]
         },
         {
+          "type": "sections",
           "path": "hall",
+          "max_columns": 2,
+          "title": "Hall",
           "icon": "mdi:door-closed",
           "subview": true,
-          "visible": [
+          "sections": [
             {
-              "user": "0a250f5e6e034571a716062a1eb4b1a5"
-            },
-            {
-              "user": "aedf768629bf470d833313914d0c458c"
-            },
-            {
-              "user": "0b0bf6c2959e464582093e79aa540066"
-            },
-            {
-              "user": "a6e7aae0e0974f19973a41e40c031d32"
-            }
-          ],
-          "title": "Hall",
-          "badges": [],
-          "cards": [
-            {
-              "square": false,
-              "columns": 1,
               "type": "grid",
               "cards": [
                 {
@@ -1286,222 +1030,269 @@
                     {
                       "type": "light-brightness"
                     }
-                  ]
+                  ],
+                  "layout_options": {
+                    "grid_columns": "full"
+                  }
                 }
               ],
-              "title": "Devices"
+              "title": "Devices",
+              "column_span": 1
             },
             {
-              "square": false,
-              "columns": 1,
               "type": "grid",
               "cards": [
                 {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
+                  "type": "tile",
+                  "entity": "binary_sensor.hall_motion_sensor",
+                  "name": "Motion",
+                  "color": "primary",
+                  "state_content": "last-changed"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.front_door",
+                  "color": "primary",
+                  "state_content": "last-changed"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.glass_break_sensor",
+                  "name": "Glass Break",
+                  "color": "primary",
+                  "state_content": "last-changed"
+                }
+              ],
+              "title": "Sensors",
+              "column_span": 1
+            }
+          ],
+          "cards": []
+        },
+        {
+          "title": "Landing",
+          "path": "landinf",
+          "type": "sections",
+          "max_columns": 2,
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "light.landing_light",
+                  "features": [
                     {
-                      "type": "tile",
-                      "entity": "binary_sensor.hall_motion_sensor",
-                      "name": "Motion",
-                      "color": "primary",
-                      "state_content": "last-changed"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.front_door",
-                      "color": "primary",
-                      "state_content": "last-changed"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.glass_break_sensor",
-                      "name": "Glass Break",
-                      "color": "primary",
-                      "state_content": "last-changed"
+                      "type": "light-brightness"
                     }
                   ],
-                  "title": "Sensors"
+                  "layout_options": {
+                    "grid_columns": "full",
+                    "grid_rows": 2
+                  }
                 }
-              ]
+              ],
+              "title": "Devices",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.landing_motion_sensor",
+                  "name": "Motion",
+                  "color": "primary",
+                  "state_content": "last-changed"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.landing_window",
+                  "name": "Window",
+                  "color": "primary",
+                  "state_content": "last-changed"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.everything_presence_lite_2fbc58_occupancy",
+                  "name": "Occupancy",
+                  "state_content": "last_changed"
+                }
+              ],
+              "title": "Sensors",
+              "column_span": 1
+            }
+          ],
+          "icon": "mdi:stairs-up",
+          "subview": true,
+          "cards": [],
+          "badges": [
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.air_quality_monitor_temperature"
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.air_quality_monitor_humidity"
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.everything_presence_lite_2fbc58_illuminance"
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.air_quality_monitor_carbon_monoxide"
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.air_quality_monitor_particulate_matter"
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.air_quality_monitor_volatile_organic_compounds"
             }
           ]
         },
         {
+          "title": "Bedroom",
           "path": "bedroom",
-          "visible": [
-            {
-              "user": "aedf768629bf470d833313914d0c458c"
-            },
-            {
-              "user": "0b0bf6c2959e464582093e79aa540066"
-            }
-          ],
-          "icon": "mdi:bed-king",
+          "icon": "mdi:bed-king-outline",
+          "type": "sections",
+          "max_columns": 2,
           "subview": true,
-          "cards": [
+          "sections": [
             {
-              "square": false,
-              "columns": 1,
               "type": "grid",
               "cards": [
                 {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
+                  "type": "thermostat",
+                  "entity": "climate.wiser_bedroom",
+                  "name": " ",
+                  "features": [
                     {
-                      "graph": "line",
-                      "hours_to_show": 24,
-                      "type": "sensor",
-                      "entity": "sensor.wiser_lts_temperature_bedroom",
-                      "detail": 1,
-                      "name": " "
+                      "type": "climate-hvac-modes"
                     },
                     {
-                      "features": [
-                        {
-                          "type": "target-temperature"
-                        },
-                        {
-                          "style": "dropdown",
-                          "preset_modes": [
-                            "Cancel Overrides",
-                            "Boost 30m",
-                            "Boost 1h"
-                          ],
-                          "type": "climate-preset-modes"
-                        }
-                      ],
-                      "type": "tile",
-                      "entity": "climate.wiser_bedroom",
-                      "name": "Heating",
-                      "hide_state": true,
-                      "vertical": false
-                    },
-                    {
-                      "graph": "line",
-                      "hours_to_show": 24,
-                      "type": "sensor",
-                      "entity": "sensor.apollo_msr_1_38c3bc_bme280_humidity",
-                      "detail": 1,
-                      "name": " "
-                    },
-                    {
-                      "graph": "line",
-                      "hours_to_show": 24,
-                      "type": "sensor",
-                      "entity": "sensor.apollo_msr_1_38c3bc_bme280_pressure",
-                      "detail": 1,
-                      "name": " "
-                    },
-                    {
-                      "graph": "line",
-                      "hours_to_show": 24,
-                      "type": "sensor",
-                      "entity": "sensor.apollo_msr_1_38c3bc_co2",
-                      "detail": 1,
-                      "name": " "
-                    },
-                    {
-                      "graph": "line",
-                      "hours_to_show": 24,
-                      "type": "sensor",
-                      "entity": "sensor.apollo_msr_1_38c3bc_ltr390_light",
-                      "detail": 1,
-                      "name": " "
+                      "type": "climate-preset-modes",
+                      "style": "dropdown"
                     }
                   ],
-                  "title": "Climate"
+                  "layout_options": {
+                    "grid_columns": 4,
+                    "grid_rows": 5
+                  }
+                }
+              ],
+              "title": "Climate",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "features": [
+                    {
+                      "type": "fan-speed"
+                    }
+                  ],
+                  "type": "tile",
+                  "entity": "fan.bedroom_air_purifier",
+                  "icon": "",
+                  "name": "Air Purifier",
+                  "state_content": [
+                    "state",
+                    "preset_mode"
+                  ]
                 },
                 {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
+                  "type": "tile",
+                  "entity": "light.bedroom_air_purifier_night_light",
+                  "name": "Night Light",
+                  "features": [
                     {
-                      "features": [
-                        {
-                          "type": "fan-speed"
-                        }
-                      ],
-                      "type": "tile",
-                      "entity": "fan.bedroom_air_purifier",
-                      "icon": "",
-                      "name": "Air Purifier",
-                      "state_content": [
-                        "state",
-                        "preset_mode"
-                      ]
-                    },
+                      "type": "light-brightness"
+                    }
+                  ]
+                },
+                {
+                  "type": "tile",
+                  "entity": "light.bedroom_light",
+                  "name": "Light",
+                  "features": [
                     {
-                      "type": "tile",
-                      "entity": "light.bedroom_air_purifier_night_light",
-                      "name": "Night Light",
-                      "features": [
-                        {
-                          "type": "light-brightness"
-                        }
-                      ]
-                    },
+                      "type": "light-brightness"
+                    }
+                  ]
+                },
+                {
+                  "features": [
                     {
-                      "type": "tile",
-                      "entity": "light.bedroom_light",
-                      "name": "Light",
-                      "features": [
-                        {
-                          "type": "light-brightness"
-                        }
-                      ]
-                    },
-                    {
-                      "features": [
-                        {
-                          "type": "light-brightness"
-                        }
-                      ],
-                      "type": "tile",
-                      "entity": "light.neils_desk_filament_lamp",
-                      "name": "Desk Filament Lamp"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "light.neil_s_monitor_light_bar",
-                      "name": "Monitor Light Bar",
-                      "vertical": false
-                    },
-                    {
-                      "features": [
-                        {
-                          "type": "light-brightness"
-                        }
-                      ],
-                      "type": "tile",
-                      "entity": "light.bedroom_mirror_light",
-                      "name": "Mirror Light"
-                    },
-                    {
-                      "features": [
-                        {
-                          "type": "light-brightness"
-                        }
-                      ],
-                      "type": "tile",
-                      "entity": "light.neils_bedside_lamp"
-                    },
-                    {
-                      "features": [
-                        {
-                          "type": "light-brightness"
-                        }
-                      ],
-                      "type": "tile",
-                      "entity": "light.heathers_bedside_lamp"
+                      "type": "light-brightness"
                     }
                   ],
-                  "title": "Devices"
+                  "type": "tile",
+                  "entity": "light.neils_desk_filament_lamp",
+                  "name": "Desk Filament Lamp"
                 },
+                {
+                  "type": "tile",
+                  "entity": "light.neil_s_monitor_light_bar",
+                  "name": "Monitor Light Bar",
+                  "vertical": false
+                },
+                {
+                  "features": [
+                    {
+                      "type": "light-brightness"
+                    }
+                  ],
+                  "type": "tile",
+                  "entity": "light.bedroom_mirror_light",
+                  "name": "Mirror Light"
+                },
+                {
+                  "features": [
+                    {
+                      "type": "light-brightness"
+                    }
+                  ],
+                  "type": "tile",
+                  "entity": "light.neils_bedside_lamp"
+                },
+                {
+                  "features": [
+                    {
+                      "type": "light-brightness"
+                    }
+                  ],
+                  "type": "tile",
+                  "entity": "light.heathers_bedside_lamp"
+                }
+              ],
+              "title": "Devices",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
                 {
                   "type": "media-control",
                   "entity": "media_player.bedroom_firetvstick_4k_max"
@@ -1510,428 +1301,248 @@
                   "type": "media-control",
                   "entity": "media_player.bedroom_echo_spot"
                 }
-              ]
+              ],
+              "title": "Media",
+              "column_span": 1
             },
             {
-              "square": false,
-              "columns": 1,
               "type": "grid",
               "cards": [
                 {
-                  "square": false,
-                  "type": "grid",
-                  "cards": [
+                  "camera_view": "auto",
+                  "type": "picture-glance",
+                  "entities": [
                     {
-                      "camera_view": "auto",
-                      "type": "picture-glance",
-                      "entities": [
-                        {
-                          "entity": "binary_sensor.bedroom_camera_motion"
-                        },
-                        {
-                          "entity": "sensor.bedroom_camera_wireless"
-                        },
-                        {
-                          "entity": "switch.bedroom_camera_siren"
-                        }
-                      ],
-                      "camera_image": "camera.bedroom_camera_snapshot"
+                      "entity": "binary_sensor.bedroom_camera_motion"
                     },
                     {
-                      "type": "markdown",
-                      "content": "{% if state_attr('camera.bedroom_camera_snapshot', 'timestamp') == none %}\n{% else %}\n{{ state_attr('camera.bedroom_camera_snapshot', 'timestamp') | timestamp_local | as_timestamp | timestamp_custom(\"%a %-d %h %-I:%M:%S %p\") }}\n{% endif %}"
-                    }
-                  ],
-                  "columns": 1,
-                  "title": "Security"
-                },
-                {
-                  "square": false,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.bedroom_motion_sensor",
-                      "name": "Motion",
-                      "state_content": "last-changed",
-                      "color": "primary"
+                      "entity": "sensor.bedroom_camera_wireless"
                     },
                     {
-                      "type": "tile",
-                      "entity": "binary_sensor.bedroom_window_left",
-                      "name": "Left Window",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.bedroom_window_right",
-                      "name": "Right Window",
-                      "state_content": "last-changed",
-                      "color": "primary"
+                      "entity": "switch.bedroom_camera_siren"
                     }
                   ],
-                  "columns": 2,
-                  "title": "Sensors"
+                  "camera_image": "camera.bedroom_camera",
+                  "entity": "camera.bedroom_camera"
                 },
                 {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": []
-                },
-                {
-                  "square": false,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.apollo_msr_1_38c3bc_radar_target",
-                      "name": "Occupancy",
-                      "state_content": "last-changed"
-                    }
-                  ],
-                  "title": "Presence",
-                  "columns": 2
+                  "type": "markdown",
+                  "content": "{% if state_attr('camera.bedroom_camera_snapshot', 'timestamp') == none %}\n{% else %}\n{{ state_attr('camera.bedroom_camera_snapshot', 'timestamp') | timestamp_local | as_timestamp | timestamp_custom(\"%a %-d %h %-I:%M:%S %p\") }}\n{% endif %}"
                 }
-              ]
+              ],
+              "title": "Security",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.bedroom_motion_sensor",
+                  "name": "Motion",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.bedroom_window_left",
+                  "name": "Left Window",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.bedroom_window_right",
+                  "name": "Right Window",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.apollo_msr_1_38c3bc_radar_target",
+                  "name": "Occupancy",
+                  "state_content": "last_changed"
+                }
+              ],
+              "title": "Sensors",
+              "column_span": 1
             }
           ],
-          "title": "Bedroom"
-        },
-        {
-          "path": "ben_s-bedroom",
-          "visible": [
+          "cards": [],
+          "badges": [
             {
-              "user": "aedf768629bf470d833313914d0c458c"
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.wiser_lts_temperature_bedroom"
             },
             {
-              "user": "0b0bf6c2959e464582093e79aa540066"
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.apollo_msr_1_38c3bc_bme280_humidity"
             },
             {
-              "user": "602ff2c0d1c34067b2eff779dfd5ad08"
-            }
-          ],
-          "icon": "mdi:bed-single",
-          "subview": true,
-          "title": "Ben's Bedroom",
-          "cards": [
-            {
-              "square": false,
-              "columns": 1,
-              "type": "grid",
-              "cards": [
-                {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "graph": "line",
-                      "hours_to_show": 24,
-                      "type": "sensor",
-                      "entity": "sensor.wiser_lts_temperature_ben_s_bedroom",
-                      "detail": 1,
-                      "name": " "
-                    },
-                    {
-                      "type": "conditional",
-                      "conditions": [
-                        {
-                          "entity": "person.ben",
-                          "state": "home"
-                        }
-                      ],
-                      "card": {
-                        "type": "tile",
-                        "entity": "climate.wiser_ben_s_bedroom",
-                        "name": "Heating",
-                        "vertical": true,
-                        "tap_action": {
-                          "action": "none"
-                        },
-                        "icon_tap_action": {
-                          "action": "none"
-                        },
-                        "features": [
-                          {
-                            "type": "target-temperature"
-                          }
-                        ]
-                      }
-                    }
-                  ],
-                  "title": "Climate"
-                },
-                {
-                  "square": false,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "square": false,
-                      "type": "grid",
-                      "cards": [
-                        {
-                          "type": "tile",
-                          "entity": "light.ben_s_bedroom_light",
-                          "name": "Light",
-                          "features": [
-                            {
-                              "type": "light-brightness"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tile",
-                          "entity": "humidifier.ben_s_bedroom_dehumidifier_none",
-                          "name": "Dehumidifier",
-                          "show_entity_picture": false,
-                          "vertical": true,
-                          "hide_state": false,
-                          "features": [
-                            {
-                              "type": "target-humidity"
-                            }
-                          ]
-                        }
-                      ],
-                      "columns": 2
-                    },
-                    {
-                      "type": "media-control",
-                      "entity": "media_player.ben_s_bedroom_firetvstick"
-                    },
-                    {
-                      "type": "media-control",
-                      "entity": "media_player.ben_s_echo_dot"
-                    }
-                  ],
-                  "columns": 1,
-                  "title": "Devices"
-                }
-              ]
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.apollo_msr_1_38c3bc_bme280_pressure"
             },
             {
-              "square": false,
-              "columns": 1,
-              "type": "grid",
-              "cards": [
-                {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.ben_s_bedroom_motion_sensor",
-                      "name": "Motion",
-                      "color": "primary",
-                      "state_content": "last-changed"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.ben_s_bedroom_window",
-                      "name": "Window",
-                      "color": "primary",
-                      "state_content": "last-changed"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "input_boolean.ben_s_bedroom_occupancy",
-                      "name": "Occupancy",
-                      "color": "primary",
-                      "state_content": "last-changed",
-                      "icon": ""
-                    }
-                  ],
-                  "title": "Sensors"
-                }
-              ]
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.apollo_msr_1_38c3bc_co2"
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.apollo_msr_1_38c3bc_ltr390_light"
             }
           ]
         },
         {
-          "path": "boys-bedroom",
-          "visible": [
-            {
-              "user": "aedf768629bf470d833313914d0c458c"
-            },
-            {
-              "user": "2891bbb5e831444c835b957c2c976291"
-            },
-            {
-              "user": "5ea4360e2b5f4b639510ea745c9bcbd2"
-            },
-            {
-              "user": "0b0bf6c2959e464582093e79aa540066"
-            }
-          ],
-          "icon": "mdi:bunk-bed",
-          "subview": true,
           "title": "Boys' Bedroom",
-          "cards": [
+          "path": "boys-bedroom",
+          "icon": "mdi:bunk-bed-outline",
+          "type": "sections",
+          "max_columns": 2,
+          "sections": [
             {
-              "square": false,
-              "columns": 1,
               "type": "grid",
               "cards": [
                 {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
+                  "type": "thermostat",
+                  "entity": "climate.wiser_boys_bedroom",
+                  "features": [
                     {
-                      "hours_to_show": 24,
-                      "graph": "line",
-                      "type": "sensor",
-                      "entity": "sensor.wiser_lts_temperature_boys_bedroom",
-                      "detail": 1,
-                      "name": "Temperature"
+                      "type": "climate-hvac-modes"
                     },
                     {
-                      "features": [
-                        {
-                          "type": "target-temperature"
-                        }
-                      ],
-                      "type": "tile",
-                      "entity": "climate.wiser_boys_bedroom",
-                      "name": "Heating",
-                      "vertical": true,
-                      "hide_state": false,
-                      "tap_action": {
-                        "action": "none"
-                      },
-                      "icon_tap_action": {
-                        "action": "none"
-                      }
-                    },
-                    {
-                      "graph": "line",
-                      "hours_to_show": 24,
-                      "type": "sensor",
-                      "entity": "sensor.boys_bedroom_dehumidifier_humidity",
-                      "detail": 1,
-                      "name": "Humidity"
-                    },
-                    {
-                      "graph": "line",
-                      "hours_to_show": 24,
-                      "type": "sensor",
-                      "entity": "sensor.boys_bedroom_presence_sensor_fp2_cf9d_light_sensor_light_level",
-                      "detail": 1,
-                      "name": "Luminance"
+                      "type": "climate-preset-modes",
+                      "style": "dropdown"
                     }
                   ],
-                  "title": "Climate"
+                  "name": " ",
+                  "show_current_as_primary": false,
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": 5
+                  }
                 },
                 {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
+                  "type": "humidifier",
+                  "entity": "humidifier.boys_bedroom_dehumidifier_none",
+                  "features": [
                     {
-                      "features": [
-                        {
-                          "type": "fan-speed"
-                        }
-                      ],
-                      "type": "tile",
-                      "entity": "fan.boys_bedroom_air_purifier",
-                      "state_content": [
-                        "state",
-                        "preset_mode"
-                      ],
-                      "name": "Air Purifier"
+                      "type": "humidifier-toggle"
                     },
                     {
-                      "type": "tile",
-                      "entity": "light.boys_bedroom_light",
-                      "name": "Light",
-                      "features": [
-                        {
-                          "type": "light-brightness"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "light.kyles_lava_lamp",
-                      "vertical": true
-                    },
-                    {
-                      "features": [
-                        {
-                          "type": "light-brightness"
-                        }
-                      ],
-                      "type": "tile",
-                      "entity": "light.liam_s_monitor_light_bar",
-                      "name": "Liam's Monitor Light Bar",
-                      "tap_action": {
-                        "action": "navigate",
-                        "navigation_path": "/config/devices/device/e06659480cc6e6580b1f236176174583"
-                      }
-                    },
-                    {
-                      "features": [
-                        {
-                          "type": "target-humidity"
-                        }
-                      ],
-                      "type": "tile",
-                      "entity": "humidifier.boys_bedroom_dehumidifier_none",
-                      "vertical": false
-                    },
-                    {
-                      "type": "media-control",
-                      "entity": "media_player.boys_echo_dot"
+                      "type": "humidifier-modes",
+                      "style": "dropdown"
                     }
                   ],
-                  "title": "Devices"
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": 5
+                  },
+                  "name": " "
                 }
-              ]
+              ],
+              "title": "Climate",
+              "column_span": 1
             },
             {
-              "square": false,
-              "columns": 1,
               "type": "grid",
               "cards": [
                 {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
+                  "features": [
                     {
-                      "type": "tile",
-                      "entity": "binary_sensor.boys_bedroom_motion_sensor",
-                      "name": "Motion",
-                      "color": "primary",
-                      "state_content": "last-changed"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.boys_bedroom_window_awning",
-                      "name": "Top Window",
-                      "color": "primary",
-                      "state_content": "last-changed"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.boys_bedroom_window_casement",
-                      "name": "Bottom Window",
-                      "color": "primary",
-                      "state_content": "last-changed"
+                      "type": "fan-speed"
                     }
                   ],
-                  "title": "Sensors"
+                  "type": "tile",
+                  "entity": "fan.boys_bedroom_air_purifier",
+                  "state_content": [
+                    "state",
+                    "preset_mode"
+                  ],
+                  "name": "Air Purifier"
+                },
+                {
+                  "type": "tile",
+                  "entity": "light.boys_bedroom_light",
+                  "name": "Light",
+                  "features": [
+                    {
+                      "type": "light-brightness"
+                    }
+                  ]
+                },
+                {
+                  "type": "tile",
+                  "entity": "light.kyles_lava_lamp",
+                  "vertical": true
+                },
+                {
+                  "features": [
+                    {
+                      "type": "light-brightness"
+                    }
+                  ],
+                  "type": "tile",
+                  "entity": "light.liam_s_monitor_light_bar",
+                  "name": "Liam's Monitor Light Bar",
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/config/devices/device/e06659480cc6e6580b1f236176174583"
+                  }
                 }
-              ]
+              ],
+              "title": "Devices",
+              "column_span": 1
             },
             {
-              "square": false,
               "type": "grid",
               "cards": [
+                {
+                  "type": "media-control",
+                  "entity": "media_player.boys_echo_dot"
+                }
+              ],
+              "title": "Media",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.boys_bedroom_motion_sensor",
+                  "name": "Motion",
+                  "color": "primary",
+                  "state_content": "last-changed"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.boys_bedroom_window_awning",
+                  "name": "Top Window",
+                  "color": "primary",
+                  "state_content": "last-changed"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.boys_bedroom_window_casement",
+                  "name": "Bottom Window",
+                  "color": "primary",
+                  "state_content": "last-changed"
+                },
                 {
                   "type": "tile",
                   "entity": "binary_sensor.boys_bedroom_presence_sensor_fp2_cf9d_presence_sensor_room",
@@ -1941,82 +1552,209 @@
                   "hide_state": false
                 }
               ],
-              "title": "Presence",
-              "columns": 2
+              "title": "Sensors",
+              "column_span": 1
+            }
+          ],
+          "cards": [],
+          "subview": true,
+          "badges": [
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.wiser_lts_temperature_boys_bedroom"
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.boys_bedroom_dehumidifier_humidity"
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.boys_bedroom_presence_sensor_fp2_cf9d_light_sensor_light_level"
             }
           ]
         },
         {
-          "path": "porch",
-          "icon": "mdi:coach-lamp",
-          "subview": true,
-          "visible": [
+          "title": "Ben's Bedroom",
+          "path": "ben-s-bedroom",
+          "icon": "mdi:bed-outline",
+          "type": "sections",
+          "max_columns": 2,
+          "sections": [
             {
-              "user": "0a250f5e6e034571a716062a1eb4b1a5"
-            },
-            {
-              "user": "aedf768629bf470d833313914d0c458c"
-            },
-            {
-              "user": "0b0bf6c2959e464582093e79aa540066"
-            },
-            {
-              "user": "a6e7aae0e0974f19973a41e40c031d32"
-            }
-          ],
-          "title": "Porch",
-          "badges": [],
-          "cards": [
-            {
-              "square": false,
-              "columns": 1,
               "type": "grid",
               "cards": [
                 {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
+                  "type": "thermostat",
+                  "entity": "climate.wiser_ben_s_bedroom",
+                  "name": " ",
+                  "features": [
                     {
-                      "graph": "line",
-                      "hours_to_show": 24,
-                      "type": "sensor",
-                      "entity": "sensor.forecast_home_temperature",
-                      "detail": 1,
-                      "name": "Temperature"
+                      "type": "climate-hvac-modes"
                     },
                     {
-                      "type": "entity",
-                      "entity": "weather.forecast_home",
-                      "state_color": false,
-                      "name": "Weather"
+                      "type": "climate-preset-modes",
+                      "style": "dropdown"
                     }
                   ],
-                  "title": "Climate"
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": 5
+                  }
                 },
                 {
-                  "square": false,
-                  "type": "grid",
-                  "cards": [
+                  "type": "humidifier",
+                  "entity": "humidifier.ben_s_bedroom_dehumidifier_none",
+                  "features": [
                     {
-                      "type": "tile",
-                      "entity": "light.porch_light",
-                      "name": "Light",
-                      "features": [
-                        {
-                          "type": "light-brightness"
-                        }
-                      ]
+                      "type": "humidifier-toggle"
+                    },
+                    {
+                      "type": "humidifier-modes",
+                      "style": "dropdown"
                     }
                   ],
-                  "columns": 1,
-                  "title": "Devices"
+                  "name": " ",
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": 5
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "select.ben_s_bedroom_dehumidifier_light_mode",
+                  "name": "Dehumidifier Light"
+                },
+                {
+                  "type": "tile",
+                  "entity": "select.ben_s_bedroom_dehumidifier_timer",
+                  "name": "Dehumidifier Timer"
                 }
-              ]
+              ],
+              "title": "Climate",
+              "column_span": 1
             },
             {
-              "square": false,
-              "columns": 1,
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "light.ben_s_bedroom_light",
+                  "name": "Light",
+                  "features": [
+                    {
+                      "type": "light-brightness"
+                    }
+                  ],
+                  "layout_options": {
+                    "grid_columns": "full"
+                  }
+                }
+              ],
+              "title": "Devices",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "media-control",
+                  "entity": "media_player.ben_s_bedroom_firetvstick"
+                },
+                {
+                  "type": "media-control",
+                  "entity": "media_player.ben_s_echo_dot"
+                }
+              ],
+              "title": "Media",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.ben_s_bedroom_motion_sensor",
+                  "name": "Motion",
+                  "color": "primary",
+                  "state_content": "last-changed"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.ben_s_bedroom_window",
+                  "name": "Window",
+                  "color": "primary",
+                  "state_content": "last-changed"
+                },
+                {
+                  "type": "tile",
+                  "entity": "input_boolean.ben_s_bedroom_occupancy",
+                  "name": "Occupancy",
+                  "color": "primary",
+                  "state_content": "last-changed",
+                  "icon": ""
+                }
+              ],
+              "title": "Sensors",
+              "column_span": 1
+            }
+          ],
+          "subview": true,
+          "cards": [],
+          "badges": [
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.wiser_lts_temperature_ben_s_bedroom"
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.boys_bedroom_dehumidifier_humidity"
+            }
+          ]
+        },
+        {
+          "title": "Porch",
+          "path": "porch",
+          "icon": "mdi:coach-lamp",
+          "type": "sections",
+          "max_columns": 2,
+          "subview": true,
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "light.porch_light",
+                  "name": "Light",
+                  "features": [
+                    {
+                      "type": "light-brightness"
+                    }
+                  ],
+                  "layout_options": {
+                    "grid_columns": "full"
+                  }
+                }
+              ],
+              "title": "Devices",
+              "column_span": 1
+            },
+            {
               "type": "grid",
               "cards": [
                 {
@@ -2036,87 +1774,61 @@
                       "entity": "sensor.front_doorbell_battery"
                     }
                   ],
-                  "camera_image": "camera.front_doorbell_snapshot"
+                  "camera_image": "camera.front_doorbell_camera",
+                  "entity": "camera.front_doorbell_camera"
                 },
                 {
                   "type": "markdown",
                   "content": "{% if state_attr('camera.front_doorbell_snapshot', 'timestamp') == none %}\n{% else %}\n{{ state_attr('camera.front_doorbell_snapshot', 'timestamp') | timestamp_local | as_timestamp | timestamp_custom(\"%a %-d %h %-I:%M:%S %p\") }}\n{% endif %}"
                 }
               ],
-              "title": "Security"
+              "title": "Security",
+              "column_span": 1
+            }
+          ],
+          "cards": [],
+          "badges": [
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "weather.forecast_home"
+            },
+            {
+              "type": "entity",
+              "entity": "sensor.forecast_home_temperature"
             }
           ]
         },
         {
-          "path": "garden",
-          "icon": "mdi:flower-tulip",
-          "subview": true,
-          "visible": [
-            {
-              "user": "0a250f5e6e034571a716062a1eb4b1a5"
-            },
-            {
-              "user": "aedf768629bf470d833313914d0c458c"
-            },
-            {
-              "user": "0b0bf6c2959e464582093e79aa540066"
-            },
-            {
-              "user": "a6e7aae0e0974f19973a41e40c031d32"
-            }
-          ],
           "title": "Garden",
-          "badges": [],
-          "cards": [
+          "path": "garden",
+          "icon": "mdi:flower-tulip-outline",
+          "type": "sections",
+          "max_columns": 2,
+          "subview": true,
+          "sections": [
             {
-              "square": false,
-              "columns": 1,
               "type": "grid",
               "cards": [
                 {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
+                  "type": "tile",
+                  "entity": "light.garden_light",
+                  "features": [
                     {
-                      "graph": "line",
-                      "hours_to_show": 24,
-                      "type": "sensor",
-                      "entity": "sensor.forecast_home_temperature",
-                      "detail": 1,
-                      "name": "Temperature"
-                    },
-                    {
-                      "type": "entity",
-                      "entity": "weather.forecast_home",
-                      "name": "Weather",
-                      "state_color": false
+                      "type": "light-brightness"
                     }
                   ],
-                  "title": "Climate"
-                },
-                {
-                  "square": false,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "type": "tile",
-                      "entity": "light.garden_light",
-                      "features": [
-                        {
-                          "type": "light-brightness"
-                        }
-                      ]
-                    }
-                  ],
-                  "columns": 1,
-                  "title": "Devices"
+                  "layout_options": {
+                    "grid_columns": "full"
+                  }
                 }
-              ]
+              ],
+              "title": "Devices",
+              "column_span": 1
             },
             {
-              "square": false,
-              "columns": 1,
               "type": "grid",
               "cards": [
                 {
@@ -2136,62 +1848,64 @@
                       "entity": "switch.garden_camera_siren"
                     }
                   ],
-                  "camera_image": "camera.garden_camera_snapshot"
+                  "camera_image": "camera.garden_camera",
+                  "entity": "camera.garden_camera"
                 },
                 {
                   "type": "markdown",
                   "content": "{% if state_attr('camera.garden_camera_snapshot', 'timestamp') == none %}\n{% else %}\n{{ state_attr('camera.garden_camera_snapshot', 'timestamp') | timestamp_local | as_timestamp | timestamp_custom(\"%a %-d %h %-I:%M:%S %p\") }}\n{% endif %}"
                 }
               ],
-              "title": "Security"
+              "title": "Security",
+              "column_span": 1
             },
             {
-              "square": false,
-              "columns": 1,
               "type": "grid",
               "cards": [
                 {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.out_building_door",
-                      "color": "primary",
-                      "state_content": "last-changed"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.side_gate",
-                      "color": "primary",
-                      "state_content": "last-changed"
-                    }
-                  ],
-                  "title": "Sensors"
+                  "type": "tile",
+                  "entity": "binary_sensor.out_building_door",
+                  "color": "primary",
+                  "state_content": "last-changed"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.side_gate",
+                  "color": "primary",
+                  "state_content": "last-changed"
                 }
-              ]
+              ],
+              "title": "Sensors",
+              "column_span": 1
+            }
+          ],
+          "dense_section_placement": false,
+          "cards": [],
+          "badges": [
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "weather.forecast_home"
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.forecast_home_temperature"
             }
           ]
         },
         {
+          "title": "Lights",
           "path": "lights",
-          "visible": [
+          "icon": "mdi:lightbulb-outline",
+          "type": "sections",
+          "max_columns": 2,
+          "sections": [
             {
-              "user": "aedf768629bf470d833313914d0c458c"
-            },
-            {
-              "user": "0b0bf6c2959e464582093e79aa540066"
-            }
-          ],
-          "icon": "mdi:lightbulb",
-          "subview": true,
-          "title": "Lighting",
-          "badges": [],
-          "cards": [
-            {
-              "square": false,
-              "columns": 2,
               "type": "grid",
               "cards": [
                 {
@@ -2286,40 +2000,11 @@
                   "type": "tile",
                   "entity": "light.garden_light"
                 }
-              ]
-            },
-            {
-              "square": false,
-              "type": "grid",
-              "cards": [
-                {
-                  "type": "tile",
-                  "entity": "switch.adaptive_lighting_upstairs",
-                  "name": "Upstairs",
-                  "hide_state": false,
-                  "vertical": true
-                },
-                {
-                  "type": "tile",
-                  "entity": "switch.adaptive_lighting_kitchen",
-                  "hide_state": false,
-                  "vertical": true,
-                  "name": "Kitchen"
-                },
-                {
-                  "type": "tile",
-                  "entity": "switch.adaptive_lighting_living_room",
-                  "name": "Living Room",
-                  "hide_state": false,
-                  "vertical": true
-                }
               ],
-              "columns": 3,
-              "title": "Adaptive Lighting"
+              "title": "Lights",
+              "column_span": 1
             },
             {
-              "square": false,
-              "columns": 2,
               "type": "grid",
               "cards": [
                 {
@@ -2367,437 +2052,68 @@
                   "entity": "sensor.ben_s_bedroom_dimmer_switch_battery"
                 }
               ],
-              "title": "Batteries"
-            }
-          ]
-        },
-        {
-          "path": "secure",
-          "visible": [
-            {
-              "user": "aedf768629bf470d833313914d0c458c"
-            },
-            {
-              "user": "0b0bf6c2959e464582093e79aa540066"
+              "title": "Battery Status",
+              "column_span": 1
             }
           ],
-          "icon": "mdi:shield",
+          "cards": [],
           "subview": true,
-          "title": "Security",
-          "badges": [],
-          "cards": [
+          "badges": [
             {
-              "square": false,
-              "columns": 1,
-              "type": "grid",
-              "cards": [
-                {
-                  "features": [
-                    {
-                      "type": "alarm-modes",
-                      "modes": [
-                        "armed_home",
-                        "armed_away",
-                        "disarmed"
-                      ]
-                    }
-                  ],
-                  "type": "tile",
-                  "entity": "alarm_control_panel.home_alarm",
-                  "vertical": false,
-                  "hide_state": false,
-                  "state_content": [
-                    "state",
-                    "last-changed"
-                  ]
-                },
-                {
-                  "type": "tile",
-                  "entity": "binary_sensor.glass_break_sensor",
-                  "state_content": "last-changed"
-                },
-                {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "camera_view": "auto",
-                      "type": "picture-glance",
-                      "entities": [
-                        {
-                          "entity": "binary_sensor.front_doorbell_ding"
-                        },
-                        {
-                          "entity": "binary_sensor.front_doorbell_motion"
-                        },
-                        {
-                          "entity": "sensor.front_doorbell_wireless"
-                        },
-                        {
-                          "entity": "sensor.front_doorbell_battery"
-                        }
-                      ],
-                      "camera_image": "camera.front_doorbell_snapshot"
-                    },
-                    {
-                      "camera_view": "auto",
-                      "type": "picture-glance",
-                      "entities": [
-                        {
-                          "entity": "binary_sensor.garden_camera_motion"
-                        },
-                        {
-                          "entity": "sensor.garden_camera_wireless"
-                        },
-                        {
-                          "entity": "sensor.garden_camera_battery"
-                        },
-                        {
-                          "entity": "switch.garden_camera_siren"
-                        }
-                      ],
-                      "camera_image": "camera.garden_camera_snapshot"
-                    },
-                    {
-                      "type": "markdown",
-                      "content": "{% if state_attr('camera.front_doorbell_snapshot', 'timestamp') == none %}\n{% else %}\n{{ state_attr('camera.front_doorbell_snapshot', 'timestamp') | timestamp_local | as_timestamp | timestamp_custom(\"%a %-d %h %-I:%M:%S %p\") }}\n{% endif %}"
-                    },
-                    {
-                      "type": "markdown",
-                      "content": "{% if state_attr('camera.garden_camera_snapshot', 'timestamp') == none %}\n{% else %}\n{{ state_attr('camera.garden_camera_snapshot', 'timestamp') | timestamp_local | as_timestamp | timestamp_custom(\"%a %-d %h %-I:%M:%S %p\") }}\n{% endif %}"
-                    },
-                    {
-                      "camera_view": "auto",
-                      "type": "picture-glance",
-                      "entities": [
-                        {
-                          "entity": "binary_sensor.living_room_camera_motion"
-                        },
-                        {
-                          "entity": "sensor.living_room_camera_wireless"
-                        },
-                        {
-                          "entity": "switch.living_room_camera_siren"
-                        }
-                      ],
-                      "camera_image": "camera.living_room_camera_snapshot"
-                    },
-                    {
-                      "camera_view": "auto",
-                      "type": "picture-glance",
-                      "entities": [
-                        {
-                          "entity": "binary_sensor.bedroom_camera_motion"
-                        },
-                        {
-                          "entity": "sensor.bedroom_camera_wireless"
-                        },
-                        {
-                          "entity": "switch.bedroom_camera_siren"
-                        }
-                      ],
-                      "camera_image": "camera.bedroom_camera_snapshot"
-                    },
-                    {
-                      "type": "markdown",
-                      "content": "{% if state_attr('camera.living_room_camera_snapshot', 'timestamp') == none %}\n{% else %}\n{{ state_attr('camera.living_room_camera_snapshot', 'timestamp') | timestamp_local | as_timestamp | timestamp_custom(\"%a %-d %h %-I:%M:%S %p\") }}\n{% endif %}"
-                    },
-                    {
-                      "type": "markdown",
-                      "content": "{% if state_attr('camera.bedroom_camera_snapshot', 'timestamp') == none %}\n{% else %}\n{{ state_attr('camera.bedroom_camera_snapshot', 'timestamp') | timestamp_local | as_timestamp | timestamp_custom(\"%a %-d %h %-I:%M:%S %p\") }}\n{% endif %}"
-                    }
-                  ],
-                  "title": "Cameras"
-                }
-              ]
+              "type": "entity",
+              "show_name": true,
+              "show_state": false,
+              "show_icon": true,
+              "entity": "switch.adaptive_lighting_kitchen",
+              "name": "Adapt Kitchen",
+              "tap_action": {
+                "action": "toggle"
+              }
             },
             {
-              "square": false,
-              "columns": 1,
-              "type": "grid",
-              "cards": [
-                {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.living_room_motion_sensor",
-                      "name": "Living Room",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.kitchen_motion_sensor",
-                      "name": "Kitchen",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.utility_room_motion_sensor",
-                      "name": "Utility Room",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.hall_motion_sensor",
-                      "name": "Hall",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.landing_motion_sensor",
-                      "name": "Landing",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.bedroom_motion_sensor",
-                      "name": "Bedroom",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.boys_bedroom_motion_sensor",
-                      "name": "Boys' Bedroom",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.ben_s_bedroom_motion_sensor",
-                      "name": "Ben's Bedroom",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    }
-                  ],
-                  "title": "Motion"
-                },
-                {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.front_door",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.back_door",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.out_building_door",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.side_gate",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    }
-                  ],
-                  "title": "Doors"
-                },
-                {
-                  "square": false,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "type": "history-graph",
-                      "entities": [
-                        {
-                          "entity": "binary_sensor.apollo_msr_1_38c3bc_radar_target",
-                          "name": "Bedroom"
-                        },
-                        {
-                          "entity": "binary_sensor.boys_bedroom_presence_sensor_fp2_cf9d_presence_sensor_room",
-                          "name": "Boys' Bedroom"
-                        },
-                        {
-                          "entity": "binary_sensor.everything_presence_lite_214fd8_occupancy",
-                          "name": "Kitchen"
-                        },
-                        {
-                          "entity": "binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room",
-                          "name": "Living Room"
-                        }
-                      ],
-                      "hours_to_show": 8
-                    }
-                  ],
-                  "columns": 1,
-                  "title": "Presence"
-                }
-              ]
+              "type": "entity",
+              "show_name": true,
+              "show_state": false,
+              "show_icon": true,
+              "entity": "switch.adaptive_lighting_living_room",
+              "name": "Adapt Living Room",
+              "tap_action": {
+                "action": "toggle"
+              }
             },
             {
-              "square": false,
-              "columns": 1,
-              "type": "grid",
-              "cards": [
-                {
-                  "square": false,
-                  "columns": 2,
-                  "type": "grid",
-                  "cards": [
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.living_room_window_awning_left",
-                      "state_content": "last-changed",
-                      "color": "primary",
-                      "name": "Left Living Room Awning Window"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.living_room_window_awning_right",
-                      "state_content": "last-changed",
-                      "color": "primary",
-                      "name": "Right Living Room Awning Window"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.living_room_window_casement_left",
-                      "state_content": "last-changed",
-                      "color": "primary",
-                      "name": "Left Living Room Casement Window"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.living_room_window_casement_right",
-                      "state_content": "last-changed",
-                      "color": "primary",
-                      "name": "Right Living Room Casement Window"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.kitchen_window",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.utility_room_window",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.bathroom_window",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.landing_window",
-                      "state_content": "last-changed",
-                      "color": "primary"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.boys_bedroom_window_awning",
-                      "state_content": "last-changed",
-                      "color": "primary",
-                      "name": "Boys' Bedroom Awning Window"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.boys_bedroom_window_casement",
-                      "state_content": "last-changed",
-                      "color": "primary",
-                      "name": "Boys' Bedroom Casement Window"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.bedroom_window_left",
-                      "state_content": "last-changed",
-                      "color": "primary",
-                      "name": "Left Bedroom Window"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.bedroom_window_right",
-                      "state_content": "last-changed",
-                      "color": "primary",
-                      "name": "Right Bedroom Window"
-                    },
-                    {
-                      "type": "tile",
-                      "entity": "binary_sensor.ben_s_bedroom_window",
-                      "state_content": "last-changed",
-                      "color": "primary",
-                      "name": "Ben's Bedroom Window"
-                    }
-                  ],
-                  "title": "Windows"
-                }
-              ]
+              "type": "entity",
+              "show_name": true,
+              "show_state": false,
+              "show_icon": true,
+              "entity": "switch.adaptive_lighting_neil_s_desk",
+              "name": "Adapt Neil's Desk",
+              "tap_action": {
+                "action": "toggle"
+              }
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": false,
+              "show_icon": true,
+              "entity": "switch.adaptive_lighting_upstairs",
+              "name": "Adapt Upstairs",
+              "tap_action": {
+                "action": "toggle"
+              }
             }
           ]
         },
         {
+          "title": "Heat",
           "path": "heat",
-          "visible": [
-            {
-              "user": "aedf768629bf470d833313914d0c458c"
-            },
-            {
-              "user": "0b0bf6c2959e464582093e79aa540066"
-            }
-          ],
           "icon": "mdi:radiator",
+          "type": "sections",
+          "max_columns": 2,
           "subview": true,
-          "title": "Heating",
-          "badges": [],
-          "cards": [
+          "sections": [
             {
-              "square": false,
-              "type": "grid",
-              "cards": [
-                {
-                  "type": "tile",
-                  "entity": "button.wiser_cancel_all_heating_overrides",
-                  "name": "Cancel Overrides",
-                  "hide_state": true,
-                  "vertical": true,
-                  "color": "white"
-                },
-                {
-                  "type": "tile",
-                  "entity": "button.wiser_boost_all_heating",
-                  "name": "Boost All",
-                  "hide_state": true,
-                  "vertical": true,
-                  "color": "white"
-                },
-                {
-                  "type": "tile",
-                  "entity": "switch.wiser_away_mode",
-                  "name": "Away Mode",
-                  "hide_state": false,
-                  "vertical": true,
-                  "color": "primary"
-                }
-              ],
-              "columns": 3
-            },
-            {
-              "square": false,
-              "columns": 2,
               "type": "grid",
               "cards": [
                 {
@@ -2829,7 +2145,11 @@
                   "type": "sensor",
                   "entity": "sensor.wiser_lts_temperature_living_room",
                   "detail": 1,
-                  "name": "Last 12 hours"
+                  "name": "Last 12 hours",
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": 3
+                  }
                 },
                 {
                   "features": [
@@ -2860,8 +2180,40 @@
                   "type": "sensor",
                   "entity": "sensor.wiser_lts_temperature_kitchen",
                   "detail": 1,
-                  "name": "Last 12 hours"
-                },
+                  "name": "Last 12 hours",
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": 3
+                  }
+                }
+              ],
+              "title": "Controls",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "custom:wiser-schedule-card",
+                  "display_only": false,
+                  "admin_only": true,
+                  "theme_colors": true,
+                  "show_badges": true,
+                  "show_schedule_id": false,
+                  "view_type": "default",
+                  "hide_card_borders": false,
+                  "hide_schedule_info": false,
+                  "hide_assignments": false,
+                  "hide_hw_schedule": false,
+                  "name": " "
+                }
+              ],
+              "title": "Schedule",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
                 {
                   "features": [
                     {
@@ -2891,7 +2243,11 @@
                   "type": "sensor",
                   "entity": "sensor.wiser_lts_temperature_bathroom",
                   "detail": 1,
-                  "name": "Last 12 hours"
+                  "name": "Last 12 hours",
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": 3
+                  }
                 },
                 {
                   "features": [
@@ -2922,8 +2278,54 @@
                   "type": "sensor",
                   "entity": "sensor.wiser_lts_temperature_bedroom",
                   "detail": 1,
-                  "name": "Last 12 hours"
+                  "name": "Last 12 hours",
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": 3
+                  }
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_itrv_living_room_battery",
+                  "name": "Living Room"
                 },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_itrv_kitchen_battery",
+                  "name": "Kitchen"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_itrv_bathroom_battery",
+                  "name": "Bathroom"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_itrv_bedroom_battery",
+                  "name": "Bedroom"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_itrv_boys_bedroom_battery",
+                  "name": "Boys' Bedroom"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_itrv_ben_s_bedroom_battery",
+                  "name": "Ben's Bedroom"
+                }
+              ],
+              "title": "Battery Status",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
                 {
                   "features": [
                     {
@@ -2953,7 +2355,11 @@
                   "type": "sensor",
                   "entity": "sensor.wiser_lts_temperature_boys_bedroom",
                   "detail": 1,
-                  "name": "Last 12 hours"
+                  "name": "Last 12 hours",
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": 3
+                  }
                 },
                 {
                   "features": [
@@ -2984,35 +2390,15 @@
                   "type": "sensor",
                   "entity": "sensor.wiser_lts_temperature_ben_s_bedroom",
                   "detail": 1,
-                  "name": "Last 12 hours"
+                  "name": "Last 12 hours",
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": 3
+                  }
                 }
-              ],
-              "title": "Controls"
+              ]
             },
             {
-              "square": false,
-              "type": "grid",
-              "cards": [
-                {
-                  "type": "custom:wiser-schedule-card",
-                  "display_only": false,
-                  "admin_only": true,
-                  "theme_colors": true,
-                  "show_badges": true,
-                  "show_schedule_id": false,
-                  "view_type": "default",
-                  "name": " ",
-                  "hide_card_borders": false,
-                  "hide_schedule_info": false,
-                  "hide_assignments": false,
-                  "hide_hw_schedule": false
-                }
-              ],
-              "columns": 1,
-              "title": "Schedule"
-            },
-            {
-              "square": false,
               "type": "grid",
               "cards": [
                 {
@@ -3031,12 +2417,10 @@
                   "hours_to_show": 12
                 }
               ],
-              "columns": 1,
-              "title": "History"
+              "title": "Temperature History",
+              "column_span": 1
             },
             {
-              "square": false,
-              "columns": 2,
               "type": "grid",
               "cards": [
                 {
@@ -3089,82 +2473,476 @@
                   "name": "Ben's Bedroom Signal"
                 }
               ],
-              "title": "Status"
-            },
-            {
-              "square": false,
-              "columns": 2,
-              "type": "grid",
-              "cards": [
-                {
-                  "type": "tile",
-                  "entity": "sensor.wiser_itrv_living_room_battery",
-                  "name": "Living Room"
-                },
-                {
-                  "type": "tile",
-                  "entity": "sensor.wiser_itrv_kitchen_battery",
-                  "name": "Kitchen"
-                },
-                {
-                  "type": "tile",
-                  "entity": "sensor.wiser_itrv_bathroom_battery",
-                  "name": "Bathroom"
-                },
-                {
-                  "type": "tile",
-                  "entity": "sensor.wiser_itrv_bedroom_battery",
-                  "name": "Bedroom"
-                },
-                {
-                  "type": "tile",
-                  "entity": "sensor.wiser_itrv_boys_bedroom_battery",
-                  "name": "Boys' Bedroom"
-                },
-                {
-                  "type": "tile",
-                  "entity": "sensor.wiser_itrv_ben_s_bedroom_battery",
-                  "name": "Ben's Bedroom"
-                }
-              ],
-              "title": "Batteries"
-            }
-          ]
-        },
-        {
-          "path": "vacuum",
-          "subview": true,
-          "icon": "mdi:robot-vacuum",
-          "visible": [
-            {
-              "user": "0a250f5e6e034571a716062a1eb4b1a5"
-            },
-            {
-              "user": "aedf768629bf470d833313914d0c458c"
-            },
-            {
-              "user": "0b0bf6c2959e464582093e79aa540066"
-            },
-            {
-              "user": "a6e7aae0e0974f19973a41e40c031d32"
+              "title": "System Status",
+              "column_span": 1
             }
           ],
-          "title": "Vacuum",
-          "badges": [],
-          "cards": [
+          "badges": [
             {
-              "square": false,
-              "columns": 1,
+              "type": "entity",
+              "show_name": true,
+              "show_state": false,
+              "show_icon": true,
+              "entity": "button.wiser_cancel_all_heating_overrides",
+              "name": "Cancel Overrides",
+              "tap_action": {
+                "action": "toggle"
+              }
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": false,
+              "show_icon": true,
+              "entity": "button.wiser_boost_all_heating",
+              "name": "Boost All",
+              "tap_action": {
+                "action": "toggle"
+              }
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "switch.wiser_away_mode",
+              "name": "Away Mode",
+              "state_content": [
+                "name",
+                "state"
+              ],
+              "tap_action": {
+                "action": "toggle"
+              }
+            }
+          ],
+          "dense_section_placement": false,
+          "cards": []
+        },
+        {
+          "title": "Secure",
+          "path": "secure",
+          "icon": "mdi:shield-outline",
+          "type": "sections",
+          "max_columns": 2,
+          "subview": true,
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "features": [
+                    {
+                      "type": "alarm-modes",
+                      "modes": [
+                        "armed_home",
+                        "armed_away",
+                        "disarmed"
+                      ]
+                    }
+                  ],
+                  "type": "tile",
+                  "entity": "alarm_control_panel.home_alarm",
+                  "vertical": false,
+                  "hide_state": false,
+                  "state_content": [
+                    "state",
+                    "last-changed"
+                  ],
+                  "layout_options": {
+                    "grid_columns": "full"
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.glass_break_sensor",
+                  "state_content": "last-changed",
+                  "layout_options": {
+                    "grid_columns": "full"
+                  }
+                }
+              ],
+              "column_span": 1,
+              "title": "Alarm"
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "history-graph",
+                  "entities": [
+                    {
+                      "entity": "binary_sensor.apollo_msr_1_38c3bc_radar_target",
+                      "name": "Bedroom"
+                    },
+                    {
+                      "entity": "binary_sensor.boys_bedroom_presence_sensor_fp2_cf9d_presence_sensor_room",
+                      "name": "Boys' Bedroom"
+                    },
+                    {
+                      "entity": "binary_sensor.everything_presence_lite_214fd8_occupancy",
+                      "name": "Kitchen"
+                    },
+                    {
+                      "entity": "binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room",
+                      "name": "Living Room"
+                    }
+                  ],
+                  "hours_to_show": 8
+                }
+              ],
+              "title": "Occupancy",
+              "column_span": 1
+            },
+            {
               "type": "grid",
               "cards": [
                 {
                   "type": "tile",
-                  "entity": "vacuum.deebot_ozmo_920",
-                  "vertical": false,
-                  "state_content": [
-                    "state",
-                    "fan_speed"
+                  "entity": "binary_sensor.living_room_motion_sensor",
+                  "name": "Living Room",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.kitchen_motion_sensor",
+                  "name": "Kitchen",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.utility_room_motion_sensor",
+                  "name": "Utility Room",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.hall_motion_sensor",
+                  "name": "Hall",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.landing_motion_sensor",
+                  "name": "Landing",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.bedroom_motion_sensor",
+                  "name": "Bedroom",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.boys_bedroom_motion_sensor",
+                  "name": "Boys' Bedroom",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.ben_s_bedroom_motion_sensor",
+                  "name": "Ben's Bedroom",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                }
+              ],
+              "title": "Motion Sensors",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.living_room_motion_sensor",
+                  "name": "Living Room",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.kitchen_motion_sensor",
+                  "name": "Kitchen",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.utility_room_motion_sensor",
+                  "name": "Utility Room",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.hall_motion_sensor",
+                  "name": "Hall",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.landing_motion_sensor",
+                  "name": "Landing",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.bedroom_motion_sensor",
+                  "name": "Bedroom",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.boys_bedroom_motion_sensor",
+                  "name": "Boys' Bedroom",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.ben_s_bedroom_motion_sensor",
+                  "name": "Ben's Bedroom",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                }
+              ],
+              "title": "Door Sensors",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.living_room_window_awning_left",
+                  "state_content": "last-changed",
+                  "color": "primary",
+                  "name": "Left Living Room Awning Window"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.living_room_window_awning_right",
+                  "state_content": "last-changed",
+                  "color": "primary",
+                  "name": "Right Living Room Awning Window"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.living_room_window_casement_left",
+                  "state_content": "last-changed",
+                  "color": "primary",
+                  "name": "Left Living Room Casement Window"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.living_room_window_casement_right",
+                  "state_content": "last-changed",
+                  "color": "primary",
+                  "name": "Right Living Room Casement Window"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.kitchen_window",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.utility_room_window",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.bathroom_window",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.landing_window",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.boys_bedroom_window_awning",
+                  "state_content": "last-changed",
+                  "color": "primary",
+                  "name": "Boys' Bedroom Awning Window"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.boys_bedroom_window_casement",
+                  "state_content": "last-changed",
+                  "color": "primary",
+                  "name": "Boys' Bedroom Casement Window"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.bedroom_window_left",
+                  "state_content": "last-changed",
+                  "color": "primary"
+                }
+              ],
+              "title": "Window Sensors",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "camera_view": "auto",
+                  "type": "picture-glance",
+                  "entities": [
+                    {
+                      "entity": "binary_sensor.front_doorbell_ding"
+                    },
+                    {
+                      "entity": "binary_sensor.front_doorbell_motion"
+                    },
+                    {
+                      "entity": "sensor.front_doorbell_wireless"
+                    },
+                    {
+                      "entity": "sensor.front_doorbell_battery"
+                    }
                   ],
+                  "camera_image": "camera.front_doorbell_camera",
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": "auto"
+                  }
+                },
+                {
+                  "camera_view": "auto",
+                  "type": "picture-glance",
+                  "entities": [
+                    {
+                      "entity": "binary_sensor.garden_camera_motion"
+                    },
+                    {
+                      "entity": "sensor.garden_camera_wireless"
+                    },
+                    {
+                      "entity": "sensor.garden_camera_battery"
+                    },
+                    {
+                      "entity": "switch.garden_camera_siren"
+                    }
+                  ],
+                  "camera_image": "camera.garden_camera",
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": "auto"
+                  },
+                  "entity": "camera.garden_camera"
+                },
+                {
+                  "type": "markdown",
+                  "content": "{% if state_attr('camera.front_doorbell_snapshot', 'timestamp') == none %}\n{% else %}\n{{ state_attr('camera.front_doorbell_snapshot', 'timestamp') | timestamp_local | as_timestamp | timestamp_custom(\"%a %-d %h %-I:%M:%S %p\") }}\n{% endif %}",
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": "auto"
+                  }
+                },
+                {
+                  "type": "markdown",
+                  "content": "{% if state_attr('camera.garden_camera_snapshot', 'timestamp') == none %}\n{% else %}\n{{ state_attr('camera.garden_camera_snapshot', 'timestamp') | timestamp_local | as_timestamp | timestamp_custom(\"%a %-d %h %-I:%M:%S %p\") }}\n{% endif %}",
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": "auto"
+                  }
+                },
+                {
+                  "camera_view": "auto",
+                  "type": "picture-glance",
+                  "entities": [
+                    {
+                      "entity": "binary_sensor.living_room_camera_motion"
+                    },
+                    {
+                      "entity": "sensor.living_room_camera_wireless"
+                    },
+                    {
+                      "entity": "switch.living_room_camera_siren"
+                    }
+                  ],
+                  "camera_image": "camera.living_room_camera",
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": "auto"
+                  },
+                  "entity": "camera.living_room_camera"
+                },
+                {
+                  "camera_view": "auto",
+                  "type": "picture-glance",
+                  "entities": [
+                    {
+                      "entity": "binary_sensor.bedroom_camera_motion"
+                    },
+                    {
+                      "entity": "sensor.bedroom_camera_wireless"
+                    },
+                    {
+                      "entity": "switch.bedroom_camera_siren"
+                    }
+                  ],
+                  "camera_image": "camera.bedroom_camera",
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": "auto"
+                  },
+                  "entity": "camera.bedroom_camera"
+                },
+                {
+                  "type": "markdown",
+                  "content": "{% if state_attr('camera.living_room_camera_snapshot', 'timestamp') == none %}\n{% else %}\n{{ state_attr('camera.living_room_camera_snapshot', 'timestamp') | timestamp_local | as_timestamp | timestamp_custom(\"%a %-d %h %-I:%M:%S %p\") }}\n{% endif %}",
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": "auto"
+                  }
+                },
+                {
+                  "type": "markdown",
+                  "content": "{% if state_attr('camera.bedroom_camera_snapshot', 'timestamp') == none %}\n{% else %}\n{{ state_attr('camera.bedroom_camera_snapshot', 'timestamp') | timestamp_local | as_timestamp | timestamp_custom(\"%a %-d %h %-I:%M:%S %p\") }}\n{% endif %}",
+                  "layout_options": {
+                    "grid_columns": 2,
+                    "grid_rows": "auto"
+                  }
+                }
+              ],
+              "title": "Cameras",
+              "column_span": 1
+            }
+          ],
+          "cards": [],
+          "dense_section_placement": false
+        },
+        {
+          "title": "Vacuum",
+          "path": "vacuum",
+          "icon": "mdi:robot-vacuum",
+          "subview": true,
+          "type": "sections",
+          "max_columns": 2,
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
                   "features": [
                     {
                       "type": "vacuum-commands",
@@ -3175,7 +2953,18 @@
                         "return_home"
                       ]
                     }
-                  ]
+                  ],
+                  "type": "tile",
+                  "entity": "vacuum.deebot_ozmo_920",
+                  "vertical": false,
+                  "state_content": [
+                    "state",
+                    "fan_speed"
+                  ],
+                  "layout_options": {
+                    "grid_columns": "full"
+                  },
+                  "name": " "
                 },
                 {
                   "show_state": false,
@@ -3192,11 +2981,11 @@
                     "action": "none"
                   }
                 }
-              ]
+              ],
+              "title": "DEEBOT OZMO 920",
+              "column_span": 1
             },
             {
-              "square": false,
-              "columns": 1,
               "type": "grid",
               "cards": [
                 {
@@ -3219,7 +3008,12 @@
                   "state_content": [
                     "state",
                     "fan_speed"
-                  ]
+                  ],
+                  "layout_options": {
+                    "grid_columns": "full",
+                    "grid_rows": 2
+                  },
+                  "name": " "
                 },
                 {
                   "show_state": false,
@@ -3236,20 +3030,22 @@
                     "action": "none"
                   }
                 }
-              ]
+              ],
+              "title": "DEEBOT T9",
+              "column_span": 1
             }
-          ]
+          ],
+          "cards": []
         },
         {
+          "title": "Meal Planning",
           "path": "meal-planning",
           "icon": "mdi:chef-hat",
+          "type": "sections",
+          "max_columns": 2,
           "subview": true,
-          "title": "Meal Planning",
-          "badges": [],
-          "cards": [
+          "sections": [
             {
-              "square": false,
-              "columns": 1,
               "type": "grid",
               "cards": [
                 {
@@ -3260,11 +3056,10 @@
                   ]
                 }
               ],
-              "title": "Meal Planning"
+              "title": "Meal Calendar",
+              "column_span": 1
             },
             {
-              "square": true,
-              "columns": 1,
               "type": "grid",
               "cards": [
                 {
@@ -3272,9 +3067,11 @@
                   "entity": "todo.shopping_list"
                 }
               ],
-              "title": "Shopping List"
+              "title": "Shopping List",
+              "column_span": 1
             }
-          ]
+          ],
+          "cards": []
         }
       ]
     }

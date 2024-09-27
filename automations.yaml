@@ -689,24 +689,27 @@
       entity_id: alarm_control_panel.home_alarm
       state: armed_away
     then:
-    - service: light.turn_off
-      data: {}
+    - data: {}
       target:
         floor_id: downstairs
         area_id:
-        - bedroom
         - boys_bedroom
         - ben_s_bedroom
-    - service: switch.turn_on
-      data: {}
+        entity_id:
+        - light.bedroom_light
+        - light.bedroom_mirror_light
+        - light.bedroom_air_purifier_night_light
+      action: light.turn_off
+    - data: {}
       target:
         entity_id: switch.wiser_away_mode
-    - service: media_player.turn_off
-      data: {}
+      action: switch.turn_on
+    - data: {}
       target:
         floor_id:
         - downstairs
         - upstairs
+      action: media_player.turn_off
   mode: restart
 - id: '1669789669778'
   alias: Living Room - TV - Presence
@@ -1751,15 +1754,13 @@
   trigger:
   - platform: state
     entity_id:
-    - binary_sensor.neils_iphone_focus
-    - binary_sensor.l1fwcyfgxnmbp_audio_input_in_use
+    - light.neil_s_monitor_light_bar
     from: 'off'
     to: 'on'
     id: '1'
   - platform: state
     entity_id:
-    - binary_sensor.neils_iphone_focus
-    - binary_sensor.l1fwcyfgxnmbp_audio_input_in_use
+    - light.neil_s_monitor_light_bar
     from: 'on'
     to: 'off'
     id: '2'
@@ -2941,59 +2942,38 @@
   alias: Bedroom - Lighting - Neil Work Lights - Computer
   description: ''
   trigger:
-  - platform: state
-    entity_id:
-    - sensor.l1fwcyfgxnmbp_frontmost_app
+  - platform: webhook
+    allowed_methods:
+    - POST
+    - PUT
+    local_only: true
+    webhook_id: bedroom-lighting-neil-work-lights-computer-9a9Q0CZNv4LMQoFag2gn8CGx
     id: '1'
-    from: loginwindow
-  - platform: state
-    entity_id:
-    - sensor.l1fwcyfgxnmbp_frontmost_app
-    to: loginwindow
+  - platform: webhook
+    allowed_methods:
+    - POST
+    - PUT
+    local_only: true
+    webhook_id: bedroom-lighting-neil-work-lights-computer-w9EUavyek0W_1FS7B6YbLx70
     id: '2'
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 5
   - platform: state
     entity_id:
     - light.bedroom_light
     from: 'on'
     to: 'off'
     id: '2'
-  - platform: state
-    entity_id:
-    - light.bedroom_light
-    from: 'off'
-    to: 'on'
-    id: '3'
   condition: []
   action:
   - choose:
     - conditions:
-      - condition: or
-        conditions:
-        - condition: and
-          conditions:
-          - condition: trigger
-            id:
-            - '3'
-          - condition: state
-            entity_id: person.neil
-            state: home
-          - condition: not
-            conditions:
-            - condition: state
-              entity_id: sensor.l1fwcyfgxnmbp_frontmost_app
-              state: loginwindow
-        - condition: trigger
-          id: '1'
       - condition: state
         entity_id: light.bedside_lights
         state: 'off'
       - condition: state
         entity_id: person.neil
         state: home
+      - condition: trigger
+        id: '1'
       sequence:
       - data:
           brightness_pct: 1
@@ -3483,28 +3463,74 @@
         - '1'
       - condition: numeric_state
         entity_id: sensor.forecast_home_temperature
-        below: 17
+        below: 16
       sequence:
-      - service: switch.turn_on
-        data: {}
+      - data: {}
         target:
           entity_id: switch.wiser_away_mode
-      - service: notify.mobile_app_neils_iphone
-        data:
+        action: switch.turn_on
+      - data:
           message: Back door open, turning heating off!
-      - service: notify.mobile_app_heathers_iphone
-        data:
+        action: notify.mobile_app_neils_iphone
+      - data:
           message: Back door open, turning heating off!
+        action: notify.mobile_app_heathers_iphone
+      - if:
+        - condition: or
+          conditions:
+          - condition: state
+            entity_id: person.kyle
+            state: home
+          - condition: state
+            entity_id: person.liam
+            state: home
+        - condition: time
+          after: 06:00:00
+          before: '21:15:00'
+        then:
+        - repeat:
+            sequence:
+            - action: media_player.volume_set
+              metadata: {}
+              data:
+                volume_level: 1
+              target:
+                entity_id: media_player.boys_echo_dot
+            - action: notify.alexa_media
+              data:
+                message: Please close the back door!
+                data:
+                  method: all
+                  type: announce
+                target:
+                - Boys' Echo Dot
+                - Living Room Echo Dot
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 10
+                milliseconds: 0
+            until:
+            - condition: state
+              entity_id: binary_sensor.back_door
+              state: 'off'
+        - action: media_player.volume_set
+          metadata: {}
+          data:
+            volume_level: 0.3
+          target:
+            entity_id: media_player.boys_echo_dot
     - conditions:
       - condition: trigger
         id:
         - '2'
       sequence:
-      - service: switch.turn_off
-        data: {}
+      - data: {}
         target:
           entity_id: switch.wiser_away_mode
-  mode: single
+        action: switch.turn_off
+  mode: parallel
+  max: 10
 - id: '1699796093596'
   alias: Home - Kyle - Notify For School
   description: ''
@@ -4325,51 +4351,6 @@
         brightness: 255
       target:
         entity_id: light.living_room_light
-  mode: single
-- id: '1716132895435'
-  alias: Bedroom - Air Quality - CO2
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id:
-    - sensor.apollo_msr_1_38c3bc_co2
-    above: 1000
-    id: '1'
-  - platform: numeric_state
-    entity_id:
-    - sensor.apollo_msr_1_38c3bc_co2
-    id: '2'
-    below: 1000
-  condition: []
-  action:
-  - choose:
-    - conditions:
-      - condition: trigger
-        id:
-        - '1'
-      - condition: time
-        after: 05:45:00
-        before: '21:30:00'
-      sequence:
-      - service: light.turn_on
-        metadata: {}
-        data:
-          rgb_color:
-          - 255
-          - 0
-          - 0
-        target:
-          entity_id: light.apollo_msr_1_38c3bc_rgb_light
-    - conditions:
-      - condition: trigger
-        id:
-        - '2'
-      sequence:
-      - service: light.turn_off
-        target:
-          entity_id:
-          - light.apollo_msr_1_38c3bc_rgb_light
-        data: {}
   mode: single
 - id: '1718826325938'
   alias: Living Room - Window - Workout Power
