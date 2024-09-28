@@ -1722,7 +1722,7 @@
               "show_name": false,
               "show_state": true,
               "show_icon": true,
-              "entity": "sensor.boys_bedroom_dehumidifier_humidity"
+              "entity": "sensor.ben_s_bedroom_humidity"
             }
           ]
         },
@@ -1848,7 +1848,7 @@
                       "entity": "switch.garden_camera_siren"
                     }
                   ],
-                  "camera_image": "camera.garden_camera",
+                  "camera_image": "Garden Camer",
                   "entity": "camera.garden_camera"
                 },
                 {
@@ -2194,27 +2194,6 @@
               "type": "grid",
               "cards": [
                 {
-                  "type": "custom:wiser-schedule-card",
-                  "display_only": false,
-                  "admin_only": true,
-                  "theme_colors": true,
-                  "show_badges": true,
-                  "show_schedule_id": false,
-                  "view_type": "default",
-                  "hide_card_borders": false,
-                  "hide_schedule_info": false,
-                  "hide_assignments": false,
-                  "hide_hw_schedule": false,
-                  "name": " "
-                }
-              ],
-              "title": "Schedule",
-              "column_span": 1
-            },
-            {
-              "type": "grid",
-              "cards": [
-                {
                   "features": [
                     {
                       "type": "target-temperature"
@@ -2290,43 +2269,6 @@
               "type": "grid",
               "cards": [
                 {
-                  "type": "tile",
-                  "entity": "sensor.wiser_itrv_living_room_battery",
-                  "name": "Living Room"
-                },
-                {
-                  "type": "tile",
-                  "entity": "sensor.wiser_itrv_kitchen_battery",
-                  "name": "Kitchen"
-                },
-                {
-                  "type": "tile",
-                  "entity": "sensor.wiser_itrv_bathroom_battery",
-                  "name": "Bathroom"
-                },
-                {
-                  "type": "tile",
-                  "entity": "sensor.wiser_itrv_bedroom_battery",
-                  "name": "Bedroom"
-                },
-                {
-                  "type": "tile",
-                  "entity": "sensor.wiser_itrv_boys_bedroom_battery",
-                  "name": "Boys' Bedroom"
-                },
-                {
-                  "type": "tile",
-                  "entity": "sensor.wiser_itrv_ben_s_bedroom_battery",
-                  "name": "Ben's Bedroom"
-                }
-              ],
-              "title": "Battery Status",
-              "column_span": 1
-            },
-            {
-              "type": "grid",
-              "cards": [
-                {
                   "features": [
                     {
                       "type": "target-temperature"
@@ -2397,6 +2339,64 @@
                   }
                 }
               ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "custom:wiser-schedule-card",
+                  "display_only": false,
+                  "admin_only": true,
+                  "theme_colors": true,
+                  "show_badges": true,
+                  "show_schedule_id": false,
+                  "view_type": "default",
+                  "hide_card_borders": false,
+                  "hide_schedule_info": false,
+                  "hide_assignments": false,
+                  "hide_hw_schedule": false,
+                  "name": " "
+                }
+              ],
+              "title": "Schedule",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_itrv_living_room_battery",
+                  "name": "Living Room"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_itrv_kitchen_battery",
+                  "name": "Kitchen"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_itrv_bathroom_battery",
+                  "name": "Bathroom"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_itrv_bedroom_battery",
+                  "name": "Bedroom"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_itrv_boys_bedroom_battery",
+                  "name": "Boys' Bedroom"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_itrv_ben_s_bedroom_battery",
+                  "name": "Ben's Bedroom"
+                }
+              ],
+              "title": "Battery Status",
+              "column_span": 1
             },
             {
               "type": "grid",
@@ -2502,15 +2502,11 @@
             },
             {
               "type": "entity",
-              "show_name": false,
-              "show_state": true,
+              "show_name": true,
+              "show_state": false,
               "show_icon": true,
               "entity": "switch.wiser_away_mode",
               "name": "Away Mode",
-              "state_content": [
-                "name",
-                "state"
-              ],
               "tap_action": {
                 "action": "toggle"
               }
