@@ -86,24 +86,20 @@
         entity_id: binary_sensor.bedroom_window_right
         state: 'off'
       sequence:
-      - service: light.turn_on
-        metadata: {}
+      - metadata: {}
         data: {}
         target:
           entity_id: light.bedroom_light
+        action: light.turn_on
     - conditions:
       - condition: trigger
         id:
         - '2'
       sequence:
-      - service: light.turn_off
-        data: {}
+      - data: {}
         target:
-          entity_id:
-          - light.bedroom_light
-          - light.bedside_lights
-          - light.bedroom_mirror_light
-          - light.bedroom_air_purifier_night_light
+          area_id: bedroom
+        action: light.turn_off
   mode: single
 - id: '1669642513302'
   alias: Bedroom - Air Purifier - Presence
@@ -1670,17 +1666,6 @@
   - condition: state
     entity_id: binary_sensor.bluespike_kyle_s_mac_mini_wireless_connected
     state: 'on'
-  - condition: not
-    conditions:
-    - condition: and
-      conditions:
-      - condition: state
-        entity_id: calendar.school_term_dates_2024_2027
-        state: 'on'
-      - condition: state
-        entity_id: calendar.school_term_dates_2024_2027
-        state: Holiday
-        attribute: message
   - condition: time
     weekday:
     - mon
@@ -1690,6 +1675,9 @@
     - fri
   - condition: state
     entity_id: calendar.united_kingdom_eng
+    state: 'off'
+  - condition: state
+    entity_id: calendar.school_holidays
     state: 'off'
   action:
   - data:
@@ -2236,6 +2224,17 @@
   trigger:
   - platform: state
     entity_id:
+    - person.neil
+    - person.heather
+    - person.jess
+    - person.ben
+    - person.liam
+    - person.kyle
+    from: not_home
+    to: home
+    id: '1'
+  - platform: state
+    entity_id:
     - binary_sensor.front_door
     from: 'off'
     to: 'on'
@@ -2267,15 +2266,15 @@
         entity_id: sensor.sun_solar_elevation
         below: -4
       sequence:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 50
         target:
           entity_id: light.porch_light
-      - service: timer.start
-        data: {}
+        action: light.turn_on
+      - data: {}
         target:
           entity_id: timer.porch_light_timer
+        action: timer.start
     - conditions:
       - condition: trigger
         id: '2'
@@ -2292,15 +2291,15 @@
             from: 'on'
             to: 'off'
           continue_on_timeout: false
-        - service: light.turn_off
-          data: {}
+        - data: {}
           target:
             area_id: porch
+          action: light.turn_off
         else:
-        - service: light.turn_off
-          data: {}
+        - data: {}
           target:
             area_id: porch
+          action: light.turn_off
   mode: restart
 - id: '1673080723577'
   alias: Hall - Lighting - Motion
@@ -2942,19 +2941,17 @@
   alias: Bedroom - Lighting - Neil Work Lights - Computer
   description: ''
   trigger:
-  - platform: webhook
-    allowed_methods:
-    - POST
-    - PUT
-    local_only: true
-    webhook_id: bedroom-lighting-neil-work-lights-computer-9a9Q0CZNv4LMQoFag2gn8CGx
+  - platform: state
+    entity_id:
+    - binary_sensor.bluespike_l1fwcyfgxnmbp_284660_wireless_connected
+    from: 'off'
+    to: 'on'
     id: '1'
-  - platform: webhook
-    allowed_methods:
-    - POST
-    - PUT
-    local_only: true
-    webhook_id: bedroom-lighting-neil-work-lights-computer-w9EUavyek0W_1FS7B6YbLx70
+  - platform: state
+    entity_id:
+    - binary_sensor.bluespike_l1fwcyfgxnmbp_284660_wireless_connected
+    from: 'on'
+    to: 'off'
     id: '2'
   - platform: state
     entity_id:
@@ -3538,17 +3535,6 @@
   - platform: time
     at: 08:05:00
   condition:
-  - condition: not
-    conditions:
-    - condition: and
-      conditions:
-      - condition: state
-        entity_id: calendar.school_term_dates_2024_2027
-        state: 'on'
-      - condition: state
-        entity_id: calendar.school_term_dates_2024_2027
-        state: Holiday
-        attribute: message
   - condition: time
     weekday:
     - mon
@@ -3558,6 +3544,9 @@
     - fri
   - condition: state
     entity_id: calendar.united_kingdom_eng
+    state: 'off'
+  - condition: state
+    entity_id: calendar.school_holidays
     state: 'off'
   action:
   - data:
@@ -4463,4 +4452,25 @@
   - action: script.living_room_tv_volume_reset
     metadata: {}
     data: {}
+  mode: single
+- id: '1727710355482'
+  alias: Bedroom - Lighting - Neil's Work Lights On When Light On
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - light.bedroom_light
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.bluespike_l1fwcyfgxnmbp_284660_wireless_connected
+    state: 'on'
+  action:
+  - action: light.turn_on
+    data: {}
+    target:
+      entity_id:
+      - light.neils_desk_filament_lamp
+      - light.neil_s_monitor_light_bar
   mode: single
