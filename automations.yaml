@@ -2947,6 +2947,10 @@
     from: 'off'
     to: 'on'
     id: '1'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 15
   - platform: state
     entity_id:
     - binary_sensor.bluespike_l1fwcyfgxnmbp_284660_wireless_connected
@@ -3021,17 +3025,17 @@
       - condition: trigger
         id: '1'
       sequence:
-      - service: climate.set_hvac_mode
-        data:
+      - data:
           hvac_mode: 'off'
         target:
           entity_id:
           - climate.wiser_boys_bedroom
-      - service: humidifier.turn_off
-        metadata: {}
+        action: climate.set_hvac_mode
+      - metadata: {}
         data: {}
         target:
           entity_id: humidifier.boys_bedroom_dehumidifier_none
+        action: humidifier.turn_off
     - conditions:
       - condition: trigger
         id: '2'
@@ -3040,28 +3044,28 @@
         - condition: or
           conditions:
           - condition: state
-            entity_id: person.ben
+            entity_id: person.kyle
             state: home
           - condition: state
             entity_id: person.liam
             state: home
         then:
-        - service: climate.set_hvac_mode
-          data:
+        - data:
             hvac_mode: auto
           target:
             entity_id:
             - climate.wiser_boys_bedroom
+          action: climate.set_hvac_mode
       - if:
         - condition: time
           after: 06:30:00
           before: '21:30:00'
         then:
-        - service: humidifier.turn_on
-          metadata: {}
+        - metadata: {}
           data: {}
           target:
             entity_id: humidifier.boys_bedroom_dehumidifier_none
+          action: humidifier.turn_on
   mode: single
 - id: '1684056329158'
   alias: Ben's Bedroom - Heating - Window Off
@@ -3086,12 +3090,17 @@
       - condition: trigger
         id: '1'
       sequence:
-      - service: climate.set_hvac_mode
-        data:
+      - data:
           hvac_mode: 'off'
         target:
           entity_id:
           - climate.wiser_ben_s_bedroom
+        action: climate.set_hvac_mode
+      - action: humidifier.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: humidifier.ben_s_bedroom_dehumidifier_none
     - conditions:
       - condition: trigger
         id: '2'
@@ -3099,12 +3108,23 @@
         entity_id: person.ben
         state: home
       sequence:
-      - service: climate.set_hvac_mode
-        data:
+      - data:
           hvac_mode: auto
         target:
           entity_id:
           - climate.wiser_ben_s_bedroom
+        action: climate.set_hvac_mode
+      - action: humidifier.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+      - action: humidifier.set_humidity
+        metadata: {}
+        data:
+          humidity: 55
+        target:
+          entity_id: humidifier.ben_s_bedroom_dehumidifier_none
   mode: single
 - id: '1684056750541'
   alias: Bedroom - Heating - Windows Off
@@ -4473,4 +4493,51 @@
       entity_id:
       - light.neils_desk_filament_lamp
       - light.neil_s_monitor_light_bar
+  mode: single
+- id: '1727725678638'
+  alias: Ben's Bedroom - Dehumidifier - Schedule
+  description: ''
+  trigger:
+  - platform: time
+    at: 05:45:00
+    id: '1'
+  - platform: time
+    at: '21:30:00'
+    id: '2'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - '1'
+      - condition: state
+        entity_id: binary_sensor.ben_s_bedroom_window
+        state: 'off'
+      sequence:
+      - data: {}
+        action: humidifier.turn_on
+        target:
+          entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+      - action: humidifier.set_mode
+        metadata: {}
+        data:
+          mode: boost
+        target:
+          entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+      - data:
+          humidity: 55
+        action: humidifier.set_humidity
+        target:
+          entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+    - conditions:
+      - condition: trigger
+        id:
+        - '2'
+      sequence:
+      - action: humidifier.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: humidifier.ben_s_bedroom_dehumidifier_none
   mode: single
