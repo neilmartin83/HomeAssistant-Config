@@ -2304,39 +2304,44 @@
 - id: '1673080723577'
   alias: Hall - Lighting - Motion
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.hall_motion_sensor
     from: 'off'
     to: 'on'
     id: '1'
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - binary_sensor.front_door
     from: 'off'
     to: 'on'
     id: '1'
-  - platform: event
-    event_type: timer.finished
+    trigger: state
+  - event_type: timer.finished
     event_data:
       entity_id: timer.hall_light_timer
     id: '2'
-  - platform: state
-    entity_id:
+    trigger: event
+  - entity_id:
     - binary_sensor.hall_motion_sensor
     from: 'on'
     to: 'off'
     id: '2'
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: trigger
         id: '1'
-      - condition: numeric_state
-        entity_id: sensor.everything_presence_lite_2fbc58_illuminance
-        below: 0.3
+      - condition: or
+        conditions:
+        - condition: numeric_state
+          entity_id: sensor.everything_presence_lite_2fbc58_illuminance
+          below: 0.3
+        - condition: state
+          entity_id: light.landing_light
+          state: 'on'
       sequence:
       - data:
           brightness_pct: 1
@@ -2358,11 +2363,11 @@
             state: 'on'
           sequence:
           - wait_for_trigger:
-            - platform: state
-              entity_id:
+            - entity_id:
               - binary_sensor.hall_motion_sensor
               from: 'on'
               to: 'off'
+              trigger: state
             continue_on_timeout: false
           - data: {}
             target:
@@ -2374,11 +2379,11 @@
             state: active
           sequence:
           - wait_for_trigger:
-            - platform: state
-              entity_id:
+            - entity_id:
               - timer.hall_light_timer
               from: active
               to: idle
+              trigger: state
             continue_on_timeout: false
           - data: {}
             target:
@@ -3450,9 +3455,8 @@
 - id: '1696061969620'
   alias: Home - Heating - Back Door
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.back_door
     from: 'off'
     to: 'on'
@@ -3461,8 +3465,8 @@
       minutes: 5
       seconds: 0
     id: '1'
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - binary_sensor.back_door
     from: 'on'
     to: 'off'
@@ -3471,8 +3475,9 @@
       hours: 0
       minutes: 5
       seconds: 0
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: trigger
@@ -3512,7 +3517,9 @@
               data:
                 volume_level: 1
               target:
-                entity_id: media_player.boys_echo_dot
+                entity_id:
+                - media_player.boys_echo_dot
+                - media_player.ben_s_echo_dot
             - action: notify.alexa_media
               data:
                 message: Please close the back door!
@@ -3520,6 +3527,7 @@
                   method: all
                   type: announce
                 target:
+                - Ben's Echo Dot
                 - Boys' Echo Dot
                 - Living Room Echo Dot
             - delay:
@@ -3536,7 +3544,9 @@
           data:
             volume_level: 0.3
           target:
-            entity_id: media_player.boys_echo_dot
+            entity_id:
+            - media_player.boys_echo_dot
+            - media_player.ben_s_echo_dot
     - conditions:
       - condition: trigger
         id:
