@@ -48,6 +48,8 @@ switch:
     mode: mired
   - platform: flux
     lights:
+      - light.heathers_bedside_lamp
       - light.neils_desk_filament_lamp
-    name: "Adaptive Lighting Neil's Desk"
+      - light.neils_bedside_lamp
+    name: "Adaptive Lighting Bedroom Lamps"
     brightness: 1

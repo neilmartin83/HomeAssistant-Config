@@ -2193,11 +2193,12 @@
               "show_name": true,
               "show_state": false,
               "show_icon": true,
-              "entity": "switch.adaptive_lighting_neil_s_desk",
-              "name": "Adapt Neil's Desk",
+              "entity": "switch.adaptive_lighting_bedroom_lamps",
+              "name": "Adapt Bedroom Lamps",
               "tap_action": {
                 "action": "toggle"
-              }
+              },
+              "color": ""
             },
             {
               "type": "entity",
