@@ -1367,19 +1367,13 @@
 - id: '1670862806854'
   alias: Landing - Lighting - Presence
   description: ''
-  trigger:
-  - platform: state
+  triggers:
+  - trigger: numeric_state
     entity_id:
-    - binary_sensor.everything_presence_lite_2fbc58_occupancy
-    to: 'off'
-    for:
-      hours: 0
-      minutes: 5
-      seconds: 0
-    from: 'on'
-    id: '2'
-  - platform: state
-    entity_id:
+    - sensor.everything_presence_lite_2fbc58_illuminance
+    below: 0.3
+    id: '1'
+  - entity_id:
     - binary_sensor.everything_presence_lite_2fbc58_occupancy
     - binary_sensor.hall_motion_sensor
     to: 'on'
@@ -1389,8 +1383,18 @@
       seconds: 0
     from: 'off'
     id: '1'
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
+    - binary_sensor.everything_presence_lite_2fbc58_occupancy
+    to: 'off'
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    from: 'on'
+    id: '2'
+    trigger: state
+  - entity_id:
     - binary_sensor.hall_motion_sensor
     for:
       hours: 0
@@ -1399,16 +1403,22 @@
     from: 'on'
     id: '3'
     to: 'off'
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - choose:
     - conditions:
-      - condition: numeric_state
-        entity_id: sensor.everything_presence_lite_2fbc58_illuminance
-        below: 0.3
       - condition: trigger
         id:
         - '1'
+      - condition: or
+        conditions:
+        - condition: numeric_state
+          entity_id: sensor.everything_presence_lite_2fbc58_illuminance
+          below: 0.3
+        - condition: state
+          entity_id: binary_sensor.everything_presence_lite_2fbc58_occupancy
+          state: 'on'
       sequence:
       - action: light.turn_on
         metadata: {}

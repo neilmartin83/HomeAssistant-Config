@@ -201,6 +201,11 @@ home_tv_turn_on:
   sequence:
   - data: {}
     action: alexa_media.update_last_called
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
   - choose:
     - conditions:
       - condition: state
@@ -235,6 +240,11 @@ home_tv_turn_off:
   sequence:
   - data: {}
     action: alexa_media.update_last_called
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
   - choose:
     - conditions:
       - condition: state

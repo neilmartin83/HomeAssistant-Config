@@ -8,9 +8,6 @@ esphome:
   name_add_mac_suffix: false
   friendly_name: ${friendly_name}
 
-esp8266:
-  early_pin_init: false
-
 api:
   encryption:
     key: !secret localbytes-plug-pm-f0a822_api_encryption_key
