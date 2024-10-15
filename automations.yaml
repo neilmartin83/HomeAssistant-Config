@@ -36,9 +36,8 @@
 - id: '1669642353245'
   alias: Bedroom - Lighting - Presence
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.apollo_msr_1_38c3bc_radar_zone_3_occupancy
     from: 'off'
     to: 'on'
@@ -47,8 +46,8 @@
       hours: 0
       minutes: 0
       seconds: 1
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - binary_sensor.apollo_msr_1_38c3bc_radar_target
     to: 'off'
     for:
@@ -57,8 +56,9 @@
       seconds: 0
     from: 'on'
     id: '2'
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: time
@@ -84,6 +84,9 @@
           state: 'on'
       - condition: state
         entity_id: binary_sensor.bedroom_window_right
+        state: 'off'
+      - condition: state
+        entity_id: light.bedside_lights
         state: 'off'
       sequence:
       - metadata: {}
