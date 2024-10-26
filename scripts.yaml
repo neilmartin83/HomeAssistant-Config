@@ -41,6 +41,12 @@ ben_s_bedroom_all_devices_off:
     action: media_player.play_media
     target:
       entity_id: media_player.ben_s_echo_dot
+  - action: select.select_option
+    metadata: {}
+    data:
+      option: Light Off
+    target:
+      entity_id: select.ben_s_bedroom_dehumidifier_light_mode
   mode: single
 home_alarm_arm_away:
   alias: Home - Alarm - Arm Away

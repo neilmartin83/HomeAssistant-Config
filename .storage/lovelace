@@ -342,20 +342,6 @@
             {
               "type": "entity",
               "show_name": false,
-              "show_state": true,
-              "show_icon": true,
-              "entity": "sensor.bins",
-              "tap_action": {
-                "action": "perform-action",
-                "perform_action": "input_boolean.toggle",
-                "target": {
-                  "entity_id": "input_boolean.bins_out"
-                }
-              }
-            },
-            {
-              "type": "entity",
-              "show_name": false,
               "show_state": false,
               "show_icon": true,
               "entity": "input_boolean.window_cleaner",
@@ -423,6 +409,106 @@
                   "state_not": "Off"
                 }
               ]
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": false,
+              "show_icon": true,
+              "entity": "input_boolean.bins_out",
+              "color": "",
+              "visibility": [
+                {
+                  "condition": "state",
+                  "entity": "sensor.rayleigh_non_recycling_bin",
+                  "state": "In 13 days"
+                },
+                {
+                  "condition": "state",
+                  "entity": "input_boolean.bins_out",
+                  "state": "on"
+                }
+              ],
+              "name": "Out",
+              "icon": "mdi:trash-can",
+              "tap_action": {
+                "action": "toggle"
+              }
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": false,
+              "show_icon": true,
+              "entity": "input_boolean.bins_out",
+              "color": "",
+              "visibility": [
+                {
+                  "condition": "state",
+                  "entity": "sensor.rayleigh_non_recycling_bin",
+                  "state": "Today"
+                },
+                {
+                  "condition": "state",
+                  "entity": "input_boolean.bins_out",
+                  "state": "off"
+                }
+              ],
+              "name": "In",
+              "icon": "mdi:trash-can",
+              "tap_action": {
+                "action": "toggle"
+              }
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": false,
+              "show_icon": true,
+              "entity": "input_boolean.bins_out",
+              "color": "",
+              "visibility": [
+                {
+                  "condition": "state",
+                  "entity": "sensor.rayleigh_recycling_bin",
+                  "state": "In 13 days"
+                },
+                {
+                  "condition": "state",
+                  "entity": "input_boolean.bins_out",
+                  "state": "on"
+                }
+              ],
+              "name": "Out",
+              "icon": "mdi:recycle-variant",
+              "tap_action": {
+                "action": "toggle"
+              }
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": false,
+              "show_icon": true,
+              "entity": "input_boolean.bins_out",
+              "color": "",
+              "visibility": [
+                {
+                  "condition": "state",
+                  "entity": "sensor.rayleigh_recycling_bin",
+                  "state": "Today"
+                },
+                {
+                  "condition": "state",
+                  "entity": "input_boolean.bins_out",
+                  "state": "off"
+                }
+              ],
+              "name": "In",
+              "icon": "mdi:recycle-variant",
+              "tap_action": {
+                "action": "toggle"
+              }
             }
           ],
           "cards": []

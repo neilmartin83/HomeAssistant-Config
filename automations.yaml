@@ -172,15 +172,14 @@
 - id: '1669643508858'
   alias: Boys' Bedroom - Air Purifier - Presence
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.boys_bedroom_presence_sensor_fp2_cf9d_presence_sensor_room
     to: 'on'
     id: '1'
     from: 'off'
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - binary_sensor.boys_bedroom_presence_sensor_fp2_cf9d_presence_sensor_room
     to: 'off'
     for:
@@ -189,14 +188,15 @@
       seconds: 0
     id: '2'
     from: 'on'
-  - platform: time
-    at: '21:00:00'
+    trigger: state
+  - at: '21:00:00'
     id: '3'
-  - platform: time
-    at: 06:30:00
+    trigger: time
+  - at: 06:30:00
     id: '4'
-  condition: []
-  action:
+    trigger: time
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: trigger
@@ -208,29 +208,29 @@
             after: '21:00:00'
             before: 06:30:00
           sequence:
-          - service: fan.turn_on
-            data:
+          - data:
               preset_mode: sleep
             target:
               entity_id: fan.boys_bedroom_air_purifier
+            action: fan.turn_on
         - conditions:
           - condition: time
             after: 06:30:00
             before: '21:00:00'
           sequence:
-          - service: fan.turn_on
-            data:
-              percentage: 1
+          - data:
+              preset_mode: sleep
             target:
               entity_id: fan.boys_bedroom_air_purifier
+            action: fan.turn_on
     - conditions:
       - condition: trigger
         id: '2'
       sequence:
-      - service: fan.turn_off
-        data: {}
+      - data: {}
         target:
           entity_id: fan.boys_bedroom_air_purifier
+        action: fan.turn_off
     - conditions:
       - condition: trigger
         id:
@@ -239,11 +239,11 @@
         entity_id: fan.boys_bedroom_air_purifier
         state: 'on'
       sequence:
-      - service: fan.set_preset_mode
-        data:
+      - data:
           preset_mode: sleep
         target:
           entity_id: fan.boys_bedroom_air_purifier
+        action: fan.set_preset_mode
     - conditions:
       - condition: trigger
         id:
@@ -252,23 +252,22 @@
         entity_id: fan.boys_bedroom_air_purifier
         state: 'on'
       sequence:
-      - service: fan.set_preset_mode
-        data:
-          preset_mode: manual
+      - data:
+          preset_mode: sleep
         target:
           entity_id: fan.boys_bedroom_air_purifier
+        action: fan.set_preset_mode
   mode: single
 - id: '1669644349426'
   alias: Home - Lighting - Lights off at Sunrise
   description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.sun_solar_elevation
+  triggers:
+  - entity_id: sensor.sun_solar_elevation
     above: -1.5
-  condition: []
-  action:
-  - service: light.turn_off
-    data: {}
+    trigger: numeric_state
+  conditions: []
+  actions:
+  - data: {}
     target:
       entity_id:
       - light.christmas_tree
@@ -278,6 +277,13 @@
       - hall
       - garden
       - porch
+    action: light.turn_off
+  - action: select.select_option
+    metadata: {}
+    data:
+      option: Light Off
+    target:
+      entity_id: select.ben_s_bedroom_dehumidifier_light_mode
   mode: single
 - id: '1669645094970'
   alias: Kitchen - Lighting - Motion
@@ -1371,11 +1377,6 @@
   alias: Landing - Lighting - Presence
   description: ''
   triggers:
-  - trigger: numeric_state
-    entity_id:
-    - sensor.everything_presence_lite_2fbc58_illuminance
-    below: 0.3
-    id: '1'
   - entity_id:
     - binary_sensor.everything_presence_lite_2fbc58_occupancy
     - binary_sensor.hall_motion_sensor
@@ -1389,6 +1390,7 @@
     trigger: state
   - entity_id:
     - binary_sensor.everything_presence_lite_2fbc58_occupancy
+    - binary_sensor.hall_motion_sensor
     to: 'off'
     for:
       hours: 0
@@ -1397,16 +1399,6 @@
     from: 'on'
     id: '2'
     trigger: state
-  - entity_id:
-    - binary_sensor.hall_motion_sensor
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 0
-    from: 'on'
-    id: '3'
-    to: 'off'
-    trigger: state
   conditions: []
   actions:
   - choose:
@@ -1414,14 +1406,9 @@
       - condition: trigger
         id:
         - '1'
-      - condition: or
-        conditions:
-        - condition: numeric_state
-          entity_id: sensor.everything_presence_lite_2fbc58_illuminance
-          below: 0.3
-        - condition: state
-          entity_id: binary_sensor.everything_presence_lite_2fbc58_occupancy
-          state: 'on'
+      - condition: numeric_state
+        entity_id: sensor.everything_presence_lite_2fbc58_illuminance
+        below: 0.3
       sequence:
       - action: light.turn_on
         metadata: {}
@@ -1429,23 +1416,16 @@
         target:
           entity_id: light.landing_light
     - conditions:
-      - condition: or
-        conditions:
-        - condition: trigger
-          id:
-          - '2'
-        - condition: and
-          conditions:
-          - condition: trigger
-            id:
-            - '3'
-          - condition: state
-            entity_id: binary_sensor.everything_presence_lite_2fbc58_occupancy
-            state: 'off'
-            for:
-              hours: 0
-              minutes: 5
-              seconds: 0
+      - condition: trigger
+        id:
+        - '2'
+      - condition: state
+        entity_id: binary_sensor.everything_presence_lite_2fbc58_occupancy
+        state: 'off'
+        for:
+          hours: 0
+          minutes: 5
+          seconds: 0
       sequence:
       - data: {}
         target:
@@ -1995,10 +1975,10 @@
 - id: '1672602103277'
   alias: Home - Bins Out - Reminder
   description: ''
-  trigger:
-  - platform: time_pattern
-    minutes: /15
-  condition:
+  triggers:
+  - minutes: /15
+    trigger: time_pattern
+  conditions:
   - condition: or
     conditions:
     - condition: state
@@ -2010,36 +1990,69 @@
   - condition: time
     after: '18:59:00'
     before: '21:30:00'
-    weekday:
-    - mon
   - condition: state
     entity_id: input_boolean.bins_out
     state: 'off'
-  action:
-  - service: notify.mobile_app_neils_iphone
-    data:
-      data:
-        actions:
-        - action: BINS
-          title: Bins are out!
-      message: Remember to take the {{ state_attr('calendar.bins', 'message') }} bin
-        out!
-  - service: notify.mobile_app_heathers_iphone
-    data:
-      data:
-        actions:
-        - action: BINS
-          title: Bins are out!
-      message: Remember to take the {{ state_attr('calendar.bins', 'message') }} bin
-        out!
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: sensor.rayleigh_non_recycling_bin
+      state: Today
+    - condition: state
+      entity_id: sensor.rayleigh_recycling_bin
+      state: Today
+  actions:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: sensor.rayleigh_non_recycling_bin
+        state: Today
+      sequence:
+      - data:
+          data:
+            actions:
+            - action: BINS
+              title: Bins are in!
+          message: Remember to take the {{ states('sensor.rayleigh_non_recycling_bin_bin_type')
+            }} out!
+        action: notify.mobile_app_neils_iphone
+      - data:
+          data:
+            actions:
+            - action: BINS
+              title: Bins are in!
+          message: Remember to take the {{ states('sensor.rayleigh_non_recycling_bin_bin_type')
+            }} out!
+        action: notify.mobile_app_heathers_iphone
+    - conditions:
+      - condition: state
+        entity_id: sensor.rayleigh_recycling_bin
+        state: Today
+      sequence:
+      - data:
+          data:
+            actions:
+            - action: BINS
+              title: Bins are in!
+          message: Remember to take the {{ states('sensor.rayleigh_recycling_bin_bin_type')
+            }} out!
+        action: notify.mobile_app_neils_iphone
+      - data:
+          data:
+            actions:
+            - action: BINS
+              title: Bins are in!
+          message: Remember to take the {{ states('sensor.rayleigh_recycling_bin_bin_type')
+            }} out!
+        action: notify.mobile_app_heathers_iphone
   mode: single
 - id: '1672602169936'
   alias: Home - Bins In - Reminder
   description: ''
-  trigger:
-  - platform: time_pattern
-    minutes: /30
-  condition:
+  triggers:
+  - minutes: /30
+    trigger: time_pattern
+  conditions:
   - condition: or
     conditions:
     - condition: state
@@ -2051,26 +2064,61 @@
   - condition: time
     after: '15:30:00'
     before: '21:30:00'
-    weekday:
-    - tue
   - condition: state
     entity_id: input_boolean.bins_out
     state: 'on'
-  action:
-  - service: notify.mobile_app_neils_iphone
-    data:
-      data:
-        actions:
-        - action: BINS
-          title: Bins are in!
-      message: Please get the {{ state_attr('calendar.bins', 'message') }} bin in!
-  - service: notify.mobile_app_heathers_iphone
-    data:
-      data:
-        actions:
-        - action: BINS
-          title: Bins are in!
-      message: Please get the {{ state_attr('calendar.bins', 'message') }} bin in!
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: sensor.rayleigh_non_recycling_bin
+      state: In 13 days
+    - condition: state
+      entity_id: sensor.rayleigh_recycling_bin
+      state: In 13 days
+  actions:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: sensor.rayleigh_non_recycling_bin
+        state: In 13 days
+      sequence:
+      - data:
+          data:
+            actions:
+            - action: BINS
+              title: Bins are out!
+          message: Please get the {{ states('sensor.rayleigh_non_recycling_bin_bin_type')
+            }} in!
+        action: notify.mobile_app_neils_iphone
+      - data:
+          data:
+            actions:
+            - action: BINS
+              title: Bins are out!
+          message: Please get the {{ states('sensor.rayleigh_non_recycling_bin_bin_type')
+            }} in!
+        action: notify.mobile_app_heathers_iphone
+    - conditions:
+      - condition: state
+        entity_id: sensor.rayleigh_recycling_bin
+        state: In 13 days
+      sequence:
+      - data:
+          data:
+            actions:
+            - action: BINS
+              title: Bins are out!
+          message: Please get the {{ states('sensor.rayleigh_recycling_bin_bin_type')
+            }} in!
+        action: notify.mobile_app_neils_iphone
+      - data:
+          data:
+            actions:
+            - action: BINS
+              title: Bins are out!
+          message: Please get the {{ states('sensor.rayleigh_recycling_bin_bin_type')
+            }} in!
+        action: notify.mobile_app_heathers_iphone
   mode: single
 - id: '1672605628692'
   alias: Living Room - Workout - NFC Scanned
@@ -2234,9 +2282,8 @@
 - id: '1673080355997'
   alias: Porch - Lighting - Motion
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - person.neil
     - person.heather
     - person.jess
@@ -2246,31 +2293,32 @@
     from: not_home
     to: home
     id: '1'
-  - platform: state
-    entity_id:
-    - binary_sensor.front_door
-    from: 'off'
-    to: 'on'
-    id: '1'
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - binary_sensor.side_gate
     from: 'off'
     to: 'on'
     id: '1'
-  - platform: state
-    entity_id:
-    - binary_sensor.front_doorbell_motion
+    trigger: state
+  - entity_id:
+    - binary_sensor.front_door
     from: 'off'
     to: 'on'
-    id: '1'
-  - platform: event
-    event_type: timer.finished
+    id: '2'
+    trigger: state
+  - entity_id:
+    - binary_sensor.front_door
+    from: 'on'
+    to: 'off'
+    id: '3'
+    trigger: state
+  - event_type: timer.finished
     event_data:
       entity_id: timer.porch_light_timer
-    id: '2'
-  condition: []
-  action:
+    id: '4'
+    trigger: event
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: trigger
@@ -2278,6 +2326,11 @@
       - condition: numeric_state
         entity_id: sensor.sun_solar_elevation
         below: -4
+      - condition: not
+        conditions:
+        - condition: state
+          entity_id: timer.porch_light_timer
+          state: paused
       sequence:
       - data:
           brightness_pct: 50
@@ -2290,30 +2343,49 @@
         action: timer.start
     - conditions:
       - condition: trigger
-        id: '2'
+        id:
+        - '2'
+      - condition: numeric_state
+        entity_id: sensor.sun_solar_elevation
+        below: -4
       sequence:
-      - if:
-        - condition: state
-          entity_id: binary_sensor.front_doorbell_motion
-          state: 'on'
-        then:
-        - wait_for_trigger:
-          - platform: state
-            entity_id:
-            - binary_sensor.front_doorbell_motion
-            from: 'on'
-            to: 'off'
-          continue_on_timeout: false
-        - data: {}
-          target:
-            area_id: porch
-          action: light.turn_off
-        else:
-        - data: {}
-          target:
-            area_id: porch
-          action: light.turn_off
-  mode: restart
+      - data:
+          brightness_pct: 50
+        target:
+          entity_id: light.porch_light
+        action: light.turn_on
+      - action: timer.start
+        data: {}
+        target:
+          entity_id: timer.porch_light_timer
+      - action: timer.pause
+        metadata: {}
+        data: {}
+        target:
+          entity_id: timer.porch_light_timer
+    - conditions:
+      - condition: trigger
+        id:
+        - '3'
+      - condition: state
+        entity_id: timer.porch_light_timer
+        state: paused
+      sequence:
+      - action: timer.start
+        metadata: {}
+        data: {}
+        target:
+          entity_id: timer.porch_light_timer
+    - conditions:
+      - condition: trigger
+        id:
+        - '4'
+      sequence:
+      - data: {}
+        target:
+          area_id: porch
+        action: light.turn_off
+  mode: single
 - id: '1673080723577'
   alias: Hall - Lighting - Motion
   description: ''
@@ -2328,25 +2400,51 @@
     - binary_sensor.front_door
     from: 'off'
     to: 'on'
-    id: '1'
+    id: '2'
     trigger: state
   - event_type: timer.finished
     event_data:
       entity_id: timer.hall_light_timer
-    id: '2'
+    id: '3'
     trigger: event
   - entity_id:
     - binary_sensor.hall_motion_sensor
     from: 'on'
     to: 'off'
-    id: '2'
+    id: '4'
     trigger: state
   conditions: []
   actions:
   - choose:
     - conditions:
       - condition: trigger
-        id: '1'
+        id:
+        - '1'
+      - condition: or
+        conditions:
+        - condition: numeric_state
+          entity_id: sensor.everything_presence_lite_2fbc58_illuminance
+          below: 0.3
+        - condition: state
+          entity_id: light.landing_light
+          state: 'on'
+      - condition: state
+        entity_id: timer.hall_light_timer
+        state: idle
+      sequence:
+      - data:
+          brightness_pct: 1
+        target:
+          entity_id: light.hall_light
+        action: light.turn_on
+      - data: {}
+        target:
+          entity_id: timer.hall_light_timer
+        action: timer.start
+    - conditions:
+      - condition: trigger
+        id:
+        - '2'
       - condition: or
         conditions:
         - condition: numeric_state
@@ -2367,7 +2465,9 @@
         action: timer.start
     - conditions:
       - condition: trigger
-        id: '2'
+        id:
+        - '3'
+        - '4'
       sequence:
       - choose:
         - conditions:
@@ -2381,6 +2481,10 @@
               from: 'on'
               to: 'off'
               trigger: state
+              for:
+                hours: 0
+                minutes: 5
+                seconds: 0
             continue_on_timeout: false
           - data: {}
             target:
@@ -4387,21 +4491,21 @@
 - id: '1718826325938'
   alias: Living Room - Window - Workout Power
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.living_room_window_casement_right
     from: 'on'
     to: 'off'
     id: '1'
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - binary_sensor.living_room_window_casement_right
     from: 'off'
     to: 'on'
     id: '2'
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: state
@@ -4425,19 +4529,15 @@
         id:
         - '1'
       sequence:
-      - service: fan.turn_off
-        data: {}
+      - data: {}
         target:
           area_id: living_room
-      - service: light.turn_off
-        data: {}
-        target:
-          area_id: living_room
-      - service: media_player.turn_off
-        metadata: {}
+        action: fan.turn_off
+      - metadata: {}
         data: {}
         target:
           entity_id: media_player.living_room
+        action: media_player.turn_off
     - conditions:
       - condition: not
         conditions:
@@ -4454,11 +4554,11 @@
         after: 05:30:00
         before: 06:15:00
       sequence:
-      - service: script.turn_on
-        metadata: {}
+      - metadata: {}
         data: {}
         target:
           entity_id: script.living_room_workout_time_apple_tv
+        action: script.turn_on
   mode: single
 - id: '1725784605363'
   alias: Living Room - Apple TV - Remote
