@@ -1208,15 +1208,14 @@
 - id: '1670664023667'
   alias: Bedroom - Lighting - Air Purifier Night Light - Motion
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.bedroom_motion_sensor
     from: 'off'
     to: 'on'
     id: '1'
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - binary_sensor.bedroom_motion_sensor
     from: 'on'
     to: 'off'
@@ -1225,8 +1224,9 @@
       hours: 0
       minutes: 0
       seconds: 0
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: trigger
@@ -1237,12 +1237,9 @@
       - condition: state
         entity_id: light.bedside_lights
         state: 'off'
-      - condition: state
-        state: 'off'
-        entity_id: light.neils_desk_filament_lamp
       - condition: numeric_state
         entity_id: sensor.apollo_msr_1_38c3bc_ltr390_light
-        below: 1
+        below: 0.4
         enabled: true
       sequence:
       - data:
@@ -1394,7 +1391,7 @@
     to: 'off'
     for:
       hours: 0
-      minutes: 5
+      minutes: 10
       seconds: 0
     from: 'on'
     id: '2'
@@ -1408,7 +1405,7 @@
         - '1'
       - condition: numeric_state
         entity_id: sensor.everything_presence_lite_2fbc58_illuminance
-        below: 0.3
+        below: 0.4
       sequence:
       - action: light.turn_on
         metadata: {}
@@ -1424,7 +1421,7 @@
         state: 'off'
         for:
           hours: 0
-          minutes: 5
+          minutes: 10
           seconds: 0
       sequence:
       - data: {}
