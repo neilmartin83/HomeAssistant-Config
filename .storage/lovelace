@@ -50,11 +50,46 @@
                     "action": "navigate",
                     "navigation_path": "/lovelace/heat"
                   },
+                  "layout_options": {
+                    "grid_columns": 1,
+                    "grid_rows": 2
+                  },
+                  "color": "grey",
+                  "visibility": [
+                    {
+                      "condition": "state",
+                      "entity": "sensor.wiser_heating",
+                      "state": "Off"
+                    }
+                  ]
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.wiser_heating",
+                  "name": "Heat",
+                  "vertical": true,
+                  "hide_state": true,
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/heat"
+                  },
+                  "icon_tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/heat"
+                  },
                   "color": "deep-orange",
                   "layout_options": {
                     "grid_columns": 1,
                     "grid_rows": 2
-                  }
+                  },
+                  "visibility": [
+                    {
+                      "condition": "state",
+                      "entity": "sensor.wiser_heating",
+                      "state": "On"
+                    }
+                  ],
+                  "icon": "mdi:radiator"
                 },
                 {
                   "type": "tile",

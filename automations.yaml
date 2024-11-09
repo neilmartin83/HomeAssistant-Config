@@ -512,12 +512,12 @@
             entity_id: light.living_room_light
   mode: restart
 - id: '1669732535776'
-  alias: Home - Windows - Notify if open
+  alias: Home - Downstairs Windows - Notify if open
   description: ''
-  trigger:
-  - platform: time_pattern
-    minutes: /30
-  condition:
+  triggers:
+  - minutes: /30
+    trigger: time_pattern
+  conditions:
   - condition: numeric_state
     entity_id: sensor.forecast_home_temperature
     below: 12
@@ -533,21 +533,21 @@
     - sat
     - sun
   - condition: state
-    entity_id: binary_sensor.all_windows
+    entity_id: binary_sensor.downstairs_windows
     state: 'on'
     for:
       hours: 0
       minutes: 30
       seconds: 0
-  action:
-  - service: notify.notify
-    data:
-      title: Windows are open - it's cold!
-      message: '{{ states | selectattr(''entity_id'',''in'', state_attr(''binary_sensor.all_windows'',''entity_id''))
+  actions:
+  - data:
+      title: Downstairs windows are open - it's cold!
+      message: '{{ states | selectattr(''entity_id'',''in'', state_attr(''binary_sensor.downstairs_windows'',''entity_id''))
         | selectattr(''state'',''eq'',''on'') | map(attribute=''name'') | join('',
         '') }}
 
         '
+    action: notify.notify
   mode: single
 - id: '1669735216190'
   alias: Home - Doors - Notify if open
@@ -4560,18 +4560,26 @@
 - id: '1725784605363'
   alias: Living Room - Apple TV - Remote
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - remote.living_room
     to: 'off'
-  condition: []
-  action:
+    trigger: state
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+  conditions: []
+  actions:
+  - delay:
+      hours: 0
+      minutes: 1
+      seconds: 0
+      milliseconds: 0
   - action: remote.turn_on
-    metadata: {}
-    data: {}
     target:
       entity_id: remote.living_room
+    data: {}
   mode: single
 - id: '1725784850353'
   alias: Living Room - TV - Volume
