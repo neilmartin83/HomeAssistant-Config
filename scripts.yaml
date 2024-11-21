@@ -228,9 +228,9 @@ home_tv_turn_on:
         state: media_player.bedroom_echo_spot
       sequence:
       - data: {}
-        target:
-          entity_id: media_player.bedroom_firetvstick_4k_max
         action: media_player.turn_on
+        target:
+          entity_id: media_player.bedroom
     - conditions:
       - condition: state
         entity_id: sensor.last_alexa
@@ -269,13 +269,7 @@ home_tv_turn_off:
       - data: {}
         action: media_player.turn_off
         target:
-          entity_id: media_player.bedroom_firetvstick_4k_max
-      - data:
-          media_content_id: Turn off Bedroom TV
-          media_content_type: custom
-        action: media_player.play_media
-        target:
-          entity_id: media_player.bedroom_echo_spot
+          entity_id: media_player.bedroom
     - conditions:
       - condition: state
         entity_id: sensor.last_alexa

@@ -77,11 +77,20 @@
       - condition: trigger
         id:
         - '1'
-      - condition: not
+      - condition: or
         conditions:
         - condition: state
-          entity_id: binary_sensor.bluespike_bedroom_tv_wireless_connected
-          state: 'on'
+          entity_id: media_player.bedroom
+          state: 'off'
+        - condition: state
+          entity_id: media_player.bedroom
+          state: unknown
+        - condition: state
+          entity_id: media_player.bedroom
+          state: unavailable
+        - condition: state
+          entity_id: media_player.bedroom
+          state: standby
       - condition: state
         entity_id: binary_sensor.bedroom_window_right
         state: 'off'
@@ -519,7 +528,7 @@
     trigger: time_pattern
   conditions:
   - condition: numeric_state
-    entity_id: sensor.forecast_home_temperature
+    entity_id: sensor.met_office_rayleigh_temperature_3_hourly
     below: 12
   - condition: time
     after: 07:30:00
@@ -552,12 +561,12 @@
 - id: '1669735216190'
   alias: Home - Doors - Notify if open
   description: ''
-  trigger:
-  - platform: time_pattern
-    minutes: /30
-  condition:
+  triggers:
+  - minutes: /30
+    trigger: time_pattern
+  conditions:
   - condition: numeric_state
-    entity_id: sensor.forecast_home_temperature
+    entity_id: sensor.met_office_rayleigh_temperature_3_hourly
     below: 12
   - condition: time
     after: 07:29:00
@@ -577,15 +586,15 @@
       hours: 0
       minutes: 30
       seconds: 0
-  action:
-  - service: notify.notify
-    data:
+  actions:
+  - data:
       title: Doors are open!
       message: '{{ states | selectattr(''entity_id'',''in'', state_attr(''binary_sensor.all_doors'',''entity_id''))
         | selectattr(''state'',''eq'',''on'') | map(attribute=''name'') | join('',
         '') }}
 
         '
+    action: notify.notify
   mode: single
 - id: '1669759904806'
   alias: Home - Alarm - Disarmed
@@ -1855,28 +1864,33 @@
 - id: '1672497794603'
   alias: Living Room - Dimmer Switch
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - event.living_room_dimmer_switch_button_1
     attribute: event_type
     from: repeat
     to: long_release
-  condition: []
-  action:
-  - service: fan.turn_off
-    data: {}
+    trigger: state
+  conditions: []
+  actions:
+  - data: {}
     target:
       area_id: living_room
-  - service: light.turn_off
-    data: {}
+    action: fan.turn_off
+  - data: {}
     target:
       area_id: living_room
-  - service: media_player.turn_off
+    action: light.turn_off
+  - action: remote.turn_on
     metadata: {}
     data: {}
     target:
+      entity_id: remote.living_room
+  - metadata: {}
+    data: {}
+    target:
       entity_id: media_player.living_room
+    action: media_player.turn_off
   mode: single
 - id: '1672502963964'
   alias: Home - Bins - Notification - Turn Off
@@ -3598,7 +3612,7 @@
         id:
         - '1'
       - condition: numeric_state
-        entity_id: sensor.forecast_home_temperature
+        entity_id: sensor.met_office_rayleigh_temperature_3_hourly
         below: 16
       sequence:
       - data: {}
@@ -4342,22 +4356,22 @@
 - id: '1709400691469'
   alias: Bedroom - Alarm Dismissed
   description: ''
-  trigger:
-  - platform: event
-    event_type: alexa_media_alarm_dismissal_event
+  triggers:
+  - event_type: alexa_media_alarm_dismissal_event
     event_data:
       device:
         id: A3EH2E0YZ30OD6
-  condition:
+    trigger: event
+  conditions:
   - condition: or
     conditions:
     - condition: state
-      entity_id: weather.forecast_home
+      entity_id: sensor.met_office_rayleigh_weather_3_hourly
       state: clear-night
     - condition: state
-      entity_id: weather.forecast_home
       state: sunny
-  action:
+      entity_id: sensor.met_office_rayleigh_weather_3_hourly
+  actions:
   - delay:
       hours: 0
       minutes: 0
@@ -4503,6 +4517,11 @@
     trigger: state
   conditions: []
   actions:
+  - action: remote.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: remote.living_room
   - choose:
     - conditions:
       - condition: state
