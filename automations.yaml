@@ -690,13 +690,13 @@
 - id: '1669786710313'
   alias: Home - Alarm - Armed Away
   description: ''
-  trigger:
+  triggers:
   - trigger: state
     entity_id:
     - alarm_control_panel.home_alarm
     to: armed_away
-  condition: []
-  action:
+  conditions: []
+  actions:
   - delay:
       hours: 0
       minutes: 0
@@ -722,12 +722,26 @@
       target:
         entity_id: switch.wiser_away_mode
       action: switch.turn_on
+    - action: switch.turn_off
+      metadata: {}
+      data: {}
+      target:
+        entity_id: switch.bluespike_guest_network
     - data: {}
       target:
         floor_id:
         - downstairs
         - upstairs
       action: media_player.turn_off
+    - action: fan.turn_off
+      metadata: {}
+      data: {}
+      target:
+        entity_id:
+        - fan.living_room_fan
+        - fan.bedroom_air_purifier
+        - fan.living_room_air_purifier
+        - fan.boys_bedroom_air_purifier
   mode: restart
 - id: '1669789669778'
   alias: Living Room - TV - Presence
@@ -1150,6 +1164,11 @@
         target:
           area_id: bedroom
         action: fan.turn_off
+      - action: remote.turn_on
+        metadata: {}
+        data: {}
+        target:
+          area_id: bedroom
       - data: {}
         target:
           area_id: bedroom
@@ -2650,16 +2669,23 @@
 - id: '1674942405000'
   alias: Home - Pisshead Mode - Notify
   description: ''
-  trigger:
+  triggers:
   - trigger: time
     at: '21:00:00'
   - trigger: time
     at: 08:00:00
-  condition:
+  - trigger: state
+    entity_id:
+    - sensor.bluespike_connected_guest_clients
+    to: '0'
+  conditions:
   - condition: state
     entity_id: input_boolean.guest_mode
     state: 'on'
-  action:
+  - condition: state
+    entity_id: sensor.bluespike_connected_guest_clients
+    state: '0'
+  actions:
   - action: notify.mobile_app_neils_iphone
     data:
       message: Pisshead mode is on!
@@ -4569,30 +4595,6 @@
           entity_id: script.living_room_workout_time_apple_tv
         action: script.turn_on
   mode: single
-- id: '1725784605363'
-  alias: Living Room - Apple TV - Remote
-  description: ''
-  triggers:
-  - entity_id:
-    - remote.living_room
-    to: 'off'
-    trigger: state
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 0
-  conditions: []
-  actions:
-  - delay:
-      hours: 0
-      minutes: 1
-      seconds: 0
-      milliseconds: 0
-  - action: remote.turn_on
-    target:
-      entity_id: remote.living_room
-    data: {}
-  mode: single
 - id: '1725784850353'
   alias: Living Room - TV - Volume
   description: ''
@@ -4680,4 +4682,36 @@
         data: {}
         target:
           entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+  mode: single
+- id: '1732650859901'
+  alias: Home - Geofence - Guest Wi-Fi
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - zone.home
+    above: 0
+  conditions: []
+  actions:
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.bluespike_guest_network
+  mode: single
+- id: '1732651066491'
+  alias: Home - Pisshead Mode - Turn On
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.bluespike_connected_guest_clients
+    above: 0
+  conditions: []
+  actions:
+  - action: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.guest_mode
   mode: single
