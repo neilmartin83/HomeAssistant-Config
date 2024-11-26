@@ -3181,6 +3181,148 @@
                 }
               ],
               "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Battery Status",
+                  "heading_style": "title"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.back_door_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.bathroom_window_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.bedroom_motion_sensor_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.bedroom_window_left_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.bedroom_window_right_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.ben_s_bedroom_motion_sensor_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.ben_s_bedroom_window_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.boys_bedroom_motion_sensor_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.boys_bedroom_window_awning_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.boys_bedroom_window_casement_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.dishwasher_door_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.front_door_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.front_doorbell_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.garden_camera_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.glass_break_sensor_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.hall_keypad_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.hall_motion_sensor_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.kitchen_motion_sensor_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.kitchen_window_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.landing_motion_sensor_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.landing_window_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.living_room_motion_sensor_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.living_room_window_awning_left_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.living_room_window_awning_right_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.living_room_window_casement_left_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.living_room_window_casement_right_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.out_building_door_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.outdoor_siren_aux_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.side_gate_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.tumble_dryer_door_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.utility_room_motion_sensor_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.utility_room_window_battery"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.washing_machine_door_battery"
+                }
+              ]
             }
           ],
           "cards": [],
