@@ -2,7 +2,7 @@
   alias: Boys' Bedroom - Lighting - Presence
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.boys_bedroom_presence_sensor_fp2_cf9d_presence_sensor_room
     to: 'off'
@@ -13,7 +13,7 @@
     from: 'on'
   condition: []
   action:
-  - service: light.turn_off
+  - action: light.turn_off
     data: {}
     target:
       area_id: boys_bedroom
@@ -22,11 +22,11 @@
   alias: Boys' Bedroom - Lighting - Lights dim at 21:00
   description: ''
   trigger:
-  - platform: time
+  - trigger: time
     at: '21:00:00'
   condition: []
   action:
-  - service: light.turn_on
+  - action: light.turn_on
     data:
       brightness: 10
     target:
@@ -117,13 +117,13 @@
   alias: Bedroom - Air Purifier - Presence
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.apollo_msr_1_38c3bc_radar_target
     to: 'on'
     id: '1'
     from: 'off'
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.apollo_msr_1_38c3bc_radar_target
     to: 'off'
@@ -151,7 +151,7 @@
         - sat
         - sun
       sequence:
-      - service: fan.turn_on
+      - action: fan.turn_on
         data:
           preset_mode: sleep
         target:
@@ -160,7 +160,7 @@
       - condition: trigger
         id: '2'
       sequence:
-      - service: fan.turn_off
+      - action: fan.turn_off
         data: {}
         target:
           entity_id: fan.bedroom_air_purifier
@@ -169,11 +169,11 @@
   alias: Bedroom - Air Purifier - Off at 21:30
   description: ''
   trigger:
-  - platform: time
+  - trigger: time
     at: '21:30:00'
   condition: []
   action:
-  - service: fan.turn_off
+  - action: fan.turn_off
     data: {}
     target:
       entity_id: fan.bedroom_air_purifier
@@ -298,13 +298,13 @@
   alias: Kitchen - Lighting - Motion
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.everything_presence_lite_214fd8_occupancy
     to: 'on'
     id: '1'
     from: 'off'
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.everything_presence_lite_214fd8_occupancy
     to: 'off'
@@ -340,29 +340,32 @@
 - id: '1669645883067'
   alias: Living Room - Air Purifier - Presence
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room
     to: 'on'
     id: '1'
     from: 'off'
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room
     to: 'off'
+    id: '2'
+    from: 'on'
+    trigger: state
     for:
       hours: 0
       minutes: 10
       seconds: 0
-    id: '2'
-    from: 'on'
-  condition: []
-  action:
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: trigger
         id: '1'
+      - condition: state
+        entity_id: fan.living_room_air_purifier
+        state: 'off'
       sequence:
       - data:
           preset_mode: sleep
@@ -382,7 +385,7 @@
   alias: Living Room - Devices - Presence
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room
     to: 'off'
@@ -393,11 +396,11 @@
     from: 'on'
   condition: []
   action:
-  - service: light.turn_off
+  - action: light.turn_off
     data: {}
     target:
       area_id: living_room
-  - service: fan.turn_off
+  - action: fan.turn_off
     data: {}
     target:
       area_id: living_room
@@ -406,13 +409,13 @@
   alias: Utility Room - Lighting - Motion
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.utility_room_motion_sensor
     to: 'on'
     id: '1'
     from: 'off'
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.utility_room_motion_sensor
     to: 'off'
@@ -448,21 +451,21 @@
 - id: '1669655182401'
   alias: Living Room - Lighting - TV
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - media_player.living_room_tv_airplay
     to: 'on'
     id: '1'
     from:
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - media_player.living_room_tv_airplay
     id: '2'
     from:
     to: 'off'
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: trigger
@@ -471,34 +474,35 @@
         entity_id: binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room
         state: 'on'
       sequence:
-      - service: light.turn_on
-        data: {}
+      - data: {}
         target:
           entity_id: light.living_room_tv_backlight
-      - service: humidifier.turn_off
-        metadata: {}
+        action: light.turn_on
+      - metadata: {}
         data: {}
         target:
           entity_id: humidifier.living_room_dehumidifier_none
+        action: humidifier.turn_off
+        enabled: false
       - if:
         - condition: state
           entity_id: fan.living_room_fan
           state: 'off'
         then:
-        - service: light.turn_off
-          metadata: {}
+        - metadata: {}
           data: {}
           target:
             entity_id: light.living_room_light
+          action: light.turn_off
     - conditions:
       - condition: trigger
         id: '2'
       sequence:
-      - service: light.turn_off
-        data: {}
+      - data: {}
         target:
           entity_id:
           - light.living_room_tv_backlight
+        action: light.turn_off
       - delay:
           hours: 0
           minutes: 0
@@ -514,11 +518,11 @@
             entity_id: sensor.living_room_presence_sensor_fp2_243e_light_sensor_light_level
             below: 10
         then:
-        - service: light.turn_on
-          metadata: {}
+        - metadata: {}
           data: {}
           target:
             entity_id: light.living_room_light
+          action: light.turn_on
   mode: restart
 - id: '1669732535776'
   alias: Home - Downstairs Windows - Notify if open
@@ -600,13 +604,13 @@
   alias: Home - Alarm - Disarmed
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - alarm_control_panel.home_alarm
     to: disarmed
   condition: []
   action:
-  - service: switch.turn_off
+  - action: switch.turn_off
     data: {}
     target:
       entity_id: switch.wiser_away_mode
@@ -615,7 +619,7 @@
   alias: Home - Alarm - Armed Home
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - alarm_control_panel.home_alarm
     to: armed_home
@@ -631,18 +635,18 @@
       entity_id: alarm_control_panel.home_alarm
       state: armed_home
     then:
-    - service: light.turn_off
+    - action: light.turn_off
       data: {}
       target:
         floor_id: downstairs
         area_id:
         - garden
         - porch
-    - service: fan.turn_off
+    - action: fan.turn_off
       data: {}
       target:
         floor_id: downstairs
-    - service: media_player.turn_off
+    - action: media_player.turn_off
       data: {}
       target:
         floor_id: downstairs
@@ -651,7 +655,7 @@
   alias: Home - Battery - Low level notification
   description: ''
   trigger:
-  - platform: time
+  - trigger: time
     at: 07:30:00
   condition:
   - condition: template
@@ -687,7 +691,7 @@
   alias: Home - Alarm - Armed Away
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - alarm_control_panel.home_alarm
     to: armed_away
@@ -728,33 +732,27 @@
 - id: '1669789669778'
   alias: Living Room - TV - Presence
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room
     to: 'off'
     for:
       hours: 1
       minutes: 0
       seconds: 0
-  condition: []
-  action:
-  - service: media_player.turn_off
-    data: {}
+    trigger: state
+  conditions: []
+  actions:
+  - data: {}
     target:
       area_id: living_room
-  - service: media_player.play_media
-    data:
-      media_content_type: routine
-      media_content_id: Living Room - Turn off TV
-    target:
-      entity_id: media_player.living_room_echo_dot
+    action: media_player.turn_off
   mode: single
 - id: '1669807196729'
   alias: Bedroom - Heating - Schedule Neil - Presence
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.apollo_msr_1_38c3bc_radar_target
     to: 'off'
@@ -764,7 +762,7 @@
       hours: 0
       minutes: 15
       seconds: 0
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.apollo_msr_1_38c3bc_radar_target
     to: 'on'
@@ -780,7 +778,7 @@
       - condition: trigger
         id: '1'
       sequence:
-      - service: wiser.assign_schedule
+      - action: wiser.assign_schedule
         data:
           to_entity_id: climate.wiser_bedroom
           schedule_name: Bedroom - Neil not working
@@ -814,7 +812,7 @@
         entity_id: calendar.united_kingdom_eng
         state: 'off'
       sequence:
-      - service: wiser.assign_schedule
+      - action: wiser.assign_schedule
         data:
           to_entity_id: climate.wiser_bedroom
           schedule_name: Bedroom - Neil working
@@ -823,7 +821,7 @@
   alias: Kitchen - Smart Button
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - event.kitchen_smart_button_button_1
     attribute: event_type
@@ -831,7 +829,7 @@
     to: long_release
   condition: []
   action:
-  - service: vacuum.start
+  - action: vacuum.start
     data: {}
     target:
       entity_id: vacuum.deebot_t9
@@ -840,7 +838,7 @@
   alias: Utility Room - Smart Button
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - event.utility_room_smart_button_button_1
     attribute: event_type
@@ -848,7 +846,7 @@
     to: long_release
   condition: []
   action:
-  - service: light.toggle
+  - action: light.toggle
     data:
       brightness_pct: 100
     target:
@@ -859,7 +857,7 @@
   alias: Ben's Bedroom - Geofence
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - person.ben
     to: not_home
@@ -869,7 +867,7 @@
       hours: 0
       minutes: 0
       seconds: 0
-  - platform: state
+  - trigger: state
     entity_id:
     - person.ben
     to: home
@@ -908,7 +906,7 @@
   alias: Home - Heating - Temperature Cap
   description: ''
   trigger:
-  - platform: event
+  - trigger: event
     event_type: wiser_event
     event_data:
       type: target_temperature_increased
@@ -920,7 +918,7 @@
   - condition: template
     value_template: '{{ target_temp|float > cap_temp }}'
   action:
-  - service: climate.set_temperature
+  - action: climate.set_temperature
     data:
       temperature: '{{cap_temp}}'
     target:
@@ -931,7 +929,7 @@
   alias: Boys' Bedroom - Geofence
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - person.kyle
     - person.liam
@@ -942,7 +940,7 @@
       hours: 0
       minutes: 0
       seconds: 0
-  - platform: state
+  - trigger: state
     entity_id:
     - person.kyle
     - person.liam
@@ -968,16 +966,16 @@
             entity_id: person.liam
             state: home
       sequence:
-      - service: climate.set_hvac_mode
+      - action: climate.set_hvac_mode
         data:
           hvac_mode: 'off'
         target:
           area_id: boys_bedroom
-      - service: light.turn_off
+      - action: light.turn_off
         data: {}
         target:
           area_id: boys_bedroom
-      - service: media_player.turn_off
+      - action: media_player.turn_off
         data: {}
         target:
           area_id: boys_bedroom
@@ -993,7 +991,7 @@
           entity_id: binary_sensor.boys_bedroom_window_casement
           state: 'off'
       sequence:
-      - service: climate.set_hvac_mode
+      - action: climate.set_hvac_mode
         data:
           hvac_mode: auto
         target:
@@ -1003,14 +1001,14 @@
   alias: System - Backup - Notify on failure
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.backups_stale
     from:
     to: 'on'
   condition: []
   action:
-  - service: notify.mobile_app_neils_iphone
+  - action: notify.mobile_app_neils_iphone
     data:
       message: Last backup failed!
   mode: single
@@ -1018,14 +1016,14 @@
   alias: Bedroom - Lighting - Bedside Lights off when Bedroom Light turns on
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - light.bedroom_light
     from: 'off'
     to: 'on'
   condition: []
   action:
-  - service: light.turn_off
+  - action: light.turn_off
     data: {}
     target:
       entity_id: light.bedside_lights
@@ -1034,7 +1032,7 @@
   alias: Home - Vacuum Downstairs - Announce
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - vacuum.deebot_t9
     to: cleaning
@@ -1043,7 +1041,7 @@
     after: 09:00:00
     before: '21:30:00'
   action:
-  - service: notify.alexa_media
+  - action: notify.alexa_media
     data:
       message: The vacuum is cleaning downstairs now, please watch out for it!
       data:
@@ -1056,13 +1054,13 @@
       - Boys' Echo Dot
       - Ben's Echo Dot
   - wait_for_trigger:
-    - platform: state
+    - trigger: state
       entity_id:
       - vacuum.deebot_t9
       to: returning
       from: cleaning
     continue_on_timeout: false
-  - service: notify.alexa_media
+  - action: notify.alexa_media
     data:
       message: The vacuum has finished cleaning downstairs!
       data:
@@ -1079,14 +1077,14 @@
   alias: Bedroom - Lighting - Bedroom Light off when Bedside Lights turn on
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - light.bedside_lights
     from: 'off'
     to: 'on'
   condition: []
   action:
-  - service: light.turn_off
+  - action: light.turn_off
     data: {}
     target:
       entity_id:
@@ -1097,9 +1095,8 @@
 - id: '1670480253270'
   alias: Bedroom - Geofence
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - person.neil
     - person.heather
     from: home
@@ -1109,15 +1106,16 @@
       hours: 0
       minutes: 0
       seconds: 0
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - person.neil
     - person.heather
     from: not_home
     to: home
     id: '2'
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: trigger
@@ -1135,33 +1133,27 @@
             entity_id: person.heather
             state: home
       sequence:
-      - service: climate.set_hvac_mode
-        data:
+      - data:
           hvac_mode: 'off'
         target:
           area_id: bedroom
-      - service: light.turn_off
-        data: {}
+        action: climate.set_hvac_mode
+      - data: {}
         target:
           entity_id:
           - light.bedroom_light
           - light.bedroom_mirror_light
           - light.bedside_lights
           - light.bedroom_air_purifier_night_light
-      - service: fan.turn_off
-        data: {}
+        action: light.turn_off
+      - data: {}
         target:
           area_id: bedroom
-      - service: media_player.turn_off
-        data: {}
+        action: fan.turn_off
+      - data: {}
         target:
           area_id: bedroom
-      - service: media_player.play_media
-        data:
-          media_content_type: routine
-          media_content_id: Bedroom - Turn off TV
-        target:
-          entity_id: media_player.bedroom_echo_spot
+        action: media_player.turn_off
     - conditions:
       - condition: trigger
         id: '2'
@@ -1174,17 +1166,17 @@
           entity_id: binary_sensor.bedroom_window_right
           state: 'off'
       sequence:
-      - service: climate.set_hvac_mode
-        data:
+      - data:
           hvac_mode: auto
         target:
           area_id: bedroom
+        action: climate.set_hvac_mode
   mode: single
 - id: '1670626495720'
   alias: Home - Heating - Temperature Cap Night
   description: ''
   trigger:
-  - platform: event
+  - trigger: event
     event_type: wiser_event
     event_data:
       type: target_temperature_increased
@@ -1207,7 +1199,7 @@
     - sat
     - sun
   action:
-  - service: climate.set_temperature
+  - action: climate.set_temperature
     data:
       temperature: '{{cap_temp}}'
     target:
@@ -1277,7 +1269,7 @@
   alias: Home - Geofence - Arm Alarm
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - zone.home
     to: '0'
@@ -1293,7 +1285,7 @@
     entity_id: input_boolean.guest_mode
     state: 'off'
   action:
-  - service: alarm_control_panel.alarm_arm_away
+  - action: alarm_control_panel.alarm_arm_away
     data: {}
     target:
       entity_id: alarm_control_panel.home_alarm
@@ -1302,7 +1294,7 @@
   alias: Home - Geofence - Disarm Alarm
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - person.neil
     - person.heather
@@ -1325,7 +1317,7 @@
       entity_id: alarm_control_panel.home_alarm
       state: armed_home
   action:
-  - service: alarm_control_panel.alarm_disarm
+  - action: alarm_control_panel.alarm_disarm
     data: {}
     target:
       entity_id: alarm_control_panel.home_alarm
@@ -1334,19 +1326,19 @@
   alias: Home - Alarm - Arm Home Night
   description: ''
   trigger:
-  - platform: time_pattern
+  - trigger: time_pattern
     hours: '23'
     minutes: /5
-  - platform: time_pattern
+  - trigger: time_pattern
     minutes: /5
     hours: '0'
-  - platform: time_pattern
+  - trigger: time_pattern
     minutes: /5
     hours: '1'
-  - platform: time_pattern
+  - trigger: time_pattern
     minutes: /5
     hours: '2'
-  - platform: time_pattern
+  - trigger: time_pattern
     minutes: /5
     hours: '3'
   condition:
@@ -1374,7 +1366,7 @@
     entity_id: input_boolean.guest_mode
     state: 'off'
   action:
-  - service: alarm_control_panel.alarm_arm_home
+  - action: alarm_control_panel.alarm_arm_home
     data: {}
     target:
       entity_id: alarm_control_panel.home_alarm
@@ -1442,7 +1434,7 @@
   alias: Utility Room - Dishwasher - Set State
   description: ''
   trigger:
-  - platform: numeric_state
+  - trigger: numeric_state
     entity_id:
     - sensor.localbytes_plug_pm_f108d4_power
     id: running
@@ -1451,7 +1443,7 @@
       hours: 0
       minutes: 2
       seconds: 0
-  - platform: numeric_state
+  - trigger: numeric_state
     entity_id:
     - sensor.localbytes_plug_pm_f108d4_power
     id: drop
@@ -1467,7 +1459,7 @@
       - condition: trigger
         id: running
       sequence:
-      - service: input_select.select_option
+      - action: input_select.select_option
         target:
           entity_id: input_select.utility_room_dishwasher_status
         data:
@@ -1483,13 +1475,13 @@
           minutes: 10
           seconds: 0
       sequence:
-      - service: input_select.select_option
+      - action: input_select.select_option
         target:
           entity_id: input_select.utility_room_dishwasher_status
         data:
           option: Drying
       - wait_for_trigger:
-        - platform: numeric_state
+        - trigger: numeric_state
           entity_id:
           - sensor.localbytes_plug_pm_f108d4_power
           for:
@@ -1502,7 +1494,7 @@
           minutes: 35
           seconds: 0
           milliseconds: 0
-      - service: input_select.select_option
+      - action: input_select.select_option
         data:
           option: 'Off'
         target:
@@ -1513,14 +1505,14 @@
   alias: Utility Room - Dishwasher - Notification
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - input_select.utility_room_dishwasher_status
     from: Drying
     to: 'Off'
   condition: []
   action:
-  - service: input_boolean.turn_on
+  - action: input_boolean.turn_on
     data: {}
     target:
       entity_id: input_boolean.dishwasher_reminder
@@ -1545,14 +1537,14 @@
             entity_id: person.heather
             state: home
         then:
-        - service: notify.mobile_app_heathers_iphone
+        - action: notify.mobile_app_heathers_iphone
           data:
             data:
               actions:
               - action: DISHWASHERSILENT
                 title: Don't remind me
             message: Dishwasher finished!
-        - service: notify.mobile_app_neils_iphone
+        - action: notify.mobile_app_neils_iphone
           data:
             data:
               actions:
@@ -1569,7 +1561,7 @@
   alias: Utility Room - Washing Machine - Set State
   description: ''
   trigger:
-  - platform: numeric_state
+  - trigger: numeric_state
     entity_id:
     - sensor.localbytes_plug_pm_f0a822_power
     id: 'off'
@@ -1578,7 +1570,7 @@
       hours: 0
       minutes: 2
       seconds: 0
-  - platform: numeric_state
+  - trigger: numeric_state
     entity_id:
     - sensor.localbytes_plug_pm_f0a822_power
     id: running
@@ -1594,7 +1586,7 @@
       - condition: trigger
         id: 'off'
       sequence:
-      - service: input_select.select_option
+      - action: input_select.select_option
         target:
           entity_id:
           - input_select.utility_room_washing_machine_status
@@ -1604,7 +1596,7 @@
       - condition: trigger
         id: running
       sequence:
-      - service: input_select.select_option
+      - action: input_select.select_option
         target:
           entity_id:
           - input_select.utility_room_washing_machine_status
@@ -1616,14 +1608,14 @@
   alias: Utility Room - Washing Machine - Notification
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - input_select.utility_room_washing_machine_status
     from: Running
     to: 'Off'
   condition: []
   action:
-  - service: input_boolean.turn_on
+  - action: input_boolean.turn_on
     data: {}
     target:
       entity_id: input_boolean.washing_machine_reminder
@@ -1638,7 +1630,7 @@
           entity_id: zone.home
           above: 0
         then:
-        - service: notify.notify
+        - action: notify.notify
           data:
             message: Washing Machine finished!
             data:
@@ -1659,7 +1651,7 @@
   alias: Boys' Bedroom - Kyle's Computer - Pause Schedule
   description: ''
   trigger:
-  - platform: time
+  - trigger: time
     at: 08:00:00
   condition:
   - condition: state
@@ -1739,13 +1731,13 @@
   alias: Bedroom - Echo Dot - Do Not Disturb
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - light.neil_s_monitor_light_bar
     from: 'off'
     to: 'on'
     id: '1'
-  - platform: state
+  - trigger: state
     entity_id:
     - light.neil_s_monitor_light_bar
     from: 'on'
@@ -1785,30 +1777,30 @@
   alias: Home - Shopping List - Copy Weekly Items
   description: ''
   trigger:
-  - platform: time
+  - trigger: time
     at: 07:30:00
   condition:
   - condition: time
     weekday:
     - mon
   action:
-  - service: todo.get_items
+  - action: todo.get_items
     target:
       entity_id: todo.weekly_items
     data: {}
     response_variable: listItems
   - repeat:
       sequence:
-      - service: todo.add_item
+      - action: todo.add_item
         target:
           entity_id: todo.shopping_list
         data:
           item: '{{ repeat.item.summary }}'
       for_each: '{{ listItems[''todo.weekly_items''][''items''] }}'
-  - service: notify.mobile_app_heathers_iphone
+  - action: notify.mobile_app_heathers_iphone
     data:
       message: I've added the shopping!
-  - service: notify.mobile_app_neils_iphone
+  - action: notify.mobile_app_neils_iphone
     data:
       message: I've added the shopping!
   mode: single
@@ -1816,7 +1808,7 @@
   alias: Home - Alarm - Disarm Home Mode Motion
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.hall_motion_sensor
     from: 'off'
@@ -1839,7 +1831,7 @@
     entity_id: alarm_control_panel.home_alarm
     state: armed_home
   action:
-  - service: alarm_control_panel.alarm_disarm
+  - action: alarm_control_panel.alarm_disarm
     data: {}
     target:
       entity_id: alarm_control_panel.home_alarm
@@ -1848,7 +1840,7 @@
   alias: Boys' Bedroom - Dimmer Switch
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - event.boys_bedroom_dimmer_switch_button_1
     attribute: event_type
@@ -1856,7 +1848,7 @@
     to: long_release
   condition: []
   action:
-  - service: light.toggle
+  - action: light.toggle
     data: {}
     target:
       entity_id: light.liam_s_monitor_light_bar
@@ -1896,9 +1888,9 @@
   alias: Home - Bins - Notification - Turn Off
   description: ''
   trigger:
-  - platform: tag
+  - trigger: tag
     tag_id: 96fa3b13-a56f-4c5b-a738-fac4f43831d0
-  - platform: event
+  - trigger: event
     event_type: mobile_app_notification_action
     event_data:
       action: BINS
@@ -1908,7 +1900,7 @@
       - aedf768629bf470d833313914d0c458c
   condition: []
   action:
-  - service: input_boolean.toggle
+  - action: input_boolean.toggle
     data: {}
     target:
       entity_id: input_boolean.bins_out
@@ -1918,11 +1910,11 @@
         entity_id: input_boolean.bins_out
         state: 'on'
       sequence:
-      - service: notify.mobile_app_neils_iphone
+      - action: notify.mobile_app_neils_iphone
         data:
           message: '{{ states.person|selectattr("attributes.user_id", "==", trigger.event.context.user_id)|map(attribute="attributes.friendly_name")|first
             }} took the bins out!'
-      - service: notify.mobile_app_heathers_iphone
+      - action: notify.mobile_app_heathers_iphone
         data:
           message: '{{ states.person|selectattr("attributes.user_id", "==", trigger.event.context.user_id)|map(attribute="attributes.friendly_name")|first
             }} took the bins out!'
@@ -1931,11 +1923,11 @@
         entity_id: input_boolean.bins_out
         state: 'off'
       sequence:
-      - service: notify.mobile_app_neils_iphone
+      - action: notify.mobile_app_neils_iphone
         data:
           message: '{{ states.person|selectattr("attributes.user_id", "==", trigger.event.context.user_id)|map(attribute="attributes.friendly_name")|first
             }} got the bins in!'
-      - service: notify.mobile_app_heathers_iphone
+      - action: notify.mobile_app_heathers_iphone
         data:
           message: '{{ states.person|selectattr("attributes.user_id", "==", trigger.event.context.user_id)|map(attribute="attributes.friendly_name")|first
             }} got the bins in!'
@@ -1944,9 +1936,9 @@
   alias: Utility Room - Dishwasher - NFC Scanned
   description: ''
   trigger:
-  - platform: tag
+  - trigger: tag
     tag_id: 0eebfff1-ae9b-4cf5-83be-8c6db2aaa38c
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.dishwasher_door
     from: 'off'
@@ -1959,7 +1951,7 @@
         entity_id: input_select.utility_room_dishwasher_status
         state: 'Off'
       sequence:
-      - service: input_boolean.turn_off
+      - action: input_boolean.turn_off
         data: {}
         target:
           entity_id: input_boolean.dishwasher_reminder
@@ -1968,7 +1960,7 @@
         entity_id: input_select.utility_room_dishwasher_status
         state: Drying
       sequence:
-      - service: input_select.select_option
+      - action: input_select.select_option
         data:
           option: 'Off'
         target:
@@ -1978,7 +1970,7 @@
           minutes: 0
           seconds: 5
           milliseconds: 0
-      - service: input_boolean.turn_off
+      - action: input_boolean.turn_off
         data: {}
         target:
           entity_id: input_boolean.dishwasher_reminder
@@ -2135,7 +2127,7 @@
   alias: Living Room - Workout - NFC Scanned
   description: ''
   trigger:
-  - platform: tag
+  - trigger: tag
     tag_id: 0efa3b58-7769-40ad-bf8c-184ecdfa641b
   condition: []
   action:
@@ -2144,7 +2136,7 @@
       value_template: '{{ trigger.event.context.user_id == "aedf768629bf470d833313914d0c458c"
         }}'
     then:
-    - service: light.turn_on
+    - action: light.turn_on
       data:
         brightness_pct: 35
       target:
@@ -2171,17 +2163,17 @@
           attribute: message
           state: Heather
     then:
-    - service: script.living_room_workout_time_apple_tv
+    - action: script.living_room_workout_time_apple_tv
       data: {}
     else:
-    - service: script.living_room_cardio_time
+    - action: script.living_room_cardio_time
       data: {}
   mode: single
 - id: '1672695411810'
   alias: Bedroom - Dimmer Switch
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - event.bedroom_dimmer_switch_button_1
     attribute: event_type
@@ -2189,15 +2181,15 @@
     to: long_release
   condition: []
   action:
-  - service: light.turn_off
+  - action: light.turn_off
     data: {}
     target:
       area_id: bedroom
-  - service: fan.turn_off
+  - action: fan.turn_off
     data: {}
     target:
       area_id: bedroom
-  - service: media_player.turn_off
+  - action: media_player.turn_off
     data: {}
     target:
       area_id: bedroom
@@ -2206,24 +2198,24 @@
   alias: Garden - Lighting - Motion
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.back_door
     from: 'off'
     to: 'on'
     id: '1'
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.garden_camera_motion
     from: 'off'
     to: 'on'
     id: '1'
-  - platform: event
+  - trigger: event
     event_type: timer.finished
     event_data:
       entity_id: timer.garden_light_timer
     id: '2'
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.garden_camera_motion
     from: 'on'
@@ -2239,11 +2231,11 @@
         entity_id: sensor.sun_solar_elevation
         below: -4
       sequence:
-      - service: light.turn_on
+      - action: light.turn_on
         data: {}
         target:
           entity_id: light.garden_light
-      - service: timer.start
+      - action: timer.start
         data: {}
         target:
           entity_id: timer.garden_light_timer
@@ -2258,13 +2250,13 @@
             state: 'on'
           sequence:
           - wait_for_trigger:
-            - platform: state
+            - trigger: state
               entity_id:
               - binary_sensor.garden_camera_motion
               from: 'on'
               to: 'off'
             continue_on_timeout: false
-          - service: light.turn_off
+          - action: light.turn_off
             data: {}
             target:
               entity_id: light.garden_light
@@ -2274,18 +2266,18 @@
             state: active
           sequence:
           - wait_for_trigger:
-            - platform: state
+            - trigger: state
               entity_id:
               - timer.garden_light_timer
               from: active
               to: idle
             continue_on_timeout: false
-          - service: light.turn_off
+          - action: light.turn_off
             data: {}
             target:
               entity_id: light.garden_light
         default:
-        - service: light.turn_off
+        - action: light.turn_off
           data: {}
           target:
             entity_id: light.garden_light
@@ -2527,7 +2519,7 @@
   alias: Hall - Dimmer Switch
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - event.hall_dimmer_switch_button_1
     attribute: event_type
@@ -2535,18 +2527,18 @@
     to: long_release
   condition: []
   action:
-  - service: light.turn_off
+  - action: light.turn_off
     data: {}
     target:
       floor_id: downstairs
       area_id:
       - garden
       - porch
-  - service: fan.turn_off
+  - action: fan.turn_off
     data: {}
     target:
       floor_id: downstairs
-  - service: media_player.turn_off
+  - action: media_player.turn_off
     data: {}
     target:
       floor_id: downstairs
@@ -2555,25 +2547,25 @@
   alias: Living Room - Heating - Fan and Windows Off
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - fan.living_room_fan
     from: 'off'
     to: 'on'
     id: '1'
-  - platform: state
+  - trigger: state
     entity_id:
     - fan.living_room_fan
     from: 'on'
     to: 'off'
     id: '2'
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.living_room_windows
     from: 'off'
     to: 'on'
     id: '1'
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.living_room_windows
     from: 'on'
@@ -2586,7 +2578,7 @@
       - condition: trigger
         id: '1'
       sequence:
-      - service: climate.set_hvac_mode
+      - action: climate.set_hvac_mode
         data:
           hvac_mode: 'off'
         target:
@@ -2603,7 +2595,7 @@
           entity_id: binary_sensor.living_room_windows
           state: 'off'
       sequence:
-      - service: climate.set_hvac_mode
+      - action: climate.set_hvac_mode
         data:
           hvac_mode: auto
         target:
@@ -2613,7 +2605,7 @@
   alias: Utility Room - Washing Machine - Door Open
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.washing_machine_door
     from: 'off'
@@ -2623,7 +2615,7 @@
     entity_id: input_select.utility_room_washing_machine_status
     state: 'Off'
   action:
-  - service: input_boolean.turn_off
+  - action: input_boolean.turn_off
     data: {}
     target:
       entity_id:
@@ -2635,7 +2627,7 @@
   alias: Home - Alarm - Disarm Home Mode If Armed With Downstairs - Presence
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - alarm_control_panel.home_alarm
     from: disarmed
@@ -2650,7 +2642,7 @@
       entity_id: input_boolean.guest_mode
       state: 'on'
   action:
-  - service: alarm_control_panel.alarm_disarm
+  - action: alarm_control_panel.alarm_disarm
     data: {}
     target:
       entity_id: alarm_control_panel.home_alarm
@@ -2659,23 +2651,23 @@
   alias: Home - Pisshead Mode - Notify
   description: ''
   trigger:
-  - platform: time
+  - trigger: time
     at: '21:00:00'
-  - platform: time
+  - trigger: time
     at: 08:00:00
   condition:
   - condition: state
     entity_id: input_boolean.guest_mode
     state: 'on'
   action:
-  - service: notify.mobile_app_neils_iphone
+  - action: notify.mobile_app_neils_iphone
     data:
       message: Pisshead mode is on!
       data:
         actions:
         - action: GUESTOFF
           title: Turn off
-  - service: notify.mobile_app_heathers_iphone
+  - action: notify.mobile_app_heathers_iphone
     data:
       message: Pisshead mode is on!
       data:
@@ -2687,13 +2679,13 @@
   alias: Home - Pisshead Mode - Turn Off
   description: ''
   trigger:
-  - platform: event
+  - trigger: event
     event_type: mobile_app_notification_action
     event_data:
       action: GUESTOFF
   condition: []
   action:
-  - service: input_boolean.turn_off
+  - action: input_boolean.turn_off
     data: {}
     target:
       entity_id: input_boolean.guest_mode
@@ -2702,7 +2694,7 @@
   alias: Utility Room - Dishwasher - Notification - Turn Off
   description: ''
   trigger:
-  - platform: event
+  - trigger: event
     event_type: mobile_app_notification_action
     event_data:
       action: DISHWASHERSILENT
@@ -2712,7 +2704,7 @@
       - aedf768629bf470d833313914d0c458c
   condition: []
   action:
-  - service: input_boolean.turn_off
+  - action: input_boolean.turn_off
     data: {}
     target:
       entity_id: input_boolean.dishwasher_reminder
@@ -2721,7 +2713,7 @@
   alias: Utility Room - Washing Machine - Notification - Turn Off
   description: ''
   trigger:
-  - platform: event
+  - trigger: event
     event_type: mobile_app_notification_action
     event_data:
       action: WASHINGMACHINESILENT
@@ -2729,7 +2721,7 @@
       user_id:
       - 0b0bf6c2959e464582093e79aa540066
       - aedf768629bf470d833313914d0c458c
-  - platform: event
+  - trigger: event
     event_type: mobile_app_notification_action
     event_data:
       action: WASHINGMACHINEBEN
@@ -2738,7 +2730,7 @@
       - 0b0bf6c2959e464582093e79aa540066
       - aedf768629bf470d833313914d0c458c
     id: '1'
-  - platform: event
+  - trigger: event
     event_type: mobile_app_notification_action
     event_data:
       action: WASHINGMACHINELIAM
@@ -2749,7 +2741,7 @@
     id: '2'
   condition: []
   action:
-  - service: input_boolean.turn_off
+  - action: input_boolean.turn_off
     data: {}
     target:
       entity_id: input_boolean.washing_machine_reminder
@@ -2758,7 +2750,7 @@
       - condition: trigger
         id: '1'
       sequence:
-      - service: input_boolean.turn_on
+      - action: input_boolean.turn_on
         data: {}
         target:
           entity_id: input_boolean.washing_machine_reminder_ben
@@ -2767,7 +2759,7 @@
         id:
         - '2'
       sequence:
-      - service: input_boolean.turn_on
+      - action: input_boolean.turn_on
         data: {}
         target:
           entity_id: input_boolean.washing_machine_reminder_liam
@@ -2776,7 +2768,7 @@
   alias: Bedroom - Desk - Flash When Doorbell Pressed
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.front_doorbell_ding
     from: 'off'
@@ -2793,7 +2785,7 @@
     entity_id: person.neil
     state: home
   action:
-  - service: light.toggle
+  - action: light.toggle
     data:
       flash: long
     target:
@@ -2803,13 +2795,13 @@
   alias: Utility Room - Washing Machine - Notification Annoy
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - input_boolean.washing_machine_reminder_ben
     from: 'off'
     to: 'on'
     id: '1'
-  - platform: state
+  - trigger: state
     entity_id:
     - input_boolean.washing_machine_reminder_liam
     from: 'off'
@@ -2833,7 +2825,7 @@
               entity_id: person.ben
               state: home
             then:
-            - service: notify.alexa_media
+            - action: notify.alexa_media
               data:
                 data:
                   method: all
@@ -2862,7 +2854,7 @@
               entity_id: person.liam
               state: home
             then:
-            - service: notify.alexa_media
+            - action: notify.alexa_media
               data:
                 data:
                   method: all
@@ -2880,13 +2872,13 @@
   alias: Home - Window Cleaner - Toggle
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - input_boolean.window_cleaner
     from: 'off'
     to: 'on'
     id: '1'
-  - platform: state
+  - trigger: state
     entity_id:
     - input_boolean.window_cleaner
     from: 'on'
@@ -2904,7 +2896,7 @@
           entity_id: alarm_control_panel.home_alarm
           state: armed_away
         then:
-        - service: alarm_control_panel.alarm_disarm
+        - action: alarm_control_panel.alarm_disarm
           data: {}
           target:
             entity_id: alarm_control_panel.home_alarm
@@ -2913,7 +2905,7 @@
             minutes: 0
             seconds: 5
             milliseconds: 0
-        - service: select.select_option
+        - action: select.select_option
           data:
             option: Always
           target:
@@ -2923,12 +2915,12 @@
             minutes: 0
             seconds: 5
             milliseconds: 0
-        - service: alarm_control_panel.alarm_arm_away
+        - action: alarm_control_panel.alarm_arm_away
           data: {}
           target:
             entity_id: alarm_control_panel.home_alarm
         else:
-        - service: select.select_option
+        - action: select.select_option
           data:
             option: Always
           target:
@@ -2942,7 +2934,7 @@
           entity_id: alarm_control_panel.home_alarm
           state: armed_away
         then:
-        - service: alarm_control_panel.alarm_disarm
+        - action: alarm_control_panel.alarm_disarm
           data: {}
           target:
             entity_id: alarm_control_panel.home_alarm
@@ -2951,7 +2943,7 @@
             minutes: 0
             seconds: 5
             milliseconds: 0
-        - service: select.select_option
+        - action: select.select_option
           data:
             option: Faulted
           target:
@@ -2961,12 +2953,12 @@
             minutes: 0
             seconds: 5
             milliseconds: 0
-        - service: alarm_control_panel.alarm_arm_away
+        - action: alarm_control_panel.alarm_arm_away
           data: {}
           target:
             entity_id: alarm_control_panel.home_alarm
         else:
-        - service: select.select_option
+        - action: select.select_option
           data:
             option: Faulted
           target:
@@ -2976,23 +2968,23 @@
   alias: Home - Window Cleaner - Notify
   description: ''
   trigger:
-  - platform: time
+  - trigger: time
     at: '21:00:00'
-  - platform: time
+  - trigger: time
     at: 08:00:00
   condition:
   - condition: state
     entity_id: input_boolean.window_cleaner
     state: 'on'
   action:
-  - service: notify.mobile_app_neils_iphone
+  - action: notify.mobile_app_neils_iphone
     data:
       message: Side Gate bypassed! Is the Window Cleaner coming?
       data:
         actions:
         - action: WINDOWOFF
           title: No!
-  - service: notify.mobile_app_heathers_iphone
+  - action: notify.mobile_app_heathers_iphone
     data:
       message: Side Gate bypassed! Is the Window Cleaner coming?
       data:
@@ -3004,13 +2996,13 @@
   alias: Home - Window Cleaner - Turn Off
   description: ''
   trigger:
-  - platform: event
+  - trigger: event
     event_type: mobile_app_notification_action
     event_data:
       action: WINDOWOFF
   condition: []
   action:
-  - service: input_boolean.turn_off
+  - action: input_boolean.turn_off
     data: {}
     target:
       entity_id: input_boolean.window_cleaner
@@ -3019,13 +3011,13 @@
   alias: Boys' Bedroom - Lighting - Liam's Light Bar Computer
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.bluespike_liam_s_pc_wireless_connected
     from: 'off'
     to: 'on'
     id: '1'
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.bluespike_liam_s_pc_wireless_connected
     from: 'on'
@@ -3042,7 +3034,7 @@
       - condition: trigger
         id: '1'
       sequence:
-      - service: light.turn_on
+      - action: light.turn_on
         data: {}
         target:
           entity_id: light.liam_s_monitor_light_bar
@@ -3050,7 +3042,7 @@
       - condition: trigger
         id: '2'
       sequence:
-      - service: light.turn_off
+      - action: light.turn_off
         data: {}
         target:
           entity_id: light.liam_s_monitor_light_bar
@@ -3059,7 +3051,7 @@
   alias: Landing - Dimmer Switch
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - event.landing_dimmer_switch_button_1
     attribute: event_type
@@ -3067,14 +3059,14 @@
     to: long_release
   condition: []
   action:
-  - service: script.ben_s_bedroom_all_devices_off
+  - action: script.ben_s_bedroom_all_devices_off
     data: {}
   mode: single
 - id: '1682938342989'
   alias: Bedroom - Lighting - Neil Work Lights - Computer
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.bluespike_l1fwcyfgxnmbp_284660_wireless_connected
     from: 'off'
@@ -3084,13 +3076,13 @@
       hours: 0
       minutes: 0
       seconds: 15
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.bluespike_l1fwcyfgxnmbp_284660_wireless_connected
     from: 'on'
     to: 'off'
     id: '2'
-  - platform: state
+  - trigger: state
     entity_id:
     - light.bedroom_light
     from: 'on'
@@ -3139,13 +3131,13 @@
   alias: Boys' Bedroom - Heating - Windows Off
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.boys_bedroom_windows
     from: 'off'
     to: 'on'
     id: '1'
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.boys_bedroom_windows
     from: 'on'
@@ -3204,13 +3196,13 @@
   alias: Ben's Bedroom - Heating - Window Off
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.ben_s_bedroom_window
     from: 'off'
     to: 'on'
     id: '1'
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.ben_s_bedroom_window
     from: 'on'
@@ -3263,13 +3255,13 @@
   alias: Bedroom - Heating - Windows Off
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.bedroom_windows
     from: 'off'
     to: 'on'
     id: '1'
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.bedroom_windows
     from: 'on'
@@ -3282,7 +3274,7 @@
       - condition: trigger
         id: '1'
       sequence:
-      - service: climate.set_hvac_mode
+      - action: climate.set_hvac_mode
         data:
           hvac_mode: 'off'
         target:
@@ -3301,7 +3293,7 @@
             entity_id: person.heather
             state: home
       sequence:
-      - service: climate.set_hvac_mode
+      - action: climate.set_hvac_mode
         data:
           hvac_mode: auto
         target:
@@ -3312,13 +3304,13 @@
   alias: Kitchen - Heating - Window Off
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.kitchen_window
     from: 'off'
     to: 'on'
     id: '1'
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.kitchen_window
     from: 'on'
@@ -3331,7 +3323,7 @@
       - condition: trigger
         id: '1'
       sequence:
-      - service: climate.set_hvac_mode
+      - action: climate.set_hvac_mode
         data:
           hvac_mode: 'off'
         target:
@@ -3341,7 +3333,7 @@
       - condition: trigger
         id: '2'
       sequence:
-      - service: climate.set_hvac_mode
+      - action: climate.set_hvac_mode
         data:
           hvac_mode: auto
         target:
@@ -3352,7 +3344,7 @@
   alias: Home - Heating - Temperature Increase Windows Off
   description: ''
   trigger:
-  - platform: event
+  - trigger: event
     event_type: wiser_event
     event_data:
       type: target_temperature_increased
@@ -3363,7 +3355,7 @@
         entity_id: binary_sensor.bedroom_windows
         state: 'on'
       sequence:
-      - service: climate.set_hvac_mode
+      - action: climate.set_hvac_mode
         data:
           hvac_mode: 'off'
         target:
@@ -3373,7 +3365,7 @@
         entity_id: binary_sensor.boys_bedroom_windows
         state: 'on'
       sequence:
-      - service: climate.set_hvac_mode
+      - action: climate.set_hvac_mode
         data:
           hvac_mode: 'off'
         target:
@@ -3383,7 +3375,7 @@
         entity_id: binary_sensor.ben_s_bedroom_window
         state: 'on'
       sequence:
-      - service: climate.set_hvac_mode
+      - action: climate.set_hvac_mode
         data:
           hvac_mode: 'off'
         target:
@@ -3393,7 +3385,7 @@
         entity_id: binary_sensor.kitchen_window
         state: 'on'
       sequence:
-      - service: climate.set_hvac_mode
+      - action: climate.set_hvac_mode
         data:
           hvac_mode: 'off'
         target:
@@ -3403,7 +3395,7 @@
         entity_id: binary_sensor.living_room_windows
         state: 'on'
       sequence:
-      - service: climate.set_hvac_mode
+      - action: climate.set_hvac_mode
         data:
           hvac_mode: 'off'
         target:
@@ -3414,13 +3406,13 @@
   alias: Living Room - Lighting - Presence
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room
     from: 'off'
     to: 'on'
     id: '1'
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room
     to: 'off'
@@ -3478,7 +3470,7 @@
   alias: Home - Shopping List - Add Meal Ingredients
   description: ''
   trigger:
-  - platform: time
+  - trigger: time
     at: 07:00:00
     enabled: true
   condition:
@@ -3491,7 +3483,7 @@
     - fri
     enabled: true
   action:
-  - service: calendar.get_events
+  - action: calendar.get_events
     data:
       duration:
         hours: 0
@@ -3505,20 +3497,20 @@
   - variables:
       recipeEntity: todo.recipe_{{ mealNextWeek['calendar.meals'].events[0].summary
         | slugify }}
-  - service: todo.get_items
+  - action: todo.get_items
     target:
       entity_id: '{{ recipeEntity }}'
     data: {}
     response_variable: recipeItems
   - repeat:
       sequence:
-      - service: todo.add_item
+      - action: todo.add_item
         target:
           entity_id: todo.shopping_list
         data:
           item: '{{ repeat.item.summary }}'
       for_each: '{{ recipeItems[recipeEntity][''items''] }}'
-  - service: notify.mobile_app_heathers_iphone
+  - action: notify.mobile_app_heathers_iphone
     data:
       message: 'Ingredients for {{ mealNextWeek[''calendar.meals''].events[0].summary
         }} next {{ as_timestamp(now().date()) | timestamp_custom(''%A'') }} added
@@ -3526,7 +3518,7 @@
 
         '
     enabled: true
-  - service: notify.mobile_app_neils_iphone
+  - action: notify.mobile_app_neils_iphone
     data:
       message: 'Ingredients for {{ mealNextWeek[''calendar.meals''].events[0].summary
         }} next {{ as_timestamp(now().date()) | timestamp_custom(''%A'') }} added
@@ -3539,7 +3531,7 @@
   alias: Home - Vacuum Upstairs - Announce
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - vacuum.deebot_ozmo_920
     to: cleaning
@@ -3548,7 +3540,7 @@
     after: 09:00:00
     before: '21:30:00'
   action:
-  - service: notify.alexa_media
+  - action: notify.alexa_media
     data:
       message: The vacuum is cleaning upstairs now, please watch out for it!
       data:
@@ -3561,13 +3553,13 @@
       - Boys' Echo Dot
       - Ben's Echo Dot
   - wait_for_trigger:
-    - platform: state
+    - trigger: state
       entity_id:
       - vacuum.deebot_ozmo_920
       to: returning
       from: cleaning
     continue_on_timeout: false
-  - service: notify.alexa_media
+  - action: notify.alexa_media
     data:
       message: The vacuum has finished cleaning upstairs!
       data:
@@ -3675,6 +3667,7 @@
             entity_id:
             - media_player.boys_echo_dot
             - media_player.ben_s_echo_dot
+        enabled: false
     - conditions:
       - condition: trigger
         id:
@@ -3690,7 +3683,7 @@
   alias: Home - Kyle - Notify For School
   description: ''
   trigger:
-  - platform: time
+  - trigger: time
     at: 08:05:00
   condition:
   - condition: time
@@ -3742,10 +3735,10 @@
   alias: Boys' Bedroom - Dehumidifier - Schedule
   description: ''
   trigger:
-  - platform: time
+  - trigger: time
     at: 06:00:00
     id: '1'
-  - platform: time
+  - trigger: time
     at: '21:30:00'
     id: '2'
   condition: []
@@ -3762,12 +3755,12 @@
         entity_id: binary_sensor.boys_bedroom_window_casement
         state: 'off'
       sequence:
-      - service: humidifier.turn_on
+      - action: humidifier.turn_on
         target:
           entity_id:
           - humidifier.boys_bedroom_dehumidifier_none
         data: {}
-      - service: humidifier.set_humidity
+      - action: humidifier.set_humidity
         target:
           entity_id:
           - humidifier.boys_bedroom_dehumidifier_none
@@ -3778,7 +3771,7 @@
         id:
         - '2'
       sequence:
-      - service: humidifier.turn_off
+      - action: humidifier.turn_off
         target:
           entity_id: humidifier.boys_bedroom_dehumidifier_none
         data: {}
@@ -3787,7 +3780,7 @@
   alias: Boys' Bedroom - Dehumidifier - Tank Full
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.boys_bedroom_dehumidifier_tank
     from: 'off'
@@ -3810,19 +3803,19 @@
   action:
   - repeat:
       sequence:
-      - service: light.toggle
+      - action: light.toggle
         target:
           entity_id:
           - light.boys_bedroom_light
         data:
           flash: long
-      - service: media_player.volume_set
+      - action: media_player.volume_set
         target:
           entity_id:
           - media_player.boys_echo_dot
         data:
           volume_level: 0.5
-      - service: notify.alexa_media_boys_echo_dot
+      - action: notify.alexa_media_boys_echo_dot
         data:
           message: The dehumidifier water tank is full. Please empty it or else the
             room will stink of rotten pants.
@@ -3840,14 +3833,14 @@
   alias: Home - Lighting - Hall And Landing Brightness
   description: ''
   trigger:
-  - platform: numeric_state
+  - trigger: numeric_state
     entity_id:
     - light.landing_light
     - light.hall_light
     attribute: brightness
     above: 3
     id: '1'
-  - platform: state
+  - trigger: state
     entity_id:
     - timer.hall_and_landing_light_timer
     from: active
@@ -3861,7 +3854,7 @@
         id:
         - '1'
       sequence:
-      - service: timer.start
+      - action: timer.start
         target:
           entity_id: timer.hall_and_landing_light_timer
         data: {}
@@ -3875,7 +3868,7 @@
           entity_id: light.hall_light
           state: 'on'
         then:
-        - service: light.turn_on
+        - action: light.turn_on
           target:
             entity_id: light.hall_light
           data:
@@ -3885,7 +3878,7 @@
           entity_id: light.landing_light
           state: 'on'
         then:
-        - service: light.turn_on
+        - action: light.turn_on
           target:
             entity_id: light.landing_light
           data:
@@ -3895,10 +3888,10 @@
   alias: Boys' Bedroom - Kyle's Lava Lamp - Schedule
   description: ''
   trigger:
-  - platform: time
+  - trigger: time
     at: '19:30:00'
     id: '1'
-  - platform: time
+  - trigger: time
     at: '22:00:00'
     id: '2'
   condition:
@@ -3912,7 +3905,7 @@
         id:
         - '1'
       sequence:
-      - service: light.turn_on
+      - action: light.turn_on
         metadata: {}
         data: {}
         target:
@@ -3922,7 +3915,7 @@
         id:
         - '2'
       sequence:
-      - service: light.turn_off
+      - action: light.turn_off
         target:
           entity_id:
           - light.kyles_lava_lamp
@@ -3932,14 +3925,14 @@
   alias: Living Room - Dehumidifier - UPS On Battery
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.ups_online_status
     from: 'on'
     to: 'off'
   condition: []
   action:
-  - service: humidifier.turn_off
+  - action: humidifier.turn_off
     metadata: {}
     data: {}
     target:
@@ -3949,18 +3942,18 @@
   alias: Living Room - Dehumidifier - Dry Clothes
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - humidifier.living_room_dehumidifier_none
     from: 'off'
     to: 'on'
     id: '1'
-  - platform: event
+  - trigger: event
     event_type: timer.finished
     event_data:
       entity_id: timer.living_room_dehumidifier_timer
     id: '2'
-  - platform: state
+  - trigger: state
     entity_id:
     - humidifier.living_room_dehumidifier_none
     from: 'on'
@@ -3974,17 +3967,17 @@
         id:
         - '1'
       sequence:
-      - service: humidifier.set_mode
+      - action: humidifier.set_mode
         target:
           entity_id: humidifier.living_room_dehumidifier_none
         data:
           mode: '2'
-      - service: timer.start
+      - action: timer.start
         metadata: {}
         data: {}
         target:
           entity_id: timer.living_room_dehumidifier_timer
-      - service: notify.alexa_media_living_room_echo_dot
+      - action: notify.alexa_media_living_room_echo_dot
         data:
           message: Your clothes will be dry in 6 hours time.
     - conditions:
@@ -3992,12 +3985,12 @@
         id:
         - '2'
       sequence:
-      - service: humidifier.turn_off
+      - action: humidifier.turn_off
         metadata: {}
         data: {}
         target:
           entity_id: humidifier.living_room_dehumidifier_none
-      - service: notify.notify
+      - action: notify.notify
         metadata: {}
         data:
           message: Clothes are dry in the living room!
@@ -4006,7 +3999,7 @@
         id:
         - '3'
       sequence:
-      - service: timer.cancel
+      - action: timer.cancel
         metadata: {}
         data: {}
         target:
@@ -4016,7 +4009,7 @@
   alias: Utility Room - Tumble Dryer - Set State
   description: ''
   trigger:
-  - platform: numeric_state
+  - trigger: numeric_state
     entity_id:
     - sensor.localbytes_plug_pm_8ca200_power
     id: 'off'
@@ -4025,7 +4018,7 @@
       hours: 0
       minutes: 0
       seconds: 30
-  - platform: numeric_state
+  - trigger: numeric_state
     entity_id:
     - sensor.localbytes_plug_pm_8ca200_power
     id: running
@@ -4034,7 +4027,7 @@
       hours: 0
       minutes: 0
       seconds: 0
-  - platform: numeric_state
+  - trigger: numeric_state
     entity_id:
     - sensor.localbytes_plug_pm_8ca200_power
     id: cooldown
@@ -4051,7 +4044,7 @@
       - condition: trigger
         id: 'off'
       sequence:
-      - service: input_select.select_option
+      - action: input_select.select_option
         target:
           entity_id:
           - input_select.tumble_dryer_status
@@ -4061,7 +4054,7 @@
       - condition: trigger
         id: running
       sequence:
-      - service: input_select.select_option
+      - action: input_select.select_option
         target:
           entity_id:
           - input_select.tumble_dryer_status
@@ -4075,7 +4068,7 @@
         entity_id: input_select.tumble_dryer_status
         state: Running
       sequence:
-      - service: input_select.select_option
+      - action: input_select.select_option
         target:
           entity_id:
           - input_select.tumble_dryer_status
@@ -4087,14 +4080,14 @@
   alias: Utility Room - Tumble Dryer - Notification
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - input_select.tumble_dryer_status
     from: Cooldown
     to: 'Off'
   condition: []
   action:
-  - service: input_boolean.turn_on
+  - action: input_boolean.turn_on
     data: {}
     target:
       entity_id: input_boolean.tumble_dryer_reminder
@@ -4111,7 +4104,7 @@
           entity_id: zone.home
           above: 0
         then:
-        - service: notify.notify
+        - action: notify.notify
           data:
             message: Tumble Dryer finished!
             data:
@@ -4133,13 +4126,13 @@
   alias: Utility Room - Tumble Dryer - Annoy
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - input_boolean.tumble_dryer_reminder_ben
     from: 'off'
     to: 'on'
     id: '1'
-  - platform: state
+  - trigger: state
     entity_id:
     - input_boolean.tumble_dryer_reminder_liam
     from: 'off'
@@ -4163,7 +4156,7 @@
               entity_id: person.ben
               state: home
             then:
-            - service: notify.alexa_media
+            - action: notify.alexa_media
               data:
                 data:
                   method: all
@@ -4192,7 +4185,7 @@
               entity_id: person.liam
               state: home
             then:
-            - service: notify.alexa_media
+            - action: notify.alexa_media
               data:
                 data:
                   method: all
@@ -4210,7 +4203,7 @@
   alias: Utility Room - Tumble Dryer - Notification - Turn Off
   description: ''
   trigger:
-  - platform: event
+  - trigger: event
     event_type: mobile_app_notification_action
     event_data:
       action: TUMBLEDRYERSILENT
@@ -4218,7 +4211,7 @@
       user_id:
       - 0b0bf6c2959e464582093e79aa540066
       - aedf768629bf470d833313914d0c458c
-  - platform: event
+  - trigger: event
     event_type: mobile_app_notification_action
     event_data:
       action: TUMBLEDRYERBEN
@@ -4227,7 +4220,7 @@
       - 0b0bf6c2959e464582093e79aa540066
       - aedf768629bf470d833313914d0c458c
     id: '1'
-  - platform: event
+  - trigger: event
     event_type: mobile_app_notification_action
     event_data:
       action: TUMBLEDRYERLIAM
@@ -4238,7 +4231,7 @@
     id: '2'
   condition: []
   action:
-  - service: input_boolean.turn_off
+  - action: input_boolean.turn_off
     data: {}
     target:
       entity_id:
@@ -4248,7 +4241,7 @@
       - condition: trigger
         id: '1'
       sequence:
-      - service: input_boolean.turn_on
+      - action: input_boolean.turn_on
         data: {}
         target:
           entity_id:
@@ -4258,7 +4251,7 @@
         id:
         - '2'
       sequence:
-      - service: input_boolean.turn_on
+      - action: input_boolean.turn_on
         data: {}
         target:
           entity_id:
@@ -4268,7 +4261,7 @@
   alias: Utility Room - Tumble Dryer - Door Open
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.tumble_dryer_door
     from: 'off'
@@ -4278,7 +4271,7 @@
     entity_id: input_select.tumble_dryer_status
     state: 'Off'
   action:
-  - service: input_boolean.turn_off
+  - action: input_boolean.turn_off
     data: {}
     target:
       entity_id:
@@ -4290,7 +4283,7 @@
   alias: Living Room - Dehumidifier - Tank Full
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.living_room_dehumidifier_tank
     from: 'off'
@@ -4307,7 +4300,7 @@
   action:
   - repeat:
       sequence:
-      - service: notify.notify
+      - action: notify.notify
         data:
           message: The Living Room Dehumidifier is full, please empty it!
       - delay:
@@ -4389,7 +4382,7 @@
   alias: Boys' Bedroom - Liam's PC - Pause Wi-Fi
   description: ''
   trigger:
-  - platform: time_pattern
+  - trigger: time_pattern
     hours: '21'
     minutes: /15
   condition:
@@ -4399,7 +4392,7 @@
   - condition: time
     after: '21:01:00'
   action:
-  - service: switch.turn_on
+  - action: switch.turn_on
     metadata: {}
     data: {}
     target:
@@ -4409,14 +4402,14 @@
   alias: Boys' Bedroom - Liam's PC - Resume Wi-Fi
   description: ''
   trigger:
-  - platform: time
+  - trigger: time
     at: 00:00:00
   condition:
   - condition: state
     entity_id: switch.bluespike_liam_s_pc_wireless_paused
     state: 'on'
   action:
-  - service: switch.turn_off
+  - action: switch.turn_off
     target:
       entity_id:
       - switch.bluespike_liam_s_pc_wireless_paused
@@ -4426,13 +4419,13 @@
   alias: Kitchen - Lighting - Worktop
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.everything_presence_lite_214fd8_zone_1_occupancy
     to: 'on'
     id: '1'
     from: 'off'
-  - platform: state
+  - trigger: state
     entity_id:
     - binary_sensor.everything_presence_lite_214fd8_zone_1_occupancy
     to: 'off'
@@ -4448,7 +4441,7 @@
       - condition: trigger
         id: '1'
       sequence:
-      - service: light.turn_on
+      - action: light.turn_on
         data:
           brightness_pct: 100
         target:
@@ -4459,7 +4452,7 @@
       - condition: trigger
         id: '2'
       sequence:
-      - service: light.turn_off
+      - action: light.turn_off
         data: {}
         target:
           entity_id:
@@ -4470,7 +4463,7 @@
   alias: Living Room - TV - Workout
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - media_player.living_room
     attribute: app_id
@@ -4480,7 +4473,7 @@
     entity_id: binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room
     state: 'on'
   action:
-  - service: fan.turn_on
+  - action: fan.turn_on
     target:
       area_id:
       - living_room
@@ -4492,7 +4485,7 @@
       attribute: message
       state: Neil
     then:
-    - service: light.turn_on
+    - action: light.turn_on
       metadata: {}
       data:
         brightness: 255
@@ -4604,7 +4597,7 @@
   alias: Living Room - TV - Volume
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - media_player.living_room_tv_airplay
     to: 'on'
@@ -4624,7 +4617,7 @@
   alias: Bedroom - Lighting - Neil's Work Lights On When Light On
   description: ''
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - light.bedroom_light
     from: 'off'
@@ -4645,10 +4638,10 @@
   alias: Ben's Bedroom - Dehumidifier - Schedule
   description: ''
   trigger:
-  - platform: time
+  - trigger: time
     at: 05:45:00
     id: '1'
-  - platform: time
+  - trigger: time
     at: '21:30:00'
     id: '2'
   condition: []

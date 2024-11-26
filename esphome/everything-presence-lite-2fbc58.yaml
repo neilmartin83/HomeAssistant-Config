@@ -22,3 +22,13 @@ wifi:
 ota:
   - platform: esphome
     password: !secret everything-presence-lite-2fbc58_ota_password
+
+sensor:
+  - platform: dht
+    pin: 32
+    temperature:
+      name: "Temperature"
+    humidity:
+      name: "Humidity"
+      accuracy_decimals: 1
+    

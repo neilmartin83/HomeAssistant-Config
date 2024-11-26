@@ -313,7 +313,7 @@
                 },
                 {
                   "type": "tile",
-                  "entity": "sensor.air_quality_monitor_temperature",
+                  "entity": "sensor.everything_presence_lite_2fbc58_temperature",
                   "state_content": "temperature",
                   "tap_action": {
                     "action": "navigate",
@@ -676,7 +676,14 @@
                 },
                 {
                   "type": "tile",
-                  "entity": "light.christmas_tree"
+                  "entity": "light.christmas_tree",
+                  "visibility": [
+                    {
+                      "condition": "state",
+                      "entity": "light.christmas_tree",
+                      "state_not": "unavailable"
+                    }
+                  ]
                 }
               ],
               "column_span": 1
@@ -1234,7 +1241,7 @@
         },
         {
           "title": "Landing",
-          "path": "landinf",
+          "path": "landing",
           "type": "sections",
           "max_columns": 2,
           "sections": [
@@ -1301,14 +1308,16 @@
               "show_name": false,
               "show_state": true,
               "show_icon": true,
-              "entity": "sensor.air_quality_monitor_temperature"
+              "entity": "sensor.everything_presence_lite_2fbc58_temperature",
+              "color": ""
             },
             {
               "type": "entity",
               "show_name": false,
               "show_state": true,
               "show_icon": true,
-              "entity": "sensor.air_quality_monitor_humidity"
+              "entity": "sensor.everything_presence_lite_2fbc58_humidity",
+              "color": ""
             },
             {
               "type": "entity",
@@ -1316,27 +1325,6 @@
               "show_state": true,
               "show_icon": true,
               "entity": "sensor.everything_presence_lite_2fbc58_illuminance"
-            },
-            {
-              "type": "entity",
-              "show_name": false,
-              "show_state": true,
-              "show_icon": true,
-              "entity": "sensor.air_quality_monitor_carbon_monoxide"
-            },
-            {
-              "type": "entity",
-              "show_name": false,
-              "show_state": true,
-              "show_icon": true,
-              "entity": "sensor.air_quality_monitor_particulate_matter"
-            },
-            {
-              "type": "entity",
-              "show_name": false,
-              "show_state": true,
-              "show_icon": true,
-              "entity": "sensor.air_quality_monitor_volatile_organic_compounds"
             }
           ]
         },
@@ -1930,7 +1918,8 @@
               "show_name": false,
               "show_state": true,
               "show_icon": true,
-              "entity": "sensor.ben_s_bedroom_humidity"
+              "entity": "sensor.ben_s_bedroom_dehumidifier_humidity",
+              "color": ""
             }
           ]
         },

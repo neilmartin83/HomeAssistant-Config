@@ -11,12 +11,12 @@ living_room_cardio_time:
       entity_id: light.living_room_light
       state: 'off'
     then:
-    - service: light.turn_on
+    - action: light.turn_on
       data:
         brightness_pct: 100
       target:
         entity_id: light.living_room_light
-  - service: fan.turn_on
+  - action: fan.turn_on
     data:
       percentage: 100
     target:
@@ -51,13 +51,13 @@ ben_s_bedroom_all_devices_off:
 home_alarm_arm_away:
   alias: Home - Alarm - Arm Away
   sequence:
-  - service: notify.alexa_media_last_called
+  - action: notify.alexa_media_last_called
     data:
       message: alexa.cannedtts.speak.curatedtts-category-goodbye/alexa.cannedtts.speak.curatedtts-random
       data:
         type: tts
       target: last_called
-  - service: notify.alexa_media_last_called
+  - action: notify.alexa_media_last_called
     data:
       message: '"you have 30 seconds to exit, then I''ll arm the alarm"'
       data:
@@ -68,7 +68,7 @@ home_alarm_arm_away:
       minutes: 0
       seconds: 30
       milliseconds: 0
-  - service: alarm_control_panel.alarm_arm_away
+  - action: alarm_control_panel.alarm_arm_away
     data: {}
     target:
       entity_id: alarm_control_panel.home_alarm
@@ -109,7 +109,7 @@ home_alexa_announce_dinner_time:
 bedroom_turn_on_bedside_lights:
   alias: Bedroom - Lighting - Turn on Bedside Lights
   sequence:
-  - service: light.turn_on
+  - action: light.turn_on
     data:
       brightness_pct: 10
     target:
@@ -118,13 +118,13 @@ bedroom_turn_on_bedside_lights:
 home_dinner_details:
   alias: Home - Dinner Details
   sequence:
-  - service: alexa_media.update_last_called
+  - action: alexa_media.update_last_called
     data: {}
   - if:
     - condition: template
       value_template: '{{ states.calendar.meals.state == ''on'' }}'
     then:
-    - service: notify.alexa_media_last_called
+    - action: notify.alexa_media_last_called
       data:
         data:
           type: tts
@@ -133,7 +133,7 @@ home_dinner_details:
 
           '
     else:
-    - service: notify.alexa_media_last_called
+    - action: notify.alexa_media_last_called
       data:
         data:
           type: tts
@@ -341,7 +341,7 @@ living_room_workout_time_apple_tv:
 home_open_windows:
   alias: Home - Open Windows
   sequence:
-  - service: alexa_media.update_last_called
+  - action: alexa_media.update_last_called
     data: {}
   - choose:
     - conditions:
@@ -349,7 +349,7 @@ home_open_windows:
         entity_id: binary_sensor.all_windows
         state: 'on'
       sequence:
-      - service: notify.alexa_media_last_called
+      - action: notify.alexa_media_last_called
         data:
           data:
             type: tts
@@ -363,7 +363,7 @@ home_open_windows:
         entity_id: binary_sensor.all_windows
         state: 'off'
       sequence:
-      - service: notify.alexa_media_last_called
+      - action: notify.alexa_media_last_called
         data:
           data:
             type: tts
@@ -374,7 +374,7 @@ home_open_windows:
 home_open_doors:
   alias: Home - Open Doors
   sequence:
-  - service: alexa_media.update_last_called
+  - action: alexa_media.update_last_called
     data: {}
   - choose:
     - conditions:
@@ -382,7 +382,7 @@ home_open_doors:
         entity_id: binary_sensor.all_doors
         state: 'on'
       sequence:
-      - service: notify.alexa_media_last_called
+      - action: notify.alexa_media_last_called
         data:
           data:
             type: tts
@@ -396,7 +396,7 @@ home_open_doors:
         entity_id: binary_sensor.all_doors
         state: 'off'
       sequence:
-      - service: notify.alexa_media_last_called
+      - action: notify.alexa_media_last_called
         data:
           data:
             type: tts
@@ -405,9 +405,9 @@ home_open_doors:
 home_dinner_details_tomorrow:
   alias: Home - Dinner Details Tomorrow
   sequence:
-  - service: alexa_media.update_last_called
+  - action: alexa_media.update_last_called
     data: {}
-  - service: calendar.get_events
+  - action: calendar.get_events
     data:
       duration:
         hours: 0
@@ -424,7 +424,7 @@ home_dinner_details_tomorrow:
         value_template: '{{ mealTomorrow[''calendar.meals''].events[0] | length !=
           0 }}'
       sequence:
-      - service: notify.alexa_media_last_called
+      - action: notify.alexa_media_last_called
         data:
           data:
             type: tts
@@ -435,7 +435,7 @@ home_dinner_details_tomorrow:
         value_template: '{{ mealTomorrow[''calendar.meals''].events[0] | length !=
           0 }}'
       sequence:
-      - service: notify.alexa_media_last_called
+      - action: notify.alexa_media_last_called
         data:
           data:
             type: tts
@@ -444,9 +444,9 @@ home_dinner_details_tomorrow:
 utility_room_dishwasher_status:
   alias: Utility Room - Dishwasher - Status
   sequence:
-  - service: alexa_media.update_last_called
+  - action: alexa_media.update_last_called
     data: {}
-  - service: notify.alexa_media_last_called
+  - action: notify.alexa_media_last_called
     data:
       data:
         type: tts
@@ -456,9 +456,9 @@ utility_room_dishwasher_status:
 home_who_is_home:
   alias: Home - Who Is Home
   sequence:
-  - service: alexa_media.update_last_called
+  - action: alexa_media.update_last_called
     data: {}
-  - service: notify.alexa_media_last_called
+  - action: notify.alexa_media_last_called
     data:
       data:
         type: tts
