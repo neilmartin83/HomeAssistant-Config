@@ -92,7 +92,7 @@ home_alexa_announce_dinner_time:
           message: It's dinner time. Dinner is ready!
           target:
           - Living Room Echo Dot
-          - Bedroom Echo Spot
+          - Bedroom Echo Pop
           - Boys' Echo Dot
         action: notify.alexa_media
   - delay:
@@ -168,7 +168,7 @@ home_heating_room_boost:
     - conditions:
       - condition: state
         entity_id: sensor.last_alexa
-        state: media_player.bedroom_echo_spot
+        state: media_player.bedroom_echo_pop
       sequence:
       - data:
           temperature: 20
@@ -225,7 +225,7 @@ home_tv_turn_on:
     - conditions:
       - condition: state
         entity_id: sensor.last_alexa
-        state: media_player.bedroom_echo_spot
+        state: media_player.bedroom_echo_pop
       sequence:
       - data: {}
         action: media_player.turn_on
@@ -264,7 +264,7 @@ home_tv_turn_off:
     - conditions:
       - condition: state
         entity_id: sensor.last_alexa
-        state: media_player.bedroom_echo_spot
+        state: media_player.bedroom_echo_pop
       sequence:
       - data: {}
         action: media_player.turn_off
@@ -536,7 +536,7 @@ home_alexa_announce_coffee_time:
           message: It's coffee time. Coffee is ready!
           target:
           - Living Room Echo Dot
-          - Bedroom Echo Spot
+          - Bedroom Echo Pop
         action: notify.alexa_media
   mode: single
   description: ''

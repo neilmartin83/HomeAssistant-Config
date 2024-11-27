@@ -1064,7 +1064,7 @@
       target:
       - Kitchen Echo Show
       - Living Room Echo Dot
-      - Bedroom Echo Spot
+      - Bedroom Echo Pop
       - Boys' Echo Dot
       - Ben's Echo Dot
   - wait_for_trigger:
@@ -1083,7 +1083,7 @@
       target:
       - Kitchen Echo Show
       - Living Room Echo Dot
-      - Bedroom Echo Spot
+      - Bedroom Echo Pop
       - Boys' Echo Dot
       - Ben's Echo Dot
   mode: single
@@ -1749,7 +1749,7 @@
 - id: '1671535300084'
   alias: Bedroom - Echo Dot - Do Not Disturb
   description: ''
-  trigger:
+  triggers:
   - trigger: state
     entity_id:
     - light.neil_s_monitor_light_bar
@@ -1762,8 +1762,8 @@
     from: 'on'
     to: 'off'
     id: '2'
-  condition: []
-  action:
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: trigger
@@ -1781,7 +1781,8 @@
       sequence:
       - data: {}
         target:
-          entity_id: switch.bedroom_echo_spot_do_not_disturb_switch
+          entity_id:
+          - switch.bedroom_echo_pop_do_not_disturb_switch
         action: switch.turn_on
     - conditions:
       - condition: trigger
@@ -1789,7 +1790,8 @@
       sequence:
       - data: {}
         target:
-          entity_id: switch.bedroom_echo_spot_do_not_disturb_switch
+          entity_id:
+          - switch.bedroom_echo_pop_do_not_disturb_switch
         action: switch.turn_off
   mode: single
 - id: '1672177277902'
@@ -3221,7 +3223,7 @@
 - id: '1684056329158'
   alias: Ben's Bedroom - Heating - Window Off
   description: ''
-  trigger:
+  triggers:
   - trigger: state
     entity_id:
     - binary_sensor.ben_s_bedroom_window
@@ -3234,8 +3236,8 @@
     from: 'on'
     to: 'off'
     id: '2'
-  condition: []
-  action:
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: trigger
@@ -3274,6 +3276,12 @@
         metadata: {}
         data:
           humidity: 55
+        target:
+          entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+      - action: humidifier.set_mode
+        metadata: {}
+        data:
+          mode: sleep
         target:
           entity_id: humidifier.ben_s_bedroom_dehumidifier_none
   mode: single
@@ -3575,7 +3583,7 @@
       target:
       - Kitchen Echo Show
       - Living Room Echo Dot
-      - Bedroom Echo Spot
+      - Bedroom Echo Pop
       - Boys' Echo Dot
       - Ben's Echo Dot
   - wait_for_trigger:
@@ -3594,7 +3602,7 @@
       target:
       - Kitchen Echo Show
       - Living Room Echo Dot
-      - Bedroom Echo Spot
+      - Bedroom Echo Pop
       - Boys' Echo Dot
       - Ben's Echo Dot
   mode: single
@@ -4372,38 +4380,6 @@
       mobile_app_device: 6f7b01aaeab2f76775d41dd43d1d3413
       mobile_app_device_2: 6f7b01aaeab2f76775d41dd43d1d3413
       run_config_check: true
-- id: '1709400691469'
-  alias: Bedroom - Alarm Dismissed
-  description: ''
-  triggers:
-  - event_type: alexa_media_alarm_dismissal_event
-    event_data:
-      device:
-        id: A3EH2E0YZ30OD6
-    trigger: event
-  conditions:
-  - condition: or
-    conditions:
-    - condition: state
-      entity_id: sensor.met_office_rayleigh_weather_3_hourly
-      state: clear-night
-    - condition: state
-      state: sunny
-      entity_id: sensor.met_office_rayleigh_weather_3_hourly
-  actions:
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 15
-      milliseconds: 0
-  - metadata: {}
-    data:
-      media_content_id: wake up boo radleys
-      media_content_type: APPLE_MUSIC
-    target:
-      entity_id: media_player.bedroom_echo_spot
-    action: media_player.play_media
-  mode: single
 - id: '1712408109712'
   alias: Boys' Bedroom - Liam's PC - Pause Wi-Fi
   description: ''
@@ -4639,15 +4615,15 @@
 - id: '1727725678638'
   alias: Ben's Bedroom - Dehumidifier - Schedule
   description: ''
-  trigger:
+  triggers:
   - trigger: time
     at: 05:45:00
     id: '1'
   - trigger: time
     at: '21:30:00'
     id: '2'
-  condition: []
-  action:
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: trigger
@@ -4664,7 +4640,7 @@
       - action: humidifier.set_mode
         metadata: {}
         data:
-          mode: boost
+          mode: sleep
         target:
           entity_id: humidifier.ben_s_bedroom_dehumidifier_none
       - data:

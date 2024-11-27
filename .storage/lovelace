@@ -1466,7 +1466,7 @@
                 },
                 {
                   "type": "media-control",
-                  "entity": "media_player.bedroom_echo_spot"
+                  "entity": "media_player.bedroom_echo_pop"
                 }
               ],
               "column_span": 1
