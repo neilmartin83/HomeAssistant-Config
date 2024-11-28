@@ -746,7 +746,7 @@
                 },
                 {
                   "type": "tile",
-                  "entity": "sensor.living_room_presence_sensor_fp2_243e_light_sensor_light_level",
+                  "entity": "sensor.everything_presence_lite_ccb890_illuminance",
                   "name": "Light Level"
                 },
                 {
@@ -786,7 +786,7 @@
                 },
                 {
                   "type": "tile",
-                  "entity": "binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room",
+                  "entity": "binary_sensor.everything_presence_lite_ccb890_occupancy",
                   "name": "Occupancy",
                   "state_content": "last-changed",
                   "color": "primary"
@@ -818,7 +818,15 @@
               "show_name": false,
               "show_state": true,
               "show_icon": true,
-              "entity": "sensor.living_room_presence_sensor_fp2_243e_light_sensor_light_level"
+              "entity": "sensor.everything_presence_lite_ccb890_illuminance"
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.everything_presence_lite_ccb890_co2",
+              "color": ""
             }
           ]
         },
@@ -1730,11 +1738,12 @@
                 },
                 {
                   "type": "tile",
-                  "entity": "binary_sensor.boys_bedroom_presence_sensor_fp2_cf9d_presence_sensor_room",
+                  "entity": "binary_sensor.everything_presence_lite_cbaa7c_occupancy",
                   "name": "Occupancy",
                   "show_entity_picture": false,
                   "vertical": false,
-                  "hide_state": false
+                  "hide_state": false,
+                  "state_content": "last_changed"
                 }
               ],
               "column_span": 1
@@ -1762,7 +1771,15 @@
               "show_name": false,
               "show_state": true,
               "show_icon": true,
-              "entity": "sensor.boys_bedroom_presence_sensor_fp2_cf9d_light_sensor_light_level"
+              "entity": "sensor.everything_presence_lite_cbaa7c_illuminance"
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.everything_presence_lite_cbaa7c_co2",
+              "color": ""
             }
           ]
         },
@@ -2820,7 +2837,7 @@
                       "name": "Bedroom"
                     },
                     {
-                      "entity": "binary_sensor.boys_bedroom_presence_sensor_fp2_cf9d_presence_sensor_room",
+                      "entity": "binary_sensor.everything_presence_lite_cbaa7c_occupancy",
                       "name": "Boys' Bedroom"
                     },
                     {
@@ -2828,7 +2845,7 @@
                       "name": "Kitchen"
                     },
                     {
-                      "entity": "binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room",
+                      "entity": "binary_sensor.everything_presence_lite_ccb890_occupancy",
                       "name": "Living Room"
                     }
                   ],

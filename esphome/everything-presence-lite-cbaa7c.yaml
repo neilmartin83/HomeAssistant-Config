@@ -1,0 +1,24 @@
+substitutions:
+  name: everything-presence-lite-cbaa7c
+  friendly_name: Boys' Bedroom Presence Sensor
+
+packages:
+  EverythingSmartTechnology.Everything_Presence_Lite: github://everythingsmarthome/everything-presence-lite/everything-presence-lite-ha-co2.yaml@main
+
+esphome:
+  name: ${name}
+  name_add_mac_suffix: false
+  friendly_name: ${friendly_name}
+
+api:
+  encryption:
+    key: !secret everything-presence-lite-cbaa7c_api_encryption_key
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: True
+
+ota:
+  - platform: esphome
+    password: !secret everything-presence-lite-cbaa7c_ota_password

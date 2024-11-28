@@ -1,18 +1,18 @@
 - id: '1669640676229'
   alias: Boys' Bedroom - Lighting - Presence
   description: ''
-  trigger:
+  triggers:
   - trigger: state
     entity_id:
-    - binary_sensor.boys_bedroom_presence_sensor_fp2_cf9d_presence_sensor_room
+    - binary_sensor.everything_presence_lite_cbaa7c_occupancy
     to: 'off'
     for:
       hours: 0
       minutes: 20
       seconds: 0
     from: 'on'
-  condition: []
-  action:
+  conditions: []
+  actions:
   - action: light.turn_off
     data: {}
     target:
@@ -183,13 +183,13 @@
   description: ''
   triggers:
   - entity_id:
-    - binary_sensor.boys_bedroom_presence_sensor_fp2_cf9d_presence_sensor_room
+    - binary_sensor.everything_presence_lite_cbaa7c_occupancy
     to: 'on'
     id: '1'
     from: 'off'
     trigger: state
   - entity_id:
-    - binary_sensor.boys_bedroom_presence_sensor_fp2_cf9d_presence_sensor_room
+    - binary_sensor.everything_presence_lite_cbaa7c_occupancy
     to: 'off'
     for:
       hours: 0
@@ -342,13 +342,13 @@
   description: ''
   triggers:
   - entity_id:
-    - binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room
+    - binary_sensor.everything_presence_lite_ccb890_occupancy
     to: 'on'
     id: '1'
     from: 'off'
     trigger: state
   - entity_id:
-    - binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room
+    - binary_sensor.everything_presence_lite_ccb890_occupancy
     to: 'off'
     id: '2'
     from: 'on'
@@ -387,7 +387,7 @@
   trigger:
   - trigger: state
     entity_id:
-    - binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room
+    - binary_sensor.everything_presence_lite_ccb890_occupancy
     to: 'off'
     for:
       hours: 0
@@ -471,7 +471,7 @@
       - condition: trigger
         id: '1'
       - condition: state
-        entity_id: binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room
+        entity_id: binary_sensor.everything_presence_lite_ccb890_occupancy
         state: 'on'
       sequence:
       - data: {}
@@ -512,10 +512,10 @@
         - condition: and
           conditions:
           - condition: state
-            entity_id: binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room
+            entity_id: binary_sensor.everything_presence_lite_ccb890_occupancy
             state: 'on'
           - condition: numeric_state
-            entity_id: sensor.living_room_presence_sensor_fp2_243e_light_sensor_light_level
+            entity_id: sensor.everything_presence_lite_ccb890_illuminance
             below: 10
         then:
         - metadata: {}
@@ -748,7 +748,7 @@
   description: ''
   triggers:
   - entity_id:
-    - binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room
+    - binary_sensor.everything_presence_lite_ccb890_occupancy
     to: 'off'
     for:
       hours: 1
@@ -3442,13 +3442,13 @@
   trigger:
   - trigger: state
     entity_id:
-    - binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room
+    - binary_sensor.everything_presence_lite_ccb890_occupancy
     from: 'off'
     to: 'on'
     id: '1'
   - trigger: state
     entity_id:
-    - binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room
+    - binary_sensor.everything_presence_lite_ccb890_occupancy
     to: 'off'
     id: '2'
     for:
@@ -3461,7 +3461,7 @@
   - choose:
     - conditions:
       - condition: numeric_state
-        entity_id: sensor.living_room_presence_sensor_fp2_243e_light_sensor_light_level
+        entity_id: sensor.everything_presence_lite_ccb890_illuminance
         below: 10
       - condition: trigger
         id: '1'
@@ -4472,7 +4472,7 @@
     to: com.apple.Fitness
   condition:
   - condition: state
-    entity_id: binary_sensor.living_room_presence_sensor_fp2_243e_presence_sensor_room
+    entity_id: binary_sensor.everything_presence_lite_ccb890_occupancy
     state: 'on'
   action:
   - action: fan.turn_on
