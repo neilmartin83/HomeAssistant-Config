@@ -210,28 +210,15 @@
     - conditions:
       - condition: trigger
         id: '1'
+      - condition: time
+        after: 06:30:00
+        before: '21:00:00'
       sequence:
-      - choose:
-        - conditions:
-          - condition: time
-            after: '21:00:00'
-            before: 06:30:00
-          sequence:
-          - data:
-              preset_mode: sleep
-            target:
-              entity_id: fan.boys_bedroom_air_purifier
-            action: fan.turn_on
-        - conditions:
-          - condition: time
-            after: 06:30:00
-            before: '21:00:00'
-          sequence:
-          - data:
-              preset_mode: sleep
-            target:
-              entity_id: fan.boys_bedroom_air_purifier
-            action: fan.turn_on
+      - data:
+          preset_mode: sleep
+        target:
+          entity_id: fan.boys_bedroom_air_purifier
+        action: fan.turn_on
     - conditions:
       - condition: trigger
         id: '2'
@@ -3439,7 +3426,7 @@
 - id: '1684061229162'
   alias: Living Room - Lighting - Presence
   description: ''
-  trigger:
+  triggers:
   - trigger: state
     entity_id:
     - binary_sensor.everything_presence_lite_ccb890_occupancy
@@ -3453,11 +3440,16 @@
     id: '2'
     for:
       hours: 0
-      minutes: 10
+      minutes: 5
       seconds: 0
     from: 'on'
-  condition: []
-  action:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.everything_presence_lite_ccb890_illuminance
+    above: 9
+    id: '2'
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: numeric_state
@@ -3975,69 +3967,40 @@
 - id: '1707058960910'
   alias: Living Room - Dehumidifier - Dry Clothes
   description: ''
-  trigger:
+  triggers:
   - trigger: state
     entity_id:
     - humidifier.living_room_dehumidifier_none
     from: 'off'
     to: 'on'
     id: '1'
-  - trigger: event
-    event_type: timer.finished
-    event_data:
-      entity_id: timer.living_room_dehumidifier_timer
-    id: '2'
-  - trigger: state
-    entity_id:
-    - humidifier.living_room_dehumidifier_none
-    from: 'on'
-    to: 'off'
-    id: '3'
-  condition: []
-  action:
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: trigger
         id:
         - '1'
-      sequence:
-      - action: humidifier.set_mode
-        target:
-          entity_id: humidifier.living_room_dehumidifier_none
-        data:
-          mode: '2'
-      - action: timer.start
-        metadata: {}
-        data: {}
-        target:
-          entity_id: timer.living_room_dehumidifier_timer
-      - action: notify.alexa_media_living_room_echo_dot
-        data:
-          message: Your clothes will be dry in 6 hours time.
-    - conditions:
-      - condition: trigger
-        id:
-        - '2'
-      sequence:
-      - action: humidifier.turn_off
-        metadata: {}
-        data: {}
-        target:
-          entity_id: humidifier.living_room_dehumidifier_none
-      - action: notify.notify
-        metadata: {}
-        data:
-          message: Clothes are dry in the living room!
-    - conditions:
-      - condition: trigger
-        id:
-        - '3'
-      sequence:
-      - action: timer.cancel
-        metadata: {}
-        data: {}
-        target:
-          entity_id: timer.living_room_dehumidifier_timer
+      sequence: []
+  - action: humidifier.set_mode
+    target:
+      entity_id: humidifier.living_room_dehumidifier_none
+    data:
+      mode: '2'
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 1
+      milliseconds: 0
+  - action: select.select_option
+    metadata: {}
+    data:
+      option: 6h
+    target:
+      entity_id: select.living_room_dehumidifier_timer
+  - action: notify.alexa_media_living_room_echo_dot
+    data:
+      message: Your clothes will be dry in 6 hours time.
   mode: single
 - id: '1707577618657'
   alias: Utility Room - Tumble Dryer - Set State
@@ -4377,6 +4340,10 @@
       - update.tuya_local_update
       - update.washing_machine_firmware
       - update.bedroom_presence_sensor_firmware
+      - update.boys_bedroom_presence_sensor_firmware
+      - update.everything_presence_zone_configurator_update
+      - update.living_room_presence_sensor_firmware
+      - update.uk_bin_collection_data_update
       mobile_app_device: 6f7b01aaeab2f76775d41dd43d1d3413
       mobile_app_device_2: 6f7b01aaeab2f76775d41dd43d1d3413
       run_config_check: true
@@ -4420,7 +4387,7 @@
 - id: '1714128991962'
   alias: Kitchen - Lighting - Worktop
   description: ''
-  trigger:
+  triggers:
   - trigger: state
     entity_id:
     - binary_sensor.everything_presence_lite_214fd8_zone_1_occupancy
@@ -4433,11 +4400,11 @@
     to: 'off'
     for:
       hours: 0
-      minutes: 5
+      minutes: 1
       seconds: 0
     id: '2'
-  condition: []
-  action:
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: trigger
@@ -4460,39 +4427,6 @@
           entity_id:
           - light.kitchen_lightstrip
           - light.cooker_hood_light
-  mode: single
-- id: '1715279491783'
-  alias: Living Room - TV - Workout
-  description: ''
-  trigger:
-  - trigger: state
-    entity_id:
-    - media_player.living_room
-    attribute: app_id
-    to: com.apple.Fitness
-  condition:
-  - condition: state
-    entity_id: binary_sensor.everything_presence_lite_ccb890_occupancy
-    state: 'on'
-  action:
-  - action: fan.turn_on
-    target:
-      area_id:
-      - living_room
-    data:
-      percentage: 100
-  - if:
-    - condition: state
-      entity_id: calendar.strength_workouts
-      attribute: message
-      state: Neil
-    then:
-    - action: light.turn_on
-      metadata: {}
-      data:
-        brightness: 255
-      target:
-        entity_id: light.living_room_light
   mode: single
 - id: '1718826325938'
   alias: Living Room - Window - Workout Power

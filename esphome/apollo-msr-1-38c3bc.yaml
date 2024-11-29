@@ -26,7 +26,6 @@ wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
   power_save_mode: light
-  fast_connect: True
 
 web_server: !remove
 

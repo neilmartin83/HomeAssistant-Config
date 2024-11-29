@@ -47,6 +47,22 @@ ben_s_bedroom_all_devices_off:
       option: Light Off
     target:
       entity_id: select.ben_s_bedroom_dehumidifier_light_mode
+  - if:
+    - condition: time
+      after: 06:30:00
+      before: '21:00:00'
+    then:
+    - action: humidifier.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+    - action: humidifier.set_mode
+      metadata: {}
+      data:
+        mode: sleep
+      target:
+        entity_id: humidifier.ben_s_bedroom_dehumidifier_none
   mode: single
 home_alarm_arm_away:
   alias: Home - Alarm - Arm Away
@@ -289,11 +305,6 @@ home_tv_turn_off:
 living_room_workout_time_apple_tv:
   alias: Living Room - Workout Time Apple TV
   sequence:
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 2
-      milliseconds: 0
   - if:
     - condition: state
       entity_id: light.living_room_light
@@ -337,6 +348,12 @@ living_room_workout_time_apple_tv:
     target:
       entity_id: remote.living_room
     action: remote.send_command
+  - action: media_player.select_source
+    metadata: {}
+    data:
+      source: Fitness
+    target:
+      entity_id: media_player.living_room
   mode: single
 home_open_windows:
   alias: Home - Open Windows

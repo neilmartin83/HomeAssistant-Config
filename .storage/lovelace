@@ -598,14 +598,6 @@
                     "grid_columns": 2,
                     "grid_rows": 5
                   }
-                },
-                {
-                  "type": "markdown",
-                  "content": "{% if is_state('timer.living_room_dehumidifier_timer', 'idle') %}\n__Dehumidifier Not Running__\n{% else %}\n__Dehumidifier Time Remaining:__ {{ state_attr('timer.living_room_dehumidifier_timer', 'finishes_at') | as_datetime - now().replace(microsecond=0) }}\n{% endif %}",
-                  "layout_options": {
-                    "grid_columns": "full",
-                    "grid_rows": "auto"
-                  }
                 }
               ],
               "column_span": 1

@@ -20,7 +20,6 @@ logger:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
-  fast_connect: True
   power_save_mode: HIGH
   ap:
     ssid: ${friendly_name}
