@@ -221,6 +221,13 @@ home_heating_room_boost:
 home_tv_turn_on:
   alias: Home - TV - Turn On
   sequence:
+  - action: remote.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - remote.living_room
+      - remote.bedroom
   - data: {}
     action: alexa_media.update_last_called
   - delay:
@@ -260,6 +267,13 @@ home_tv_turn_on:
 home_tv_turn_off:
   alias: Home - TV - Turn Off
   sequence:
+  - action: remote.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - remote.bedroom
+      - remote.living_room
   - data: {}
     action: alexa_media.update_last_called
   - delay:

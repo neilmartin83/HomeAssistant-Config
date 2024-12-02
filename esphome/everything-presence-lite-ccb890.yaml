@@ -21,3 +21,11 @@ wifi:
 ota:
   - platform: esphome
     password: !secret everything-presence-lite-ccb890_ota_password
+
+sensor:
+  - platform: wifi_signal
+    disabled_by_default: True
+    name: "WiFi Signal"
+  - platform: internal_temperature
+    disabled_by_default: True
+    name: "ESP Temperature"

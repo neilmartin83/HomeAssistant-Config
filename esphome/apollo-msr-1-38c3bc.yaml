@@ -1,6 +1,6 @@
 substitutions:
   name: apollo-msr-1-38c3bc
-  friendly_name: Bedroom Presence Sensor
+  friendly_name: Hall Presence Sensor
 
 packages:
   ApolloAutomation.MSR-1: github://ApolloAutomation/MSR-1/Integrations/ESPHome/MSR-1.yaml

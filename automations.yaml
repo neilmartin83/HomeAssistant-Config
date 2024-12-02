@@ -2007,17 +2007,17 @@
   - condition: or
     conditions:
     - condition: state
-      entity_id: sensor.rayleigh_non_recycling_bin
-      state: Today
+      entity_id: calendar.rayleigh_recycling_bin_calendar
+      state: 'on'
     - condition: state
-      entity_id: sensor.rayleigh_recycling_bin
-      state: Today
+      entity_id: calendar.rayleigh_non_recycling_bin_calendar
+      state: 'on'
   actions:
   - choose:
     - conditions:
       - condition: state
-        entity_id: sensor.rayleigh_non_recycling_bin
-        state: Today
+        entity_id: calendar.rayleigh_non_recycling_bin_calendar
+        state: 'on'
       sequence:
       - data:
           data:
@@ -2037,8 +2037,8 @@
         action: notify.mobile_app_heathers_iphone
     - conditions:
       - condition: state
-        entity_id: sensor.rayleigh_recycling_bin
-        state: Today
+        entity_id: calendar.rayleigh_recycling_bin_calendar
+        state: 'on'
       sequence:
       - data:
           data:
@@ -2078,58 +2078,27 @@
   - condition: state
     entity_id: input_boolean.bins_out
     state: 'on'
-  - condition: or
-    conditions:
-    - condition: state
-      entity_id: sensor.rayleigh_non_recycling_bin
-      state: In 13 days
-    - condition: state
-      entity_id: sensor.rayleigh_recycling_bin
-      state: In 13 days
+  - condition: state
+    entity_id: calendar.rayleigh_recycling_bin_calendar
+    state: 'off'
+  - condition: state
+    entity_id: calendar.rayleigh_non_recycling_bin_calendar
+    state: 'off'
   actions:
-  - choose:
-    - conditions:
-      - condition: state
-        entity_id: sensor.rayleigh_non_recycling_bin
-        state: In 13 days
-      sequence:
-      - data:
-          data:
-            actions:
-            - action: BINS
-              title: Bins are out!
-          message: Please get the {{ states('sensor.rayleigh_non_recycling_bin_bin_type')
-            }} in!
-        action: notify.mobile_app_neils_iphone
-      - data:
-          data:
-            actions:
-            - action: BINS
-              title: Bins are out!
-          message: Please get the {{ states('sensor.rayleigh_non_recycling_bin_bin_type')
-            }} in!
-        action: notify.mobile_app_heathers_iphone
-    - conditions:
-      - condition: state
-        entity_id: sensor.rayleigh_recycling_bin
-        state: In 13 days
-      sequence:
-      - data:
-          data:
-            actions:
-            - action: BINS
-              title: Bins are out!
-          message: Please get the {{ states('sensor.rayleigh_recycling_bin_bin_type')
-            }} in!
-        action: notify.mobile_app_neils_iphone
-      - data:
-          data:
-            actions:
-            - action: BINS
-              title: Bins are out!
-          message: Please get the {{ states('sensor.rayleigh_recycling_bin_bin_type')
-            }} in!
-        action: notify.mobile_app_heathers_iphone
+  - data:
+      data:
+        actions:
+        - action: BINS
+          title: Bins are out!
+      message: Please get the bins in!
+    action: notify.mobile_app_heathers_iphone
+  - data:
+      data:
+        actions:
+        - action: BINS
+          title: Bins are out!
+      message: Please get the bins in!
+    action: notify.mobile_app_neils_iphone
   mode: single
 - id: '1672605628692'
   alias: Living Room - Workout - NFC Scanned
@@ -4400,7 +4369,7 @@
     to: 'off'
     for:
       hours: 0
-      minutes: 1
+      minutes: 5
       seconds: 0
     id: '2'
   conditions: []

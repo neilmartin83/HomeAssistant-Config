@@ -1902,7 +1902,7 @@
                 },
                 {
                   "type": "tile",
-                  "entity": "input_boolean.ben_s_bedroom_occupancy",
+                  "entity": "binary_sensor.ben_s_bedroom_occupancy",
                   "name": "Occupancy",
                   "color": "primary",
                   "state_content": "last-changed",
@@ -2829,6 +2829,9 @@
                       "name": "Bedroom"
                     },
                     {
+                      "entity": "binary_sensor.ben_s_bedroom_occupancy"
+                    },
+                    {
                       "entity": "binary_sensor.everything_presence_lite_cbaa7c_occupancy",
                       "name": "Boys' Bedroom"
                     },
@@ -2921,59 +2924,23 @@
                 },
                 {
                   "type": "tile",
-                  "entity": "binary_sensor.living_room_motion_sensor",
-                  "name": "Living Room",
-                  "state_content": "last-changed",
-                  "color": "primary"
+                  "entity": "binary_sensor.back_door",
+                  "state_content": "last_changed"
                 },
                 {
                   "type": "tile",
-                  "entity": "binary_sensor.kitchen_motion_sensor",
-                  "name": "Kitchen",
-                  "state_content": "last-changed",
-                  "color": "primary"
+                  "entity": "binary_sensor.front_door",
+                  "state_content": "last_changed"
                 },
                 {
                   "type": "tile",
-                  "entity": "binary_sensor.utility_room_motion_sensor",
-                  "name": "Utility Room",
-                  "state_content": "last-changed",
-                  "color": "primary"
+                  "entity": "binary_sensor.out_building_door",
+                  "state_content": "last_changed"
                 },
                 {
                   "type": "tile",
-                  "entity": "binary_sensor.hall_motion_sensor",
-                  "name": "Hall",
-                  "state_content": "last-changed",
-                  "color": "primary"
-                },
-                {
-                  "type": "tile",
-                  "entity": "binary_sensor.landing_motion_sensor",
-                  "name": "Landing",
-                  "state_content": "last-changed",
-                  "color": "primary"
-                },
-                {
-                  "type": "tile",
-                  "entity": "binary_sensor.bedroom_motion_sensor",
-                  "name": "Bedroom",
-                  "state_content": "last-changed",
-                  "color": "primary"
-                },
-                {
-                  "type": "tile",
-                  "entity": "binary_sensor.boys_bedroom_motion_sensor",
-                  "name": "Boys' Bedroom",
-                  "state_content": "last-changed",
-                  "color": "primary"
-                },
-                {
-                  "type": "tile",
-                  "entity": "binary_sensor.ben_s_bedroom_motion_sensor",
-                  "name": "Ben's Bedroom",
-                  "state_content": "last-changed",
-                  "color": "primary"
+                  "entity": "binary_sensor.side_gate",
+                  "state_content": "last_changed"
                 }
               ],
               "column_span": 1
