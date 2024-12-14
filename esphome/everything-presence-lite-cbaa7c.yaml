@@ -29,3 +29,4 @@ sensor:
   - platform: internal_temperature
     disabled_by_default: True
     name: "ESP Temperature"
+    

@@ -1,9 +1,9 @@
 substitutions:
-  name: everything-presence-lite-ccb890
-  friendly_name: Living Room Presence Sensor
+  name: everything-presence-lite-5ba230
+  friendly_name: Bedroom Presence Sensor
 
 packages:
-  EverythingSmartTechnology.Everything_Presence_Lite: github://everythingsmarthome/everything-presence-lite/everything-presence-lite-ha.yaml@main
+  EverythingSmartTechnology.Everything_Presence_Lite: github://everythingsmarthome/everything-presence-lite/everything-presence-lite-ha-co2.yaml@main
 
 esphome:
   name: ${name}
@@ -12,7 +12,7 @@ esphome:
 
 api:
   encryption:
-    key: !secret everything-presence-lite-ccb890_api_encryption_key
+    key: !secret everything-presence-lite-5ba230_api_encryption_key
 
 wifi:
   ssid: !secret wifi_ssid
@@ -20,7 +20,7 @@ wifi:
 
 ota:
   - platform: esphome
-    password: !secret everything-presence-lite-ccb890_ota_password
+    password: !secret everything-presence-lite-5ba230_ota_password
 
 sensor:
   - platform: wifi_signal

@@ -35,34 +35,18 @@ ben_s_bedroom_all_devices_off:
     target:
       area_id: ben_s_bedroom
     action: media_player.turn_off
-  - data:
-      media_content_type: custom
-      media_content_id: Turn off Ben's Bedroom TV
-    action: media_player.play_media
-    target:
-      entity_id: media_player.ben_s_echo_dot
   - action: select.select_option
     metadata: {}
     data:
       option: Light Off
     target:
       entity_id: select.ben_s_bedroom_dehumidifier_light_mode
-  - if:
-    - condition: time
-      after: 06:30:00
-      before: '21:00:00'
-    then:
-    - action: humidifier.turn_on
-      metadata: {}
-      data: {}
-      target:
-        entity_id: humidifier.ben_s_bedroom_dehumidifier_none
-    - action: humidifier.set_mode
-      metadata: {}
-      data:
-        mode: sleep
-      target:
-        entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+  - data:
+      media_content_type: custom
+      media_content_id: Turn off Ben's Bedroom TV
+    action: media_player.play_media
+    target:
+      entity_id: media_player.ben_s_echo_dot
   mode: single
 home_alarm_arm_away:
   alias: Home - Alarm - Arm Away

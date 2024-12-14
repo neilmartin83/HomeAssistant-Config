@@ -417,11 +417,11 @@
               "show_name": false,
               "show_state": true,
               "show_icon": true,
-              "entity": "input_select.utility_room_washing_machine_status",
+              "entity": "input_select.washing_machine_status",
               "visibility": [
                 {
                   "condition": "state",
-                  "entity": "input_select.utility_room_washing_machine_status",
+                  "entity": "input_select.washing_machine_status",
                   "state_not": "Off"
                 }
               ],
@@ -594,10 +594,18 @@
                     }
                   ],
                   "name": " ",
-                  "layout_options": {
-                    "grid_columns": 2,
-                    "grid_rows": 5
+                  "grid_options": {
+                    "columns": 6,
+                    "rows": 4
                   }
+                },
+                {
+                  "type": "tile",
+                  "entity": "select.living_room_dehumidifier_timer",
+                  "name": "Dehumidifier Timer",
+                  "vertical": false,
+                  "show_entity_picture": false,
+                  "hide_state": false
                 }
               ],
               "column_span": 1
@@ -803,7 +811,10 @@
               "show_name": false,
               "show_state": true,
               "show_icon": true,
-              "entity": "sensor.living_room_dehumidifier_humidity"
+              "entity": "humidifier.living_room_dehumidifier_none",
+              "color": "",
+              "icon": "mdi:water-percent",
+              "state_content": "current_humidity"
             },
             {
               "type": "entity",
@@ -811,14 +822,6 @@
               "show_state": true,
               "show_icon": true,
               "entity": "sensor.everything_presence_lite_ccb890_illuminance"
-            },
-            {
-              "type": "entity",
-              "show_name": false,
-              "show_state": true,
-              "show_icon": true,
-              "entity": "sensor.everything_presence_lite_ccb890_co2",
-              "color": ""
             }
           ]
         },
@@ -1034,7 +1037,7 @@
                 },
                 {
                   "type": "tile",
-                  "entity": "input_select.utility_room_washing_machine_status",
+                  "entity": "input_select.washing_machine_status",
                   "name": "Washing Machine",
                   "tap_action": {
                     "action": "none"
@@ -1232,12 +1235,60 @@
                   "name": "Glass Break",
                   "color": "primary",
                   "state_content": "last-changed"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.apollo_msr_1_38c3bc_radar_target",
+                  "name": "Occupancy",
+                  "state_content": "last_changed"
                 }
               ],
               "column_span": 1
             }
           ],
-          "cards": []
+          "cards": [],
+          "badges": [
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.apollo_msr_1_38c3bc_ltr390_light",
+              "color": ""
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.apollo_msr_1_38c3bc_bme280_humidity",
+              "color": ""
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.apollo_msr_1_38c3bc_bme280_temperature",
+              "color": ""
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.apollo_msr_1_38c3bc_co2",
+              "color": ""
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.apollo_msr_1_38c3bc_bme280_pressure",
+              "color": ""
+            }
+          ]
         },
         {
           "title": "Landing",
@@ -1245,6 +1296,34 @@
           "type": "sections",
           "max_columns": 2,
           "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Climate",
+                  "heading_style": "title"
+                },
+                {
+                  "type": "humidifier",
+                  "entity": "humidifier.landing_dehumidifier_none",
+                  "features": [
+                    {
+                      "type": "humidifier-toggle"
+                    },
+                    {
+                      "type": "humidifier-modes",
+                      "style": "dropdown"
+                    }
+                  ],
+                  "name": " ",
+                  "grid_options": {
+                    "columns": 12,
+                    "rows": 5
+                  }
+                }
+              ]
+            },
             {
               "type": "grid",
               "cards": [
@@ -1324,7 +1403,8 @@
               "show_name": false,
               "show_state": true,
               "show_icon": true,
-              "entity": "sensor.everything_presence_lite_2fbc58_illuminance"
+              "entity": "sensor.everything_presence_lite_2fbc58_illuminance",
+              "color": ""
             }
           ]
         },
@@ -1532,7 +1612,7 @@
                 },
                 {
                   "type": "tile",
-                  "entity": "binary_sensor.apollo_msr_1_38c3bc_radar_target",
+                  "entity": "binary_sensor.everything_presence_lite_5ba230_occupancy",
                   "name": "Occupancy",
                   "state_content": "last_changed"
                 }
@@ -1554,28 +1634,16 @@
               "show_name": false,
               "show_state": true,
               "show_icon": true,
-              "entity": "sensor.apollo_msr_1_38c3bc_bme280_humidity"
+              "entity": "sensor.everything_presence_lite_5ba230_co2",
+              "color": ""
             },
             {
               "type": "entity",
               "show_name": false,
               "show_state": true,
               "show_icon": true,
-              "entity": "sensor.apollo_msr_1_38c3bc_bme280_pressure"
-            },
-            {
-              "type": "entity",
-              "show_name": false,
-              "show_state": true,
-              "show_icon": true,
-              "entity": "sensor.apollo_msr_1_38c3bc_co2"
-            },
-            {
-              "type": "entity",
-              "show_name": false,
-              "show_state": true,
-              "show_icon": true,
-              "entity": "sensor.apollo_msr_1_38c3bc_ltr390_light"
+              "entity": "sensor.everything_presence_lite_5ba230_illuminance",
+              "color": ""
             }
           ]
         },
@@ -1607,28 +1675,10 @@
                   ],
                   "name": " ",
                   "show_current_as_primary": false,
-                  "layout_options": {
-                    "grid_columns": 2,
-                    "grid_rows": 5
+                  "grid_options": {
+                    "columns": 12,
+                    "rows": 5
                   }
-                },
-                {
-                  "type": "humidifier",
-                  "entity": "humidifier.boys_bedroom_dehumidifier_none",
-                  "features": [
-                    {
-                      "type": "humidifier-toggle"
-                    },
-                    {
-                      "type": "humidifier-modes",
-                      "style": "dropdown"
-                    }
-                  ],
-                  "layout_options": {
-                    "grid_columns": 2,
-                    "grid_rows": 5
-                  },
-                  "name": " "
                 }
               ],
               "column_span": 1
@@ -1750,13 +1800,6 @@
               "show_state": true,
               "show_icon": true,
               "entity": "sensor.wiser_lts_temperature_boys_bedroom"
-            },
-            {
-              "type": "entity",
-              "show_name": false,
-              "show_state": true,
-              "show_icon": true,
-              "entity": "sensor.boys_bedroom_dehumidifier_humidity"
             },
             {
               "type": "entity",
@@ -1899,14 +1942,6 @@
                   "name": "Window",
                   "color": "primary",
                   "state_content": "last-changed"
-                },
-                {
-                  "type": "tile",
-                  "entity": "binary_sensor.ben_s_bedroom_occupancy",
-                  "name": "Occupancy",
-                  "color": "primary",
-                  "state_content": "last-changed",
-                  "icon": ""
                 }
               ],
               "column_span": 1
@@ -1927,8 +1962,10 @@
               "show_name": false,
               "show_state": true,
               "show_icon": true,
-              "entity": "sensor.ben_s_bedroom_dehumidifier_humidity",
-              "color": ""
+              "entity": "humidifier.ben_s_bedroom_dehumidifier_none",
+              "color": "",
+              "icon": "mdi:water-percent",
+              "state_content": "current_humidity"
             }
           ]
         },
@@ -2829,19 +2866,15 @@
                       "name": "Bedroom"
                     },
                     {
-                      "entity": "binary_sensor.ben_s_bedroom_occupancy"
-                    },
-                    {
-                      "entity": "binary_sensor.everything_presence_lite_cbaa7c_occupancy",
-                      "name": "Boys' Bedroom"
-                    },
-                    {
                       "entity": "binary_sensor.everything_presence_lite_214fd8_occupancy",
                       "name": "Kitchen"
                     },
                     {
                       "entity": "binary_sensor.everything_presence_lite_ccb890_occupancy",
                       "name": "Living Room"
+                    },
+                    {
+                      "entity": "binary_sensor.everything_presence_lite_5ba230_occupancy"
                     }
                   ],
                   "hours_to_show": 8

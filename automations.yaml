@@ -38,17 +38,13 @@
   description: ''
   triggers:
   - entity_id:
-    - binary_sensor.apollo_msr_1_38c3bc_radar_zone_3_occupancy
+    - binary_sensor.everything_presence_lite_5ba230_zone_1_occupancy
     from: 'off'
     to: 'on'
     id: '1'
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 1
     trigger: state
   - entity_id:
-    - binary_sensor.apollo_msr_1_38c3bc_radar_target
+    - binary_sensor.everything_presence_lite_5ba230_occupancy
     to: 'off'
     for:
       hours: 0
@@ -62,17 +58,10 @@
   - choose:
     - conditions:
       - condition: time
-        after: 08:15:00
-        before: '21:00:00'
-        weekday:
-        - mon
-        - tue
-        - wed
-        - thu
-        - fri
-        - sat
+        after: 06:00:00
+        before: '22:00:00'
       - condition: numeric_state
-        entity_id: sensor.apollo_msr_1_38c3bc_ltr390_light
+        entity_id: sensor.everything_presence_lite_5ba230_illuminance
         below: 25
       - condition: trigger
         id:
@@ -92,11 +81,17 @@
           entity_id: media_player.bedroom
           state: standby
       - condition: state
-        entity_id: binary_sensor.bedroom_window_right
-        state: 'off'
-      - condition: state
         entity_id: light.bedside_lights
         state: 'off'
+      - condition: not
+        conditions:
+        - condition: state
+          entity_id: binary_sensor.everything_presence_lite_5ba230_occupancy
+          state: 'on'
+          for:
+            hours: 0
+            minutes: 0
+            seconds: 5
       sequence:
       - metadata: {}
         data: {}
@@ -119,13 +114,13 @@
   trigger:
   - trigger: state
     entity_id:
-    - binary_sensor.apollo_msr_1_38c3bc_radar_target
+    - binary_sensor.everything_presence_lite_5ba230_occupancy
     to: 'on'
     id: '1'
     from: 'off'
   - trigger: state
     entity_id:
-    - binary_sensor.apollo_msr_1_38c3bc_radar_target
+    - binary_sensor.everything_presence_lite_5ba230_occupancy
     to: 'off'
     for:
       hours: 0
@@ -465,12 +460,6 @@
         target:
           entity_id: light.living_room_tv_backlight
         action: light.turn_on
-      - metadata: {}
-        data: {}
-        target:
-          entity_id: humidifier.living_room_dehumidifier_none
-        action: humidifier.turn_off
-        enabled: false
       - if:
         - condition: state
           entity_id: fan.living_room_fan
@@ -752,43 +741,45 @@
 - id: '1669807196729'
   alias: Bedroom - Heating - Schedule Neil - Presence
   description: ''
-  trigger:
+  triggers:
   - trigger: state
     entity_id:
-    - binary_sensor.apollo_msr_1_38c3bc_radar_target
+    - binary_sensor.everything_presence_lite_5ba230_occupancy
     to: 'off'
     id: '1'
     from: 'on'
     for:
       hours: 0
-      minutes: 15
+      minutes: 10
       seconds: 0
   - trigger: state
     entity_id:
-    - binary_sensor.apollo_msr_1_38c3bc_radar_target
+    - binary_sensor.everything_presence_lite_5ba230_occupancy
     to: 'on'
     id: '2'
     from: 'off'
-  condition:
+  conditions:
   - condition: state
     entity_id: person.neil
     state: home
-  action:
+  actions:
   - choose:
     - conditions:
       - condition: trigger
         id: '1'
       sequence:
-      - action: wiser.assign_schedule
+      - action: climate.set_hvac_mode
+        metadata: {}
         data:
-          to_entity_id: climate.wiser_bedroom
-          schedule_name: Bedroom - Neil not working
+          hvac_mode: auto
+        target:
+          entity_id: climate.wiser_bedroom
     - conditions:
       - condition: trigger
         id: '2'
       - condition: time
-        after: 08:00:00
-        before: '18:00:00'
+        after: 08:15:00
+        before: '17:30:00'
         weekday:
         - mon
         - tue
@@ -813,10 +804,13 @@
         entity_id: calendar.united_kingdom_eng
         state: 'off'
       sequence:
-      - action: wiser.assign_schedule
+      - action: wiser.boost_heating
+        metadata: {}
         data:
-          to_entity_id: climate.wiser_bedroom
-          schedule_name: Bedroom - Neil working
+          temperature: 20
+          time_period: 240
+        target:
+          entity_id: climate.wiser_bedroom
   mode: single
 - id: '1669834868112'
   alias: Kitchen - Smart Button
@@ -1245,7 +1239,7 @@
         entity_id: light.bedside_lights
         state: 'off'
       - condition: numeric_state
-        entity_id: sensor.apollo_msr_1_38c3bc_ltr390_light
+        entity_id: sensor.everything_presence_lite_5ba230_illuminance
         below: 0.4
         enabled: true
       sequence:
@@ -1383,7 +1377,6 @@
   triggers:
   - entity_id:
     - binary_sensor.everything_presence_lite_2fbc58_occupancy
-    - binary_sensor.hall_motion_sensor
     to: 'on'
     for:
       hours: 0
@@ -1394,7 +1387,6 @@
     trigger: state
   - entity_id:
     - binary_sensor.everything_presence_lite_2fbc58_occupancy
-    - binary_sensor.hall_motion_sensor
     to: 'off'
     for:
       hours: 0
@@ -1412,7 +1404,7 @@
         - '1'
       - condition: numeric_state
         entity_id: sensor.everything_presence_lite_2fbc58_illuminance
-        below: 0.4
+        below: 0.3
       sequence:
       - action: light.turn_on
         metadata: {}
@@ -1423,18 +1415,12 @@
       - condition: trigger
         id:
         - '2'
-      - condition: state
-        entity_id: binary_sensor.everything_presence_lite_2fbc58_occupancy
-        state: 'off'
-        for:
-          hours: 0
-          minutes: 10
-          seconds: 0
       sequence:
-      - data: {}
+      - action: light.turn_off
+        metadata: {}
+        data: {}
         target:
           entity_id: light.landing_light
-        action: light.turn_off
   mode: single
 - id: '1670963268105'
   alias: Utility Room - Dishwasher - Set State
@@ -1566,7 +1552,7 @@
 - id: '1671037078231'
   alias: Utility Room - Washing Machine - Set State
   description: ''
-  trigger:
+  triggers:
   - trigger: numeric_state
     entity_id:
     - sensor.localbytes_plug_pm_f0a822_power
@@ -1581,12 +1567,8 @@
     - sensor.localbytes_plug_pm_f0a822_power
     id: running
     above: 5
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 0
-  condition: []
-  action:
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: trigger
@@ -1595,7 +1577,7 @@
       - action: input_select.select_option
         target:
           entity_id:
-          - input_select.utility_room_washing_machine_status
+          - input_select.washing_machine_status
         data:
           option: 'Off'
     - conditions:
@@ -1605,7 +1587,7 @@
       - action: input_select.select_option
         target:
           entity_id:
-          - input_select.utility_room_washing_machine_status
+          - input_select.washing_machine_status
         data:
           option: Running
     default: []
@@ -1616,7 +1598,7 @@
   trigger:
   - trigger: state
     entity_id:
-    - input_select.utility_room_washing_machine_status
+    - input_select.washing_machine_status
     from: Running
     to: 'Off'
   condition: []
@@ -2371,24 +2353,24 @@
   description: ''
   triggers:
   - entity_id:
-    - binary_sensor.hall_motion_sensor
-    from: 'off'
+    - binary_sensor.apollo_msr_1_38c3bc_radar_target
     to: 'on'
     id: '1'
     trigger: state
+    from: 'off'
   - entity_id:
     - binary_sensor.front_door
     from: 'off'
     to: 'on'
     id: '2'
     trigger: state
-  - event_type: timer.finished
-    event_data:
-      entity_id: timer.hall_light_timer
-    id: '3'
-    trigger: event
+  - trigger: state
+    entity_id:
+    - timer.hall_light_timer
+    from: active
+    to: idle
   - entity_id:
-    - binary_sensor.hall_motion_sensor
+    - binary_sensor.apollo_msr_1_38c3bc_radar_target
     from: 'on'
     to: 'off'
     id: '4'
@@ -2400,17 +2382,12 @@
       - condition: trigger
         id:
         - '1'
-      - condition: or
-        conditions:
-        - condition: numeric_state
-          entity_id: sensor.everything_presence_lite_2fbc58_illuminance
-          below: 0.3
-        - condition: state
-          entity_id: light.landing_light
-          state: 'on'
       - condition: state
         entity_id: timer.hall_light_timer
         state: idle
+      - condition: numeric_state
+        entity_id: sensor.apollo_msr_1_38c3bc_ltr390_light
+        below: 0.6
       sequence:
       - data:
           brightness_pct: 1
@@ -2425,14 +2402,9 @@
       - condition: trigger
         id:
         - '2'
-      - condition: or
-        conditions:
-        - condition: numeric_state
-          entity_id: sensor.everything_presence_lite_2fbc58_illuminance
-          below: 0.3
-        - condition: state
-          entity_id: light.landing_light
-          state: 'on'
+      - condition: numeric_state
+        entity_id: sensor.apollo_msr_1_38c3bc_ltr390_light
+        below: 0.6
       sequence:
       - data:
           brightness_pct: 1
@@ -2452,12 +2424,12 @@
       - choose:
         - conditions:
           - condition: state
-            entity_id: binary_sensor.hall_motion_sensor
+            entity_id: binary_sensor.apollo_msr_1_38c3bc_radar_target
             state: 'on'
           sequence:
           - wait_for_trigger:
             - entity_id:
-              - binary_sensor.hall_motion_sensor
+              - binary_sensor.apollo_msr_1_38c3bc_radar_target
               from: 'on'
               to: 'off'
               trigger: state
@@ -2589,7 +2561,7 @@
     to: 'on'
   condition:
   - condition: state
-    entity_id: input_select.utility_room_washing_machine_status
+    entity_id: input_select.washing_machine_status
     state: 'Off'
   action:
   - action: input_boolean.turn_off
@@ -2632,10 +2604,6 @@
     at: '21:00:00'
   - trigger: time
     at: 08:00:00
-  - trigger: state
-    entity_id:
-    - sensor.bluespike_connected_guest_clients
-    to: '0'
   conditions:
   - condition: state
     entity_id: input_boolean.guest_mode
@@ -2662,13 +2630,17 @@
 - id: '1674942972653'
   alias: Home - Pisshead Mode - Turn Off
   description: ''
-  trigger:
+  triggers:
   - trigger: event
     event_type: mobile_app_notification_action
     event_data:
       action: GUESTOFF
-  condition: []
-  action:
+  - trigger: state
+    entity_id:
+    - sensor.bluespike_connected_guest_clients
+    to: '0'
+  conditions: []
+  actions:
   - action: input_boolean.turn_off
     data: {}
     target:
@@ -2763,7 +2735,7 @@
     above: 0
     below: 2
   - condition: state
-    entity_id: binary_sensor.apollo_msr_1_38c3bc_radar_target
+    entity_id: binary_sensor.everything_presence_lite_5ba230_occupancy
     state: 'on'
   - condition: state
     entity_id: person.neil
@@ -3114,7 +3086,7 @@
 - id: '1684046061640'
   alias: Boys' Bedroom - Heating - Windows Off
   description: ''
-  trigger:
+  triggers:
   - trigger: state
     entity_id:
     - binary_sensor.boys_bedroom_windows
@@ -3127,8 +3099,8 @@
     from: 'on'
     to: 'off'
     id: '2'
-  condition: []
-  action:
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: trigger
@@ -3140,41 +3112,24 @@
           entity_id:
           - climate.wiser_boys_bedroom
         action: climate.set_hvac_mode
-      - metadata: {}
-        data: {}
-        target:
-          entity_id: humidifier.boys_bedroom_dehumidifier_none
-        action: humidifier.turn_off
     - conditions:
       - condition: trigger
         id: '2'
+      - condition: or
+        conditions:
+        - condition: state
+          entity_id: person.kyle
+          state: home
+        - condition: state
+          entity_id: person.liam
+          state: home
       sequence:
-      - if:
-        - condition: or
-          conditions:
-          - condition: state
-            entity_id: person.kyle
-            state: home
-          - condition: state
-            entity_id: person.liam
-            state: home
-        then:
-        - data:
-            hvac_mode: auto
-          target:
-            entity_id:
-            - climate.wiser_boys_bedroom
-          action: climate.set_hvac_mode
-      - if:
-        - condition: time
-          after: 06:30:00
-          before: '21:30:00'
-        then:
-        - metadata: {}
-          data: {}
-          target:
-            entity_id: humidifier.boys_bedroom_dehumidifier_none
-          action: humidifier.turn_on
+      - data:
+          hvac_mode: auto
+        target:
+          entity_id:
+          - climate.wiser_boys_bedroom
+        action: climate.set_hvac_mode
   mode: single
 - id: '1684056329158'
   alias: Ben's Bedroom - Heating - Window Off
@@ -3213,16 +3168,7 @@
     - conditions:
       - condition: trigger
         id: '2'
-      - condition: state
-        entity_id: person.ben
-        state: home
       sequence:
-      - data:
-          hvac_mode: auto
-        target:
-          entity_id:
-          - climate.wiser_ben_s_bedroom
-        action: climate.set_hvac_mode
       - action: humidifier.turn_on
         metadata: {}
         data: {}
@@ -3240,6 +3186,17 @@
           mode: sleep
         target:
           entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+      - if:
+        - condition: state
+          entity_id: person.ben
+          state: home
+        then:
+        - data:
+            hvac_mode: auto
+          target:
+            entity_id:
+            - climate.wiser_ben_s_bedroom
+          action: climate.set_hvac_mode
   mode: single
 - id: '1684056750541'
   alias: Bedroom - Heating - Windows Off
@@ -3398,7 +3355,7 @@
   triggers:
   - trigger: state
     entity_id:
-    - binary_sensor.everything_presence_lite_ccb890_occupancy
+    - binary_sensor.everything_presence_lite_ccb890_zone_1_occupancy
     from: 'off'
     to: 'on'
     id: '1'
@@ -3434,6 +3391,16 @@
         - condition: state
           entity_id: media_player.living_room_tv_airplay
           state: unavailable
+        enabled: false
+      - condition: not
+        conditions:
+        - condition: state
+          entity_id: binary_sensor.everything_presence_lite_ccb890_occupancy
+          state: 'on'
+          for:
+            hours: 0
+            minutes: 0
+            seconds: 10
       sequence:
       - metadata: {}
         data: {}
@@ -3726,104 +3693,6 @@
       entity_id: media_player.boys_echo_dot
     action: media_player.volume_set
   mode: restart
-- id: '1701726382538'
-  alias: Boys' Bedroom - Dehumidifier - Schedule
-  description: ''
-  trigger:
-  - trigger: time
-    at: 06:00:00
-    id: '1'
-  - trigger: time
-    at: '21:30:00'
-    id: '2'
-  condition: []
-  action:
-  - choose:
-    - conditions:
-      - condition: trigger
-        id:
-        - '1'
-      - condition: state
-        entity_id: binary_sensor.boys_bedroom_window_awning
-        state: 'off'
-      - condition: state
-        entity_id: binary_sensor.boys_bedroom_window_casement
-        state: 'off'
-      sequence:
-      - action: humidifier.turn_on
-        target:
-          entity_id:
-          - humidifier.boys_bedroom_dehumidifier_none
-        data: {}
-      - action: humidifier.set_humidity
-        target:
-          entity_id:
-          - humidifier.boys_bedroom_dehumidifier_none
-        data:
-          humidity: 55
-    - conditions:
-      - condition: trigger
-        id:
-        - '2'
-      sequence:
-      - action: humidifier.turn_off
-        target:
-          entity_id: humidifier.boys_bedroom_dehumidifier_none
-        data: {}
-  mode: single
-- id: '1702211376026'
-  alias: Boys' Bedroom - Dehumidifier - Tank Full
-  description: ''
-  trigger:
-  - trigger: state
-    entity_id:
-    - binary_sensor.boys_bedroom_dehumidifier_tank
-    from: 'off'
-    to: 'on'
-  condition:
-  - condition: or
-    conditions:
-    - condition: state
-      entity_id: person.neil
-      state: home
-    - condition: state
-      entity_id: person.heather
-      state: home
-    - condition: state
-      entity_id: person.liam
-      state: home
-    - condition: state
-      entity_id: person.ben
-      state: home
-  action:
-  - repeat:
-      sequence:
-      - action: light.toggle
-        target:
-          entity_id:
-          - light.boys_bedroom_light
-        data:
-          flash: long
-      - action: media_player.volume_set
-        target:
-          entity_id:
-          - media_player.boys_echo_dot
-        data:
-          volume_level: 0.5
-      - action: notify.alexa_media_boys_echo_dot
-        data:
-          message: The dehumidifier water tank is full. Please empty it or else the
-            room will stink of rotten pants.
-      - delay:
-          hours: 0
-          minutes: 10
-          seconds: 0
-          milliseconds: 0
-      until:
-      - condition: state
-        entity_id: binary_sensor.boys_bedroom_dehumidifier_tank
-        state: 'off'
-  mode: single
 - id: '1702240719027'
   alias: Home - Lighting - Hall And Landing Brightness
   description: ''
@@ -3915,23 +3784,6 @@
           entity_id:
           - light.kyles_lava_lamp
         data: {}
-  mode: single
-- id: '1706908524221'
-  alias: Living Room - Dehumidifier - UPS On Battery
-  description: ''
-  trigger:
-  - trigger: state
-    entity_id:
-    - binary_sensor.ups_online_status
-    from: 'on'
-    to: 'off'
-  condition: []
-  action:
-  - action: humidifier.turn_off
-    metadata: {}
-    data: {}
-    target:
-      entity_id: humidifier.living_room_dehumidifier_none
   mode: single
 - id: '1707058960910'
   alias: Living Room - Dehumidifier - Dry Clothes
@@ -4313,6 +4165,7 @@
       - update.everything_presence_zone_configurator_update
       - update.living_room_presence_sensor_firmware
       - update.uk_bin_collection_data_update
+      - update.hall_presence_sensor_firmware
       mobile_app_device: 6f7b01aaeab2f76775d41dd43d1d3413
       mobile_app_device_2: 6f7b01aaeab2f76775d41dd43d1d3413
       run_config_check: true
@@ -4521,46 +4374,26 @@
   triggers:
   - trigger: time
     at: 05:45:00
-    id: '1'
   - trigger: time
     at: '21:30:00'
-    id: '2'
-  conditions: []
+  - trigger: state
+    entity_id:
+    - humidifier.ben_s_bedroom_dehumidifier_none
+    to: 'off'
+  conditions:
+  - condition: state
+    entity_id: binary_sensor.ben_s_bedroom_window
+    state: 'off'
   actions:
-  - choose:
-    - conditions:
-      - condition: trigger
-        id:
-        - '1'
-      - condition: state
-        entity_id: binary_sensor.ben_s_bedroom_window
-        state: 'off'
-      sequence:
-      - data: {}
-        action: humidifier.turn_on
-        target:
-          entity_id: humidifier.ben_s_bedroom_dehumidifier_none
-      - action: humidifier.set_mode
-        metadata: {}
-        data:
-          mode: sleep
-        target:
-          entity_id: humidifier.ben_s_bedroom_dehumidifier_none
-      - data:
-          humidity: 55
-        action: humidifier.set_humidity
-        target:
-          entity_id: humidifier.ben_s_bedroom_dehumidifier_none
-    - conditions:
-      - condition: trigger
-        id:
-        - '2'
-      sequence:
-      - action: humidifier.turn_off
-        metadata: {}
-        data: {}
-        target:
-          entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+  - data: {}
+    action: humidifier.turn_on
+    target:
+      entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+  - data:
+      humidity: 55
+    action: humidifier.set_humidity
+    target:
+      entity_id: humidifier.ben_s_bedroom_dehumidifier_none
   mode: single
 - id: '1732650859901'
   alias: Home - Geofence - Guest Wi-Fi
@@ -4593,4 +4426,20 @@
     data: {}
     target:
       entity_id: input_boolean.guest_mode
+  mode: single
+- id: '1733583729295'
+  alias: Bedroom - Lighting - Heather's Bedside Lamp
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.localbytes_plug_pm_d5e5b5_power
+    above: 5
+  conditions: []
+  actions:
+  - action: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: light.heathers_bedside_lamp
   mode: single

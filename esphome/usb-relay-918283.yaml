@@ -1,6 +1,6 @@
 substitutions:
   name: usb-relay-918283
-  friendly_name: USB Relay
+  friendly_name: Neil's Monitor Light Bar
   default_state: RESTORE_DEFAULT_OFF
 
 esphome:
