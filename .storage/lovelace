@@ -1519,7 +1519,7 @@
                     }
                   ],
                   "type": "tile",
-                  "entity": "light.neils_bedside_lamp"
+                  "entity": "light.neils_bedside_light"
                 },
                 {
                   "features": [
@@ -1528,7 +1528,7 @@
                     }
                   ],
                   "type": "tile",
-                  "entity": "light.heathers_bedside_lamp"
+                  "entity": "light.heathers_bedside_light"
                 }
               ],
               "column_span": 1
@@ -1716,7 +1716,7 @@
                 },
                 {
                   "type": "tile",
-                  "entity": "light.kyles_lava_lamp",
+                  "entity": "light.kyles_lava_light",
                   "vertical": true
                 },
                 {
@@ -2219,11 +2219,11 @@
                 },
                 {
                   "type": "tile",
-                  "entity": "light.heathers_bedside_lamp"
+                  "entity": "light.heathers_bedside_light"
                 },
                 {
                   "type": "tile",
-                  "entity": "light.neils_bedside_lamp"
+                  "entity": "light.neils_bedside_light"
                 },
                 {
                   "type": "tile",
@@ -2251,7 +2251,7 @@
                 },
                 {
                   "type": "tile",
-                  "entity": "light.kyles_lava_lamp"
+                  "entity": "light.kyles_lava_light"
                 },
                 {
                   "type": "tile",
@@ -2309,11 +2309,11 @@
                 },
                 {
                   "type": "tile",
-                  "entity": "sensor.neils_bedside_lamp_button_battery"
+                  "entity": "sensor.neils_bedside_light_button_battery"
                 },
                 {
                   "type": "tile",
-                  "entity": "sensor.heathers_bedside_lamp_button_battery"
+                  "entity": "sensor.heathers_bedside_light_button_battery"
                 },
                 {
                   "type": "tile",

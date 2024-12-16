@@ -698,11 +698,6 @@
       target:
         entity_id: switch.wiser_away_mode
       action: switch.turn_on
-    - action: switch.turn_off
-      metadata: {}
-      data: {}
-      target:
-        entity_id: switch.bluespike_guest_network
     - data: {}
       target:
         floor_id:
@@ -812,23 +807,6 @@
         target:
           entity_id: climate.wiser_bedroom
   mode: single
-- id: '1669834868112'
-  alias: Kitchen - Smart Button
-  description: ''
-  trigger:
-  - trigger: state
-    entity_id:
-    - event.kitchen_smart_button_button_1
-    attribute: event_type
-    from: repeat
-    to: long_release
-  condition: []
-  action:
-  - action: vacuum.start
-    data: {}
-    target:
-      entity_id: vacuum.deebot_t9
-  mode: single
 - id: '1669893268652'
   alias: Utility Room - Smart Button
   description: ''
@@ -851,7 +829,7 @@
 - id: '1669894322950'
   alias: Ben's Bedroom - Geofence
   description: ''
-  trigger:
+  triggers:
   - trigger: state
     entity_id:
     - person.ben
@@ -868,8 +846,8 @@
     to: home
     id: '2'
     from: not_home
-  condition: []
-  action:
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: trigger
@@ -889,6 +867,11 @@
       - condition: state
         entity_id: binary_sensor.ben_s_bedroom_window
         state: 'off'
+      - condition: not
+        conditions:
+        - condition: state
+          entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+          state: unavailable
       sequence:
       - data:
           hvac_mode: auto
@@ -1026,16 +1009,16 @@
 - id: '1670153859217'
   alias: Home - Vacuum Downstairs - Announce
   description: ''
-  trigger:
+  triggers:
   - trigger: state
     entity_id:
-    - vacuum.deebot_t9
+    - vacuum.deebot_ozmo_920
     to: cleaning
-  condition:
+  conditions:
   - condition: time
     after: 09:00:00
     before: '21:30:00'
-  action:
+  actions:
   - action: notify.alexa_media
     data:
       message: The vacuum is cleaning downstairs now, please watch out for it!
@@ -1051,7 +1034,7 @@
   - wait_for_trigger:
     - trigger: state
       entity_id:
-      - vacuum.deebot_t9
+      - vacuum.deebot_ozmo_920
       to: returning
       from: cleaning
     continue_on_timeout: false
@@ -2495,7 +2478,7 @@
 - id: '1673210389118'
   alias: Living Room - Heating - Fan and Windows Off
   description: ''
-  trigger:
+  triggers:
   - trigger: state
     entity_id:
     - fan.living_room_fan
@@ -2520,8 +2503,8 @@
     from: 'on'
     to: 'off'
     id: '2'
-  condition: []
-  action:
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: trigger
@@ -2532,6 +2515,11 @@
           hvac_mode: 'off'
         target:
           entity_id: climate.wiser_living_room
+      - action: humidifier.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: humidifier.living_room_dehumidifier_none
     - conditions:
       - condition: trigger
         id: '2'
@@ -2549,6 +2537,11 @@
           hvac_mode: auto
         target:
           entity_id: climate.wiser_living_room
+      - action: humidifier.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: humidifier.living_room_dehumidifier_none
   mode: single
 - id: '1674591131742'
   alias: Utility Room - Washing Machine - Door Open
@@ -3190,6 +3183,11 @@
         - condition: state
           entity_id: person.ben
           state: home
+        - condition: not
+          conditions:
+          - condition: state
+            entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+            state: unavailable
         then:
         - data:
             hvac_mode: auto
@@ -3383,15 +3381,6 @@
         below: 10
       - condition: trigger
         id: '1'
-      - condition: or
-        conditions:
-        - condition: state
-          entity_id: media_player.living_room_tv_airplay
-          state: 'off'
-        - condition: state
-          entity_id: media_player.living_room_tv_airplay
-          state: unavailable
-        enabled: false
       - condition: not
         conditions:
         - condition: state
@@ -3405,7 +3394,9 @@
       - metadata: {}
         data: {}
         target:
-          entity_id: light.living_room_light
+          entity_id:
+          - light.living_room_light
+          - light.christmas_tree
         action: light.turn_on
       - if:
         - condition: state
@@ -3426,6 +3417,7 @@
           entity_id:
           - light.living_room_light
           - light.living_room_tv_backlight
+          - light.christmas_tree
         action: light.turn_off
   mode: single
 - id: '1689100303323'
@@ -3492,16 +3484,16 @@
 - id: '1694332919338'
   alias: Home - Vacuum Upstairs - Announce
   description: ''
-  trigger:
+  triggers:
   - trigger: state
     entity_id:
-    - vacuum.deebot_ozmo_920
+    - vacuum.deebot_t9
     to: cleaning
-  condition:
+  conditions:
   - condition: time
     after: 09:00:00
     before: '21:30:00'
-  action:
+  actions:
   - action: notify.alexa_media
     data:
       message: The vacuum is cleaning upstairs now, please watch out for it!
@@ -3517,7 +3509,7 @@
   - wait_for_trigger:
     - trigger: state
       entity_id:
-      - vacuum.deebot_ozmo_920
+      - vacuum.deebot_t9
       to: returning
       from: cleaning
     continue_on_timeout: false
@@ -3749,20 +3741,20 @@
             brightness_pct: 1
   mode: single
 - id: '1704912927159'
-  alias: Boys' Bedroom - Kyle's Lava Lamp - Schedule
+  alias: Boys' Bedroom - Kyle's Lava Light - Schedule
   description: ''
-  trigger:
+  triggers:
   - trigger: time
     at: '19:30:00'
     id: '1'
   - trigger: time
     at: '22:00:00'
     id: '2'
-  condition:
+  conditions:
   - condition: state
     entity_id: person.kyle
     state: home
-  action:
+  actions:
   - choose:
     - conditions:
       - condition: trigger
@@ -3773,7 +3765,7 @@
         metadata: {}
         data: {}
         target:
-          entity_id: light.kyles_lava_lamp
+          entity_id: light.kyles_lava_light
     - conditions:
       - condition: trigger
         id:
@@ -3782,7 +3774,7 @@
       - action: light.turn_off
         target:
           entity_id:
-          - light.kyles_lava_lamp
+          - light.kyles_lava_light
         data: {}
   mode: single
 - id: '1707058960910'
@@ -3807,7 +3799,7 @@
     target:
       entity_id: humidifier.living_room_dehumidifier_none
     data:
-      mode: '2'
+      mode: '0'
   - delay:
       hours: 0
       minutes: 0
@@ -4369,17 +4361,23 @@
       - light.neil_s_monitor_light_bar
   mode: single
 - id: '1727725678638'
-  alias: Ben's Bedroom - Dehumidifier - Schedule
+  alias: Ben's Bedroom - Dehumidifier - Reset
   description: ''
   triggers:
-  - trigger: time
-    at: 05:45:00
-  - trigger: time
-    at: '21:30:00'
   - trigger: state
     entity_id:
     - humidifier.ben_s_bedroom_dehumidifier_none
     to: 'off'
+  - trigger: state
+    entity_id:
+    - humidifier.ben_s_bedroom_dehumidifier_none
+    attribute: mode
+    to: boost
+  - trigger: state
+    entity_id:
+    - humidifier.ben_s_bedroom_dehumidifier_none
+    from: '55'
+    attribute: humidity
   conditions:
   - condition: state
     entity_id: binary_sensor.ben_s_bedroom_window
@@ -4394,22 +4392,12 @@
     action: humidifier.set_humidity
     target:
       entity_id: humidifier.ben_s_bedroom_dehumidifier_none
-  mode: single
-- id: '1732650859901'
-  alias: Home - Geofence - Guest Wi-Fi
-  description: ''
-  triggers:
-  - trigger: numeric_state
-    entity_id:
-    - zone.home
-    above: 0
-  conditions: []
-  actions:
-  - action: switch.turn_on
+  - action: humidifier.set_mode
     metadata: {}
-    data: {}
+    data:
+      mode: sleep
     target:
-      entity_id: switch.bluespike_guest_network
+      entity_id: humidifier.ben_s_bedroom_dehumidifier_none
   mode: single
 - id: '1732651066491'
   alias: Home - Pisshead Mode - Turn On
@@ -4441,5 +4429,120 @@
     metadata: {}
     data: {}
     target:
-      entity_id: light.heathers_bedside_lamp
+      entity_id: light.heathers_bedside_light
+  mode: single
+- id: '1734241132467'
+  alias: Ben's Bedroom - Dehumidifier - Heating when unavailable
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - humidifier.ben_s_bedroom_dehumidifier_none
+    to: unavailable
+    id: '1'
+  - trigger: state
+    entity_id:
+    - humidifier.ben_s_bedroom_dehumidifier_none
+    id: '2'
+    from: unavailable
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - '1'
+      - condition: state
+        entity_id: person.ben
+        state: home
+      sequence:
+      - action: climate.set_hvac_mode
+        metadata: {}
+        data:
+          hvac_mode: 'off'
+        target:
+          entity_id: climate.wiser_ben_s_bedroom
+    - conditions:
+      - condition: trigger
+        id:
+        - '2'
+      sequence:
+      - action: climate.set_hvac_mode
+        metadata: {}
+        data:
+          hvac_mode: auto
+        target:
+          entity_id: climate.wiser_ben_s_bedroom
+  mode: single
+- id: '1734290867253'
+  alias: Landing - Dehumidifier - Window
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.landing_window
+    from: 'off'
+    to: 'on'
+    id: '1'
+  - trigger: state
+    entity_id:
+    - binary_sensor.landing_window
+    from: 'on'
+    to: 'off'
+    id: '2'
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: '1'
+      sequence:
+      - action: humidifier.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: humidifier.landing_dehumidifier_none
+    - conditions:
+      - condition: trigger
+        id: '2'
+      sequence:
+      - action: humidifier.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: humidifier.landing_dehumidifier_none
+  mode: single
+- id: '1734302705697'
+  alias: Landing - Dehumidifier- Schedule
+  description: ''
+  triggers:
+  - trigger: time
+    at: 05:45:00
+    id: '1'
+  - trigger: time
+    at: '22:00:00'
+    id: '2'
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - '1'
+      sequence:
+      - action: humidifier.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: humidifier.landing_dehumidifier_none
+    - conditions:
+      - condition: trigger
+        id:
+        - '2'
+      sequence:
+      - action: humidifier.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: humidifier.landing_dehumidifier_none
   mode: single
