@@ -1942,6 +1942,12 @@
                   "name": "Window",
                   "color": "primary",
                   "state_content": "last-changed"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.everything_presence_lite_8fae78_occupancy",
+                  "name": "Occupancy",
+                  "state_content": "last_changed"
                 }
               ],
               "column_span": 1
@@ -1966,6 +1972,15 @@
               "color": "",
               "icon": "mdi:water-percent",
               "state_content": "current_humidity"
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.everything_presence_lite_8fae78_illuminance",
+              "color": "",
+              "icon": ""
             }
           ]
         },
