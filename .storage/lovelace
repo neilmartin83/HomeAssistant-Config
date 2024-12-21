@@ -410,6 +410,11 @@
                   "entity": "input_select.utility_room_dishwasher_status",
                   "state_not": "Off"
                 }
+              ],
+              "color": "",
+              "state_content": [
+                "state",
+                "last_changed"
               ]
             },
             {
@@ -427,7 +432,12 @@
               ],
               "tap_action": {
                 "action": "none"
-              }
+              },
+              "color": "",
+              "state_content": [
+                "state",
+                "last_changed"
+              ]
             },
             {
               "type": "entity",
@@ -444,6 +454,11 @@
                   "entity": "input_select.tumble_dryer_status",
                   "state_not": "Off"
                 }
+              ],
+              "color": "",
+              "state_content": [
+                "state",
+                "last_changed"
               ]
             },
             {
@@ -2878,7 +2893,7 @@
                   "entities": [
                     {
                       "entity": "binary_sensor.apollo_msr_1_38c3bc_radar_target",
-                      "name": "Bedroom"
+                      "name": "Hall"
                     },
                     {
                       "entity": "binary_sensor.everything_presence_lite_214fd8_occupancy",
@@ -2889,7 +2904,16 @@
                       "name": "Living Room"
                     },
                     {
-                      "entity": "binary_sensor.everything_presence_lite_5ba230_occupancy"
+                      "entity": "binary_sensor.everything_presence_lite_5ba230_occupancy",
+                      "name": "Bedroom"
+                    },
+                    {
+                      "entity": "binary_sensor.everything_presence_lite_cbaa7c_occupancy",
+                      "name": "Boys' Bedroom"
+                    },
+                    {
+                      "entity": "binary_sensor.everything_presence_lite_8fae78_occupancy",
+                      "name": "Ben's Bedroom"
                     }
                   ],
                   "hours_to_show": 8
