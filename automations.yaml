@@ -61,9 +61,6 @@
   actions:
   - choose:
     - conditions:
-      - condition: time
-        after: 06:00:00
-        before: '22:00:00'
       - condition: numeric_state
         entity_id: sensor.everything_presence_lite_5ba230_illuminance
         below: 25
@@ -96,6 +93,23 @@
             hours: 0
             minutes: 0
             seconds: 5
+      - condition: or
+        conditions:
+        - condition: time
+          after: 06:00:00
+          before: '22:00:00'
+          weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+          - sat
+        - condition: time
+          after: 08:00:00
+          before: '22:00:00'
+          weekday:
+          - sun
       sequence:
       - metadata: {}
         data: {}
@@ -2362,12 +2376,6 @@
     from: active
     to: idle
     id: '3'
-  - entity_id:
-    - binary_sensor.apollo_msr_1_38c3bc_radar_target
-    from: 'on'
-    to: 'off'
-    id: '4'
-    trigger: state
   conditions: []
   actions:
   - choose:
@@ -2375,35 +2383,19 @@
       - condition: trigger
         id:
         - '1'
-      - condition: state
-        entity_id: timer.hall_light_timer
-        state: idle
-      - condition: numeric_state
-        entity_id: sensor.apollo_msr_1_38c3bc_ltr390_light
-        below: 0.6
-      sequence:
-      - data:
-          brightness_pct: 1
-        target:
-          entity_id: light.hall_light
-        action: light.turn_on
-      - data: {}
-        target:
-          entity_id: timer.hall_light_timer
-        action: timer.start
-    - conditions:
-      - condition: trigger
-        id:
         - '2'
-      - condition: numeric_state
-        entity_id: sensor.apollo_msr_1_38c3bc_ltr390_light
-        below: 0.6
       sequence:
-      - data:
-          brightness_pct: 1
-        target:
-          entity_id: light.hall_light
-        action: light.turn_on
+      - if:
+        - condition: numeric_state
+          entity_id: sensor.apollo_msr_1_38c3bc_ltr390_light
+          below: 0.6
+        then:
+        - action: light.turn_on
+          metadata: {}
+          data:
+            brightness_pct: 1
+          target:
+            entity_id: light.hall_light
       - data: {}
         target:
           entity_id: timer.hall_light_timer
@@ -2412,50 +2404,12 @@
       - condition: trigger
         id:
         - '3'
-        - '4'
       sequence:
-      - choose:
-        - conditions:
-          - condition: state
-            entity_id: binary_sensor.apollo_msr_1_38c3bc_radar_target
-            state: 'on'
-          sequence:
-          - wait_for_trigger:
-            - entity_id:
-              - binary_sensor.apollo_msr_1_38c3bc_radar_target
-              from: 'on'
-              to: 'off'
-              trigger: state
-              for:
-                hours: 0
-                minutes: 5
-                seconds: 0
-            continue_on_timeout: false
-          - data: {}
-            target:
-              entity_id: light.hall_light
-            action: light.turn_off
-        - conditions:
-          - condition: state
-            entity_id: timer.hall_light_timer
-            state: active
-          sequence:
-          - wait_for_trigger:
-            - entity_id:
-              - timer.hall_light_timer
-              from: active
-              to: idle
-              trigger: state
-            continue_on_timeout: false
-          - data: {}
-            target:
-              entity_id: light.hall_light
-            action: light.turn_off
-        default:
-        - data: {}
-          target:
-            entity_id: light.hall_light
-          action: light.turn_off
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.hall_light
   mode: restart
 - id: '1673208182391'
   alias: Hall - Dimmer Switch
@@ -4491,7 +4445,17 @@
     - media_player.bedroom
     to: idle
     id: '1'
-    from:
+    trigger: state
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+    from: standby
+  - entity_id:
+    - media_player.bedroom
+    id: '2'
+    from: 'on'
+    to: standby
     trigger: state
     for:
       hours: 0
@@ -4500,7 +4464,37 @@
   - entity_id:
     - media_player.bedroom
     id: '2'
-    from:
+    from: idle
+    to: standby
+    trigger: state
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+  - entity_id:
+    - media_player.bedroom
+    id: '2'
+    from: playing
+    to: standby
+    trigger: state
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+  - entity_id:
+    - media_player.bedroom
+    id: '2'
+    from: paused
+    to: standby
+    trigger: state
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+  - entity_id:
+    - media_player.bedroom
+    id: '2'
+    from: buffering
     to: standby
     trigger: state
     for:
