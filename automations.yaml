@@ -2376,6 +2376,12 @@
     from: active
     to: idle
     id: '3'
+  - entity_id:
+    - binary_sensor.apollo_msr_1_38c3bc_radar_target
+    to: 'off'
+    id: '4'
+    trigger: state
+    from: 'on'
   conditions: []
   actions:
   - choose:
@@ -2404,6 +2410,22 @@
       - condition: trigger
         id:
         - '3'
+      - condition: state
+        entity_id: binary_sensor.apollo_msr_1_38c3bc_radar_target
+        state: 'off'
+      sequence:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.hall_light
+    - conditions:
+      - condition: trigger
+        id:
+        - '4'
+      - condition: state
+        state: idle
+        entity_id: timer.hall_light_timer
       sequence:
       - action: light.turn_off
         metadata: {}
@@ -3334,7 +3356,7 @@
   - trigger: numeric_state
     entity_id:
     - sensor.everything_presence_lite_ccb890_illuminance
-    above: 4
+    above: 5
     id: '2'
   conditions: []
   actions:
