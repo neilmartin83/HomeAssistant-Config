@@ -1508,8 +1508,8 @@
                     }
                   ],
                   "type": "tile",
-                  "entity": "light.neils_desk_filament_lamp",
-                  "name": "Desk Filament Lamp"
+                  "entity": "light.neils_desk_filament_light",
+                  "name": "Desk Filament Light"
                 },
                 {
                   "type": "tile",
@@ -2261,7 +2261,7 @@
                 },
                 {
                   "type": "tile",
-                  "entity": "light.neils_desk_filament_lamp"
+                  "entity": "light.neils_desk_filament_light"
                 },
                 {
                   "type": "tile",
@@ -2387,8 +2387,8 @@
               "show_name": true,
               "show_state": false,
               "show_icon": true,
-              "entity": "switch.adaptive_lighting_bedroom_lamps",
-              "name": "Adapt Bedroom Lamps",
+              "entity": "switch.adaptive_lighting_bedroom_lights",
+              "name": "Adapt Bedroom Lights",
               "tap_action": {
                 "action": "toggle"
               },
