@@ -7,7 +7,7 @@ packages:
 
 esphome:
   name: ${name}
-  name_add_mac_suffix: false
+  name_add_mac_suffix: False
   friendly_name: ${friendly_name}
 
 api:
@@ -17,6 +17,9 @@ api:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  fast_connect: True
+  enable_btm: True
+  enable_rrm: True
 
 ota:
   - platform: esphome

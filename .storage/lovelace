@@ -598,7 +598,7 @@
                 },
                 {
                   "type": "humidifier",
-                  "entity": "humidifier.living_room_dehumidifier_none",
+                  "entity": "humidifier.living_room_dehumidifier",
                   "features": [
                     {
                       "type": "humidifier-toggle"
@@ -664,7 +664,7 @@
                 },
                 {
                   "type": "tile",
-                  "entity": "humidifier.living_room_dehumidifier_none",
+                  "entity": "humidifier.living_room_dehumidifier",
                   "name": "Dehumidifier",
                   "vertical": true,
                   "hide_state": false,
@@ -826,7 +826,7 @@
               "show_name": false,
               "show_state": true,
               "show_icon": true,
-              "entity": "humidifier.living_room_dehumidifier_none",
+              "entity": "humidifier.living_room_dehumidifier",
               "color": "",
               "icon": "mdi:water-percent",
               "state_content": "current_humidity"
@@ -1321,7 +1321,7 @@
                 },
                 {
                   "type": "humidifier",
-                  "entity": "humidifier.landing_dehumidifier_none",
+                  "entity": "humidifier.landing_dehumidifier",
                   "features": [
                     {
                       "type": "humidifier-toggle"
@@ -1867,7 +1867,7 @@
                 },
                 {
                   "type": "humidifier",
-                  "entity": "humidifier.ben_s_bedroom_dehumidifier_none",
+                  "entity": "humidifier.ben_s_bedroom_dehumidifier",
                   "features": [
                     {
                       "type": "humidifier-toggle"
@@ -1983,7 +1983,7 @@
               "show_name": false,
               "show_state": true,
               "show_icon": true,
-              "entity": "humidifier.ben_s_bedroom_dehumidifier_none",
+              "entity": "humidifier.ben_s_bedroom_dehumidifier",
               "color": "",
               "icon": "mdi:water-percent",
               "state_content": "current_humidity"

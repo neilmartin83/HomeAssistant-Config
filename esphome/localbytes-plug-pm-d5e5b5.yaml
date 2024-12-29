@@ -1,11 +1,13 @@
 substitutions:
   name: localbytes-plug-pm-d5e5b5
   friendly_name: Heather's CPAP Machine
+
 packages:
   localbytes.plug-pm: github://LocalBytes/esphome-localbytes-plug/localbytes-plug-pm.yaml@main
+
 esphome:
   name: ${name}
-  name_add_mac_suffix: false
+  name_add_mac_suffix: False
   friendly_name: ${friendly_name}
 
 api:

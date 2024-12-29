@@ -1,22 +1,25 @@
 substitutions:
   name: everything-presence-lite-2fbc58
   friendly_name: Landing Presence Sensor
+
 packages:
   EverythingSmartTechnology.Everything_Presence_Lite: github://everythingsmarthome/everything-presence-lite/everything-presence-lite-ha.yaml@main
 
 esphome:
   name: ${name}
-  name_add_mac_suffix: false
+  name_add_mac_suffix: False
   friendly_name: ${friendly_name}
 
 api:
   encryption:
     key: !secret everything-presence-lite-2fbc58_api_encryption_key
 
-
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  fast_connect: True
+  enable_btm: True
+  enable_rrm: True
 
 ota:
   - platform: esphome

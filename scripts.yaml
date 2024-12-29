@@ -100,11 +100,9 @@ home_alexa_announce_dinner_time:
       minutes: 0
       seconds: 20
       milliseconds: 0
-  - data:
-      volume_level: 0.35
-    target:
+  - action: alexa_media.restore_volume
+    data:
       entity_id: media_player.boys_echo_dot
-    action: media_player.volume_set
   mode: single
 bedroom_turn_on_bedside_lights:
   alias: Bedroom - Lighting - Turn on Bedside Lights

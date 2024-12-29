@@ -888,7 +888,7 @@
       - condition: not
         conditions:
         - condition: state
-          entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+          entity_id: humidifier.ben_s_bedroom_dehumidifier
           state: unavailable
       sequence:
       - data:
@@ -2505,7 +2505,7 @@
         metadata: {}
         data: {}
         target:
-          entity_id: humidifier.living_room_dehumidifier_none
+          entity_id: humidifier.living_room_dehumidifier
     - conditions:
       - condition: trigger
         id: '2'
@@ -2527,7 +2527,7 @@
         metadata: {}
         data: {}
         target:
-          entity_id: humidifier.living_room_dehumidifier_none
+          entity_id: humidifier.living_room_dehumidifier
   mode: single
 - id: '1674591131742'
   alias: Utility Room - Washing Machine - Door Open
@@ -3143,7 +3143,7 @@
         metadata: {}
         data: {}
         target:
-          entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+          entity_id: humidifier.ben_s_bedroom_dehumidifier
     - conditions:
       - condition: trigger
         id: '2'
@@ -3152,19 +3152,19 @@
         metadata: {}
         data: {}
         target:
-          entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+          entity_id: humidifier.ben_s_bedroom_dehumidifier
       - action: humidifier.set_humidity
         metadata: {}
         data:
           humidity: 55
         target:
-          entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+          entity_id: humidifier.ben_s_bedroom_dehumidifier
       - action: humidifier.set_mode
         metadata: {}
         data:
           mode: sleep
         target:
-          entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+          entity_id: humidifier.ben_s_bedroom_dehumidifier
       - if:
         - condition: state
           entity_id: person.ben
@@ -3172,7 +3172,7 @@
         - condition: not
           conditions:
           - condition: state
-            entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+            entity_id: humidifier.ben_s_bedroom_dehumidifier
             state: unavailable
         then:
         - data:
@@ -3397,6 +3397,9 @@
     - conditions:
       - condition: trigger
         id: '2'
+      - condition: state
+        entity_id: light.living_room_tv_backlight
+        state: 'off'
       sequence:
       - data: {}
         target:
@@ -3607,6 +3610,14 @@
             entity_id:
             - media_player.boys_echo_dot
             - media_player.ben_s_echo_dot
+        - action: alexa_media.restore_volume
+          metadata: {}
+          data:
+            entity_id: media_player.boys_echo_dot
+        - action: alexa_media.restore_volume
+          metadata: {}
+          data:
+            entity_id: media_player.ben_s_echo_dot
         enabled: false
     - conditions:
       - condition: trigger
@@ -3622,10 +3633,10 @@
 - id: '1699796093596'
   alias: Home - Kyle - Notify For School
   description: ''
-  trigger:
+  triggers:
   - trigger: time
     at: 08:05:00
-  condition:
+  conditions:
   - condition: time
     weekday:
     - mon
@@ -3639,7 +3650,7 @@
   - condition: state
     entity_id: calendar.school_holidays
     state: 'off'
-  action:
+  actions:
   - data:
       volume_level: 1
     target:
@@ -3665,11 +3676,10 @@
       minutes: 0
       seconds: 10
       milliseconds: 0
-  - data:
-      volume_level: 0.35
-    target:
+  - action: alexa_media.restore_volume
+    metadata: {}
+    data:
       entity_id: media_player.boys_echo_dot
-    action: media_player.volume_set
   mode: restart
 - id: '1702240719027'
   alias: Home - Lighting - Hall And Landing Brightness
@@ -4279,16 +4289,16 @@
   triggers:
   - trigger: state
     entity_id:
-    - humidifier.ben_s_bedroom_dehumidifier_none
+    - humidifier.ben_s_bedroom_dehumidifier
     to: 'off'
   - trigger: state
     entity_id:
-    - humidifier.ben_s_bedroom_dehumidifier_none
+    - humidifier.ben_s_bedroom_dehumidifier
     attribute: mode
     to: boost
   - trigger: state
     entity_id:
-    - humidifier.ben_s_bedroom_dehumidifier_none
+    - humidifier.ben_s_bedroom_dehumidifier
     from: '55'
     attribute: humidity
   conditions:
@@ -4299,18 +4309,18 @@
   - data: {}
     action: humidifier.turn_on
     target:
-      entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+      entity_id: humidifier.ben_s_bedroom_dehumidifier
   - data:
       humidity: 55
     action: humidifier.set_humidity
     target:
-      entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+      entity_id: humidifier.ben_s_bedroom_dehumidifier
   - action: humidifier.set_mode
     metadata: {}
     data:
       mode: sleep
     target:
-      entity_id: humidifier.ben_s_bedroom_dehumidifier_none
+      entity_id: humidifier.ben_s_bedroom_dehumidifier
   mode: single
 - id: '1732651066491'
   alias: Home - Pisshead Mode - Turn On
@@ -4350,12 +4360,12 @@
   triggers:
   - trigger: state
     entity_id:
-    - humidifier.ben_s_bedroom_dehumidifier_none
+    - humidifier.ben_s_bedroom_dehumidifier
     to: unavailable
     id: '1'
   - trigger: state
     entity_id:
-    - humidifier.ben_s_bedroom_dehumidifier_none
+    - humidifier.ben_s_bedroom_dehumidifier
     id: '2'
     from: unavailable
   conditions: []
@@ -4414,7 +4424,7 @@
         metadata: {}
         data: {}
         target:
-          entity_id: humidifier.landing_dehumidifier_none
+          entity_id: humidifier.landing_dehumidifier
     - conditions:
       - condition: trigger
         id: '2'
@@ -4423,7 +4433,7 @@
         metadata: {}
         data: {}
         target:
-          entity_id: humidifier.landing_dehumidifier_none
+          entity_id: humidifier.landing_dehumidifier
   mode: single
 - id: '1734302705697'
   alias: Landing - Dehumidifier- Schedule
@@ -4447,7 +4457,7 @@
         metadata: {}
         data: {}
         target:
-          entity_id: humidifier.landing_dehumidifier_none
+          entity_id: humidifier.landing_dehumidifier
     - conditions:
       - condition: trigger
         id:
@@ -4457,7 +4467,7 @@
         metadata: {}
         data: {}
         target:
-          entity_id: humidifier.landing_dehumidifier_none
+          entity_id: humidifier.landing_dehumidifier
   mode: single
 - id: '1734468787986'
   alias: Bedroom - Lighting - TV
@@ -4574,7 +4584,7 @@
   description: ''
   triggers:
   - trigger: time
-    at: '21:15:00'
+    at: '22:15:00'
     id: '1'
   - trigger: state
     entity_id:
@@ -4621,8 +4631,8 @@
       - condition: trigger
         id: '2'
       - condition: time
-        after: 07:30:00
-        before: '21:15:00'
+        after: '10:00:00'
+        before: '22:15:00'
       sequence:
       - action: wiser.boost_heating
         metadata: {}
