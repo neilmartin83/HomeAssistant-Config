@@ -1085,7 +1085,7 @@
     target:
       entity_id:
       - light.bedroom_light
-      - light.neils_desk_filament_lamp
+      - light.neils_desk_filament_light
       - light.bedroom_mirror_light
   mode: single
 - id: '1670480253270'
@@ -2724,7 +2724,7 @@
     data:
       flash: long
     target:
-      entity_id: light.neils_desk_filament_lamp
+      entity_id: light.neils_desk_filament_light
   mode: single
 - id: '1675625879464'
   alias: Utility Room - Washing Machine - Notification Annoy
@@ -3040,7 +3040,7 @@
           brightness_pct: 1
         target:
           entity_id:
-          - light.neils_desk_filament_lamp
+          - light.neils_desk_filament_light
         action: light.turn_on
       - metadata: {}
         data: {}
@@ -3058,7 +3058,7 @@
       - data: {}
         target:
           entity_id:
-          - light.neils_desk_filament_lamp
+          - light.neils_desk_filament_light
           - light.neil_s_monitor_light_bar
         action: light.turn_off
   mode: single
@@ -4280,7 +4280,7 @@
     data: {}
     target:
       entity_id:
-      - light.neils_desk_filament_lamp
+      - light.neils_desk_filament_light
       - light.neil_s_monitor_light_bar
   mode: single
 - id: '1727725678638'
@@ -4339,7 +4339,7 @@
       entity_id: input_boolean.guest_mode
   mode: single
 - id: '1733583729295'
-  alias: Bedroom - Lighting - Heather's Bedside Lamp
+  alias: Bedroom - Lighting - Heather's Bedside Light
   description: ''
   triggers:
   - trigger: numeric_state
