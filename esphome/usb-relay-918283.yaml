@@ -17,6 +17,9 @@ preferences:
 
 logger:
 
+network:
+  enable_ipv6: True
+
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password

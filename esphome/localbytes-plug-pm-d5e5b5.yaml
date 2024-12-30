@@ -14,6 +14,9 @@ api:
   encryption:
     key: !secret localbytes-plug-pm-d5e5b5_api_encryption_key
 
+network:
+  enable_ipv6: True
+
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password

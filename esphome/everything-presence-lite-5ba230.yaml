@@ -14,10 +14,12 @@ api:
   encryption:
     key: !secret everything-presence-lite-5ba230_api_encryption_key
 
+network:
+  enable_ipv6: True
+
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
-  fast_connect: True
   enable_btm: True
   enable_rrm: True
 
