@@ -95,21 +95,22 @@
             seconds: 5
       - condition: or
         conditions:
-        - condition: time
-          after: 06:00:00
-          before: '22:00:00'
-          weekday:
-          - mon
-          - tue
-          - wed
-          - thu
-          - fri
-          - sat
-        - condition: time
-          after: 08:00:00
-          before: '22:00:00'
-          weekday:
-          - sun
+        - condition: and
+          conditions:
+          - condition: time
+            after: 08:00:00
+            before: '22:00:00'
+          - condition: state
+            entity_id: binary_sensor.workday_sensor
+            state: 'off'
+        - condition: and
+          conditions:
+          - condition: time
+            after: 06:00:00
+            before: '22:00:00'
+          - condition: state
+            entity_id: binary_sensor.workday_sensor
+            state: 'on'
       sequence:
       - metadata: {}
         data: {}
@@ -814,8 +815,8 @@
             entity_id: calendar.neil_work
             state: 'on'
       - condition: state
-        entity_id: calendar.united_kingdom_eng
-        state: 'off'
+        entity_id: binary_sensor.workday_sensor
+        state: 'on'
       sequence:
       - action: wiser.boost_heating
         metadata: {}
@@ -1644,10 +1645,10 @@
 - id: '1671518985271'
   alias: Boys' Bedroom - Kyle's Computer - Pause Schedule
   description: ''
-  trigger:
+  triggers:
   - trigger: time
     at: 08:00:00
-  condition:
+  conditions:
   - condition: state
     entity_id: binary_sensor.bluespike_kyle_s_mac_mini_wireless_connected
     state: 'on'
@@ -1659,12 +1660,12 @@
     - thu
     - fri
   - condition: state
-    entity_id: calendar.united_kingdom_eng
-    state: 'off'
-  - condition: state
     entity_id: calendar.school_holidays
     state: 'off'
-  action:
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
+  actions:
   - data:
       volume_level: 1
     target:
@@ -1743,9 +1744,6 @@
     - conditions:
       - condition: trigger
         id: '1'
-      - condition: state
-        entity_id: calendar.united_kingdom_eng
-        state: 'off'
       - condition: time
         weekday:
         - mon
@@ -1753,6 +1751,9 @@
         - wed
         - thu
         - fri
+      - condition: state
+        entity_id: binary_sensor.workday_sensor
+        state: 'on'
       sequence:
       - data: {}
         target:
@@ -2011,7 +2012,7 @@
           data:
             actions:
             - action: BINS
-              title: Bins are in!
+              title: Bins are out!
           message: Remember to take the {{ states('sensor.rayleigh_non_recycling_bin_bin_type')
             }} out!
         action: notify.mobile_app_neils_iphone
@@ -2019,7 +2020,7 @@
           data:
             actions:
             - action: BINS
-              title: Bins are in!
+              title: Bins are out!
           message: Remember to take the {{ states('sensor.rayleigh_non_recycling_bin_bin_type')
             }} out!
         action: notify.mobile_app_heathers_iphone
@@ -2032,7 +2033,7 @@
           data:
             actions:
             - action: BINS
-              title: Bins are in!
+              title: Bins are out!
           message: Remember to take the {{ states('sensor.rayleigh_recycling_bin_bin_type')
             }} out!
         action: notify.mobile_app_neils_iphone
@@ -2040,7 +2041,7 @@
           data:
             actions:
             - action: BINS
-              title: Bins are in!
+              title: Bins are out!
           message: Remember to take the {{ states('sensor.rayleigh_recycling_bin_bin_type')
             }} out!
         action: notify.mobile_app_heathers_iphone
@@ -2077,14 +2078,14 @@
       data:
         actions:
         - action: BINS
-          title: Bins are out!
+          title: Bins are in!
       message: Please get the bins in!
     action: notify.mobile_app_heathers_iphone
   - data:
       data:
         actions:
         - action: BINS
-          title: Bins are out!
+          title: Bins are in!
       message: Please get the bins in!
     action: notify.mobile_app_neils_iphone
   mode: single
@@ -3645,11 +3646,11 @@
     - thu
     - fri
   - condition: state
-    entity_id: calendar.united_kingdom_eng
-    state: 'off'
-  - condition: state
     entity_id: calendar.school_holidays
     state: 'off'
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
   actions:
   - data:
       volume_level: 1

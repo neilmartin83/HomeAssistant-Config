@@ -3,7 +3,7 @@ substitutions:
   friendly_name: Bedroom Presence Sensor
 
 packages:
-  EverythingSmartTechnology.Everything_Presence_Lite: github://everythingsmarthome/everything-presence-lite/everything-presence-lite-ha-co2.yaml@main
+  EverythingSmartTechnology.Everything_Presence_Lite: github://everythingsmarthome/everything-presence-lite/everything-presence-lite-ha-no-ble-co2.yaml@main
 
 esphome:
   name: ${name}
@@ -22,15 +22,17 @@ wifi:
   password: !secret wifi_password
   enable_btm: True
   enable_rrm: True
+  ap:
+
+captive_portal:
 
 ota:
   - platform: esphome
     password: !secret everything-presence-lite-5ba230_ota_password
 
+esp32_improv:
+  authorizer: none
+
 sensor:
   - platform: wifi_signal
-    disabled_by_default: True
     name: "WiFi Signal"
-  - platform: internal_temperature
-    disabled_by_default: True
-    name: "ESP Temperature"
