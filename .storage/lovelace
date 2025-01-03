@@ -1483,16 +1483,6 @@
                 },
                 {
                   "type": "tile",
-                  "entity": "light.bedroom_air_purifier_night_light",
-                  "name": "Night Light",
-                  "features": [
-                    {
-                      "type": "light-brightness"
-                    }
-                  ]
-                },
-                {
-                  "type": "tile",
                   "entity": "light.bedroom_light",
                   "name": "Light",
                   "features": [
@@ -2217,10 +2207,6 @@
                 },
                 {
                   "type": "tile",
-                  "entity": "light.living_room_air_purifier_night_light"
-                },
-                {
-                  "type": "tile",
                   "entity": "light.kitchen_light"
                 },
                 {
@@ -2269,15 +2255,7 @@
                 },
                 {
                   "type": "tile",
-                  "entity": "light.bedroom_air_purifier_night_light"
-                },
-                {
-                  "type": "tile",
                   "entity": "light.boys_bedroom_light"
-                },
-                {
-                  "type": "tile",
-                  "entity": "light.boys_bedroom_air_purifier_night_light"
                 },
                 {
                   "type": "tile",

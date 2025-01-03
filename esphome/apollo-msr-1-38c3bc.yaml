@@ -22,7 +22,8 @@ ota:
   platform: esphome
   password: !secret apollo-msr-1-38c3bc_ota_password
 
-improv_serial:
+logger:
+  baud_rate: 0
 
 esp32_improv:
   authorizer: none
@@ -38,8 +39,6 @@ wifi:
   enable_rrm: True
 
 web_server: !remove
-
-logger:
 
 light:
     platform: esp32_rmt_led_strip

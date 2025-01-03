@@ -17,6 +17,9 @@ api:
 esp32:
   board: esp32doit-devkit-v1
 
+logger:
+  baud_rate: 0
+
 network:
   enable_ipv6: True
 
@@ -32,8 +35,6 @@ captive_portal:
 ota:
   - platform: esphome
     password: !secret esp32-bluetooth-proxy-748090_ota_password
-
-improv_serial:
 
 esp32_improv:
   authorizer: none

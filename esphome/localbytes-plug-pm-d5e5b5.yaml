@@ -3,7 +3,7 @@ substitutions:
   friendly_name: Heather's CPAP Machine
 
 packages:
-  localbytes.plug-pm: github://LocalBytes/esphome-localbytes-plug/localbytes-plug-pm.yaml@main
+  localbytes.plug-pm: github://neilmartin83/esphome-localbytes-plug/localbytes-plug-pm.yaml@patch-2
 
 esphome:
   name: ${name}
@@ -13,6 +13,9 @@ esphome:
 api:
   encryption:
     key: !secret localbytes-plug-pm-d5e5b5_api_encryption_key
+
+logger:
+  baud_rate: 0
 
 network:
   enable_ipv6: True

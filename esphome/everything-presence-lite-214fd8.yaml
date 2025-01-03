@@ -14,6 +14,11 @@ api:
   encryption:
     key: !secret everything-presence-lite-214fd8_api_encryption_key
 
+logger:
+  baud_rate: 0
+
+improv_serial: !remove
+
 network:
   enable_ipv6: True
 
